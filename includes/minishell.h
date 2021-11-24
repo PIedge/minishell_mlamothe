@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/24 10:16:46 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/11/24 15:10:26 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 *******************************************************************************/
 
 # include <stdio.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 /* *****************************************************************************
 **							Defines											  **
@@ -81,3 +85,7 @@ typedef struct s_mini
 }					t_mini;
 
 #endif
+
+int			ft_strlen(char *str);
+
+int			ft_strcmp(char *s1, char *s2);
