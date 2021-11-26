@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2021/11/24 15:14:33 by mlamothe         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:55:58 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,52 +60,58 @@ int		set_in(int	*in, t_redir *redir)
 	return (0);
 }
 
-int	is_builtin(char *cmd)
+int	is_builtin(char *cmd) //change return
 {
-	if (ft_strcmp(cmd, "echo"))
-		echo;
+	if (ft_strcmp(cmd, "echoo"))
+		return (0);
 	else if (ft_strcmp(cmd, "cd"))
-		echo;
+		return (0);
 	else if (ft_strcmp(cmd, "pwd"))
-		echo;
+		return (0);
 	else if (ft_strcmp(cmd, "export"))
-		echo;
+		return (0);
 	else if (ft_strcmp(cmd, "unset"))
-		echo;
+		return (0);
 	else if (ft_strcmp(cmd, "env"))
-		echo;
+		return (0);
 	else if (ft_strcmp(cmd, "exit"))
-		echo;
+		return (0);
 	return (0);
 }
 
-int		cmd_nopipe(t_cmd *cmd, t_redir *redir)
+int		cmd_nopipe(t_cmd *cmd)
 {
 	int	in;
 	int	out;
 
-	if (set_in(&in, redir))
+	if (set_in(&in, cmd->redir))
 		return (1);
-	if (set_out(&in, redir))
+	if (set_out(&out, cmd->redir))
 		return (1);
 	if (in != -1)
-		if (dup2(STDIN_FILENO, in) == -1)
+		if (dup2(in, STDIN_FILENO) == -1)
 			return (1);
 	if (out != -1)
-		if (dup2(STDOUT_FILENO, out) == -1)
+		if (dup2(out, STDOUT_FILENO) == -1)
 			return (1);
 	if (is_builtin(cmd->cmd))
 	{
-		if (do_builtin(cmd, redir))
+		//printf("go built\n");
+		//if (do_builtin(cmd))
 			return (1);
 	}
 	else
-		if (execve())
+	{
+		if (execve("/usr/bin/echo", cmd->cm_argv, NULL))
+		{
+			perror("execve");
 			return (1);
+		}
+	}
 	return (0);
 }
 
-int		exec_cmd(t_cmd *cmd, t_redir *redir)
+int		exec_cmd(t_cmd *cmd)
 {
 	pid_t	pid;
 
@@ -113,17 +119,45 @@ int		exec_cmd(t_cmd *cmd, t_redir *redir)
 		return (0);
 	if (cmd->next)
 	{
-		if (cmd_wpipe(cmd, redir))
+		//if (cmd_wpipe(cmd))
 			return (1);
 	}
 	else
 	{
 		pid = fork();
-		if (!pid)
+		if (pid < 0)
 			return (1);
+		
 		if (pid == 0)
-			if (cmd_nopipe(cmd, redir));
+			if (cmd_nopipe(cmd))
+			{
+				strerror(errno);
 				return (1);
+			}
 	}
+	return (0);
+}
+
+int main (int argc, char **argv)
+{
+	t_cmd	cmd;
+	t_redir	redir;
+
+	redir.next = NULL;
+	redir.prev = NULL;
+	redir.word = argv[argc - 1];
+	redir.type = 0;
+	cmd.cmd = argv[1];
+	cmd.next = NULL;
+	cmd.prev = NULL;
+	char **varg;
+	if (!(varg = malloc(sizeof(char**))))
+		return (1);
+	varg[0] = argv[1];
+	varg[1] = argv[2];
+	varg[2] = NULL;
+	cmd.cm_argv = varg;
+	cmd.redir = &redir;
+	exec_cmd(&cmd);
 	return (0);
 }
