@@ -1,0 +1,35 @@
+SRCS	=	ft_printf_double_tab.c	\
+			ft_readline.c			\
+			ft_strcpy.c				\
+			ft_strlen.c				\
+
+NAME	=	libft
+
+CC		=	clang
+
+FLAG	=	-Wall -Wextra -Werror
+
+VALF	=	--tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes --track-origins=yes --log-file=valgrind_log
+
+OBJS	=	$(SRCS:.c=.o)
+
+.c.o:
+		$(CC) $(FLAG) -c $< -o $(<:.c=.o)
+
+.PHONY: all
+all:	$(NAME)
+
+$(NAME):	$(OBJS)
+				ar rc $(NAME) $(OBJS)
+				ranlib $(NAME)
+
+.PHONY: clean
+clean:
+				rm -f $(OBJS)
+
+.PHONY: fclean
+fclean:		clean
+				rm -f $(NAME)
+
+.PHONY: re
+re:			fclean all
