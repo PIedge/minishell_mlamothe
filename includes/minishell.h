@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/24 10:16:46 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/11/30 08:57:43 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,14 @@ typedef struct s_cmd
 /*
 ** Main struture for minishell contains every thing that should be freed in case
 ** of an error.
+** Every thing tagged with "//" at th eend means it might be temporary.
 */
 
 typedef struct s_mini
 {
 	t_cmd	*cmd;
+	char	**env;
+	
 }					t_mini;
 
 #endif

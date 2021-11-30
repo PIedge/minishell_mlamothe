@@ -2,8 +2,9 @@ SRCS	=	ft_printf_double_tab.c	\
 			ft_readline.c			\
 			ft_strcpy.c				\
 			ft_strlen.c				\
+			ft_memcpy.c				\
 
-NAME	=	libft
+NAME	=	libft.a
 
 CC		=	clang
 

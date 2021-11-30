@@ -37,7 +37,7 @@ fclean: clean
 			rm -f ${LNAME}
 
 test:	$(LNAME)
-			$(CC) $(FLAG) main_test.c
+			$(CC) $(FLAG) main_test.c $(LNAME)
 
 re:	fclean all
 

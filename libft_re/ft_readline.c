@@ -6,11 +6,12 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:37:42 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/28 18:38:42 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/11/30 08:37:36 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <limits.h>
 #include "libft_re.h"
 
@@ -89,7 +90,7 @@ char	*ft_readline(char *prompt)
     {
         write(STDOUT_FILENO, BLU, ft_strlen(BLU));
         write(STDOUT_FILENO, prompt, ft_strlen(prompt));
-        write(STDOUT_FILENO, RESET, ft_Strlen(RESET));
+        write(STDOUT_FILENO, RESET, ft_strlen(RESET));
     }
     line = get_line();
     if (!line)
