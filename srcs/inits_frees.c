@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 09:41:15 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 10:01:53 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/11/30 15:54:32 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,16 @@ void	free_cmd(t_cmd *cmd)
 		ft_double_tab_free(cmd->cm_argv);
 		free(cmd->cmd);
 		free_redir(cmd->redir);
+		cmd = cmd->next;
 	}
+	ft_double_tab_free(cmd->cm_argv);
+	free(cmd->cmd);
+	free_redir(cmd->redir);
 }
 
 void	destroy(t_mini *mini)
 {
 	free_cmd(mini->cmd);
 
+	
 }

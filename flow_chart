@@ -1,0 +1,52 @@
+This flow chart is the order in which things in minishell moves.
+
+This flow chart supposedly imitates bash.
+
+As it is not required to copy bash to a T it might have some diferences.
+
+Lexicon:
+	-Blank: space or tab.
+	-Word: Sequence of characters considered
+	-Name: A word consisting only of alphanumeric characters and underscores, and beginning
+			only an alphabetic character or an underscore. Also refered to as an Identifier.
+	-Metacharacter: A character that, when unquoted, separates words. One of the following:
+					| & ; () < > <space tab>
+	-Control Operator: A token that performs a control function. One of the following:
+						|| & && ; ;; () | |& <newline>
+
+Details:
+	-Variables names: Acceptable variables name are defined as follows:
+			[a-zA-Z_][a-zA-Z_0-9]*
+
+According to the subject of minishell we need to do this:
+	-Not interpret unclosed quotes or any Metacharacters/Control operator not specified.
+	-Use only one global variable if nessary.
+	-Show a prompt on readline.
+	-Have a working history.
+	-Search and launch the right executable.
+	-Implement following buildins:
+			-echo with option -n
+			-cd with relative or absolute path
+			-pwd no options
+			-export no options
+			-unset no options
+			-unset no options
+			-env no options or arguments
+			-ext no options
+	-' character should inhibit everything, nothing is speacial anymore
+	-" should inhibit everything except $
+	-Redirections:
+			-< should redirect input
+			-> should redirect output
+			-<< should read niput from current source until a line containing the delimiter 		is seen. It doesn't need to update history
+			->> should redirect output with append mode
+	-Pipes | The output of each command in the pipelines is connected via a pipe to the 			input of the next command.
+	-Environment variables ($ followed by character) should expand to their value (see 				acceptable "Variables names" section in Details)
+	-$? should expand to the most recent exit status
+	-ctrl-C D \ should work like in bash
+	-In interactive mode:
+			-ctrl-C should print a newline
+			-ctrl-D exit the shell
+			-ctrl-\ does nothing
+
+When in trouble read rtfm.
