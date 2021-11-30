@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 08:57:43 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/11/30 09:06:16 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_cmd
 typedef struct s_mini
 {
 	t_cmd	*cmd;
-	char	**env;
+	char	**env; //
 	
 }					t_mini;
 

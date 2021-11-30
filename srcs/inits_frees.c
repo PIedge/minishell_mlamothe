@@ -1,30 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   inits_frees.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 09:51:28 by tmerrien         ###   ########.fr       */
+/*   Created: 2021/11/30 09:41:15 by tmerrien          #+#    #+#             */
+/*   Updated: 2021/11/30 10:01:53 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-#include "libft_re/libft_re.h"
+#include "../includes/minishell.h"
+#include "../libft_re/libft_re.h"
 
 
-int	init_mini(t_mini *mini, char **envp)
+void	free_redir(t_redir *redir)
 {
-	mini->cmd = NULL;
-	mini->env = envp;
+	while (redir->next)
+	{
+		free(redir->word);
+		redir = redir->next;
+		free(redir->prev);
+	}
+	free(redir->word);
+	free(redir);
 }
 
-int	main(int ac, char **av, char **envp)
+void	free_cmd(t_cmd *cmd)
 {
-	t_mini	mini;
+	while (cmd->next)
+	{
+		ft_double_tab_free(cmd->cm_argv);
+		free(cmd->cmd);
+		free_redir(cmd->redir);
+	}
+}
 
-	init_mini(&mini, envp);
-	if (ac > 1)
-		destroy(&mini)
+void	destroy(t_mini *mini)
+{
+	free_cmd(mini->cmd);
+
 }

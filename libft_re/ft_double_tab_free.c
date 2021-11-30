@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_double_tab_free.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 09:51:28 by tmerrien         ###   ########.fr       */
+/*   Created: 2021/11/30 09:42:19 by tmerrien          #+#    #+#             */
+/*   Updated: 2021/11/30 09:49:41 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-#include "libft_re/libft_re.h"
+#include <stdlib.h>
 
-
-int	init_mini(t_mini *mini, char **envp)
+void	ft_double_tab_free(char **tab)
 {
-	mini->cmd = NULL;
-	mini->env = envp;
-}
+	int	i;
 
-int	main(int ac, char **av, char **envp)
-{
-	t_mini	mini;
-
-	init_mini(&mini, envp);
-	if (ac > 1)
-		destroy(&mini)
+	i = -1;
+	while (tab && tab[++i])
+		free(tab[i]);
+	free(tab);
 }

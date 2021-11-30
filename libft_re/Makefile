@@ -1,4 +1,5 @@
 SRCS	=	ft_printf_double_tab.c	\
+			ft_double_tab_free.c	\
 			ft_readline.c			\
 			ft_strcpy.c				\
 			ft_strlen.c				\

@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:37:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 08:37:18 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/11/30 09:43:37 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	*ft_strcpy(char *dest, const char *src);
 
 char	*ft_readline(char *prompt);
 void	ft_printf_double_tab(char **av, char *name);
+void	ft_double_tab_free(char **tab);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif
