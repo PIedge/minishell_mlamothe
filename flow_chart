@@ -33,7 +33,7 @@ According to the subject of minishell we need to do this:
 			-unset no options
 			-env no options or arguments
 			-ext no options
-	-' character should inhibit everything, nothing is speacial anymore
+	-' character should inhibit everything, nothing is special anymore
 	-" should inhibit everything except $
 	-Redirections:
 			-< should redirect input
@@ -49,4 +49,16 @@ According to the subject of minishell we need to do this:
 			-ctrl-D exit the shell
 			-ctrl-\ does nothing
 
-When in trouble read rtfm.
+Minishell:
+	-Preparations:
+			-Setup termcaps and history
+			-Setup signal
+	-Basic loop of events:
+			-First we read the line from stdin
+			-Update history
+			-We split by pipes (create and update the chained list t_cmd)
+			-For every t_cmd in the chained list:
+				-We split with blanks as delimiters (and overlook quotes (we trim them as 		well)),	all of this goes into the argv.
+				-We expand variables ($ characters)
+			Parsing is suposed to be finished (will check again if I forgot something)
+			Execution:
