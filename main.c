@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 09:51:28 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/11/30 20:40:49 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ int	init_mini(t_mini *mini, char **envp)
 {
 	mini->cmd = NULL;
 	mini->env = envp;
+}
+
+void	minishell(t_mini *mini)
+{
+	char	*cmd_ori;
+
+	cmd_ori = ft_readline(PROMPT);
 }
 
 int	main(int ac, char **av, char **envp)

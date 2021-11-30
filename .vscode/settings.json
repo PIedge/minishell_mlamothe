@@ -1,5 +1,6 @@
 {
 	"files.associations": {
-		"libft_re.h": "c"
+		"libft_re.h": "c",
+		"minishell.h": "c"
 	}
 }
