@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 20:40:47 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/08 19:14:21 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define IN 1
 # define TWO 1 << 1
 
-# define PROMPT "shellou"
+# define PROMPT "UwU "
 
 /* *****************************************************************************
 **							Structs											  **
@@ -84,5 +84,12 @@ typedef struct s_mini
 	char	**env; //
 	
 }					t_mini;
+
+
+/*
+** Utils style functions
+*/
+void	skip_quotes(char *str, int *i, char c);
+
 
 #endif

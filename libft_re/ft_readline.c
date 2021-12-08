@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:37:42 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/30 08:37:36 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/01 12:58:35 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ char	*ft_readline(char *prompt)
     {
         write(STDOUT_FILENO, BLU, ft_strlen(BLU));
         write(STDOUT_FILENO, prompt, ft_strlen(prompt));
-        write(STDOUT_FILENO, RESET, ft_strlen(RESET));
+		write(STDOUT_FILENO, RESET, ft_strlen(RESET));
+        write(STDOUT_FILENO, "$ ", 2);
     }
     line = get_line();
     if (!line)

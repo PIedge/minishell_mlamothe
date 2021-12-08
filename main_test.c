@@ -10,7 +10,7 @@ int	main(int ac, char **av)
 
 	while (1)
 	{
-		rl = ft_readline("yes -> ");
+		rl = ft_readline("UwU");
 		if (!rl)
 			return (printf("Error\n"));
 		printf("|%s|\n", rl);
