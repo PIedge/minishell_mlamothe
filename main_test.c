@@ -6,14 +6,18 @@ int	main(int ac, char **av)
 {
 	ac = 0;
 	av = 0;
-	char *rl;
+	char 	*rl;
+	char	**first;
 
 	while (1)
 	{
 		rl = ft_readline("UwU");
 		if (!rl)
 			return (printf("Error\n"));
-		printf("|%s|\n", rl);
+		first = ft_split_mini(rl, '|');
+		if (!first)
+			return (printf("Error\n"));
+		ft_printf_double_tab(first, "pipes");
 	}
 	
 }

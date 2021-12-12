@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:37:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/08 19:40:05 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/11 00:33:21 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 
 size_t	ft_strlen(char *s);
 void	*ft_strcpy(char *dest, const char *src);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 /*
 ** New functions
@@ -44,7 +46,6 @@ void	*ft_strcpy(char *dest, const char *src);
 char	*ft_readline(char *prompt);
 void	ft_printf_double_tab(char **av, char *name);
 void	ft_double_tab_free(char **tab);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
 int		ft_is_white_space(char c);
 
 #endif

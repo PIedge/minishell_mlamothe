@@ -1,4 +1,8 @@
-SRCS	=	\
+SRCS	=	srcs/inits_frees.c		\
+			srcs/minishell.c		\
+			srcs/split_mini.c		\
+			srcs/split_mini_utils.c	\
+			main.c					\
 
 NAME	=	minishell
 
@@ -20,7 +24,7 @@ LPATH	=	./libft_re
 all:	$(LNAME) $(NAME)
 
 $(NAME):	$(OBJS)
-				$(CC) $(FLAG) $(OBJS) -o $(NAME)
+				$(CC) $(FLAG) $(OBJS) $(LNAME) -o $(NAME)
 
 ${LNAME}:
 			rm -f ${LNAME}
@@ -36,8 +40,8 @@ fclean: clean
 			rm -f ${NAME}
 			rm -f ${LNAME}
 
-test:	$(LNAME)
-			$(CC) $(FLAG) main_test.c $(LNAME)
+test:	$(LNAME) $(OBJS)
+			$(CC) $(FLAG) main_test.c $(OBJS) $(LNAME)
 
 re:	fclean all
 
