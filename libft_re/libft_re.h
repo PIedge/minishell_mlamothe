@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:37:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/11 00:33:21 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:15:36 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ size_t	ft_strlen(char *s);
 void	*ft_strcpy(char *dest, const char *src);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+int		ft_isalpha(int c);
+int		ft_isdigit(int c);
 
 /*
 ** New functions

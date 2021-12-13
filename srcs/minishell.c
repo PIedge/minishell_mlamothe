@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/12 18:42:13 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:26:14 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	set_pipes(t_mini *mini)
 	{
 		work = create_cmd(work);
 		work->cmd = pipes[y];
+		work->cm_argv = ft_split_wp(work->cmd);
 	}
 	// Test Zone
 	while (work->prev)
@@ -37,6 +38,7 @@ int	set_pipes(t_mini *mini)
 	while (work)
 	{
 		printf("work->cmd |%s|\n", work->cmd);
+		ft_printf_double_tab(work->cm_argv, "work->cm_argv");
 		work = work->next;
 	}
 	// Test Zone

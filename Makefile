@@ -1,7 +1,8 @@
 SRCS	=	srcs/inits_frees.c		\
 			srcs/minishell.c		\
-			srcs/split_mini.c		\
+			srcs/split_pipes.c		\
 			srcs/split_mini_utils.c	\
+			srcs/ft_split_wp.c		\
 			main.c					\
 
 NAME	=	minishell

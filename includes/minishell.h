@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/12 18:42:00 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:24:12 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,16 @@ void	destroy(t_mini *mini);
 int		minishell(t_mini *mini);
 
 /*
+** Split functions
+*/
+
+char	**ft_split_pipes(char *s, char c);
+char	**ft_split_wp(char *s);
+
+/*
 ** Utils style functions
 */
 void	skip_quotes(char *str, int *i, char c);
-char	**ft_split_pipes(char *s, char c);
 t_cmd	*create_cmd(t_cmd *prev);
 t_redir	*create_redir(t_redir *prev, int type);
 
