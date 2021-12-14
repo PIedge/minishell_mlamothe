@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:43:06 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/12 23:45:03 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/14 06:19:57 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static int	how_many_split(char *str)
 	return (ret);
 }
 
-static int	find_next_split(char *s, int *x)
+static int	find_next_split(char *s, int x)
 {
-	while (ft_is_white_space(s[*x]))
-		++(*x);
-	return (*x);
+	while (ft_is_white_space(s[x]))
+		++(x);
+	return (x);
 }
 
 static int		free_if_wrong(char **ret, char *s, char *actual, int y)
@@ -65,7 +65,7 @@ static char	**to_all(char *s, char **ret)
 
 	x = 0;
 	y = 0;
-	start_split = find_next_split(s,&x);
+	start_split = find_next_split(s, x);
 	while (s[++x])
 	{
 		if (s[x] == '\'' || s[x] == '\"')
@@ -74,12 +74,13 @@ static char	**to_all(char *s, char **ret)
 		{
 			if (!free_if_wrong(ret, &(s[start_split]), &(s[x]), y++))
 				return (0);
-			start_split = find_next_split(s, &x);
+			start_split = find_next_split(s, x);
 		}
 	}
 	if (!ft_is_white_space(s[x - 1]) &&
 		!free_if_wrong(ret, &(s[start_split]), &(s[x]), y++))
 		return (0);
+	printf("y %d\n", y);
 	ret[y] = 0;
 	return (ret);
 }
