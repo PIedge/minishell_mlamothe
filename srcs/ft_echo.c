@@ -1,39 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 14:00:11 by mlamothe          #+#    #+#             */
-/*   Updated: 2021/12/13 16:13:07 by mlamothe         ###   ########.fr       */
+/*   Created: 2021/12/13 16:25:39 by mlamothe          #+#    #+#             */
+/*   Updated: 2021/12/13 18:05:24 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+void	ft_write_var(char *str)
 {
-	int	i;
+
+}
+
+int	ft_echo(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int		i;
+	int		j;
+	int		opt;
 
 	i = 0;
-	while (s1[i] && s2[i])
+	opt = 0;
+	tmp = cmd;
+	while (tmp->cm_argv[++i])
 	{
-		if (s1[i] != s2[i])
-			return (1);
-		++i;
+		if (!ft_strcmp(tmp->cm_argv[i], "-n"))
+			opt = 1;
+		j = -1;
+		while (tmp->cm_argv[i][++j])
+		{
+			if (tmp->cm_argv[i][++j])
+			write();
+		}
 	}
-	if (s1[i] || s2[i])
-		return (1);
+	if (!opt)
+		write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
 
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		++i;
-	return (i);
-}
+// THEO : VARIABLES et PATH et quoi dans cm_argv ('' ou "" ou rien)

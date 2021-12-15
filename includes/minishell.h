@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/11/26 14:17:43 by mlamothe         ###   ########.fr       */
+/*   Updated: 2021/12/13 16:26:55 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 */
 # define IN 1
 # define TWO 1 << 1
+# define PIPE_R 0
+# define PIPE_W 1
 
 /* *****************************************************************************
 **							Structs											  **
@@ -92,3 +94,25 @@ typedef struct s_mini
 int			ft_strlen(char *str);
 
 int			ft_strcmp(char *s1, char *s2);
+
+int			set_out(int *out, t_redir *redir);
+
+int			set_in(int *in, t_redir *redir);
+
+int			ft_closeem(int in, int out, int ret);
+
+int			set_in_n_out(int *in, int *out, t_redir *redir);
+
+int			**get_pfd(t_cmd *cmd);
+
+int			ft_free_pipefds(int **pipefds, int ret);
+
+int			first_child(int pipe_r, int pipe_w, t_cmd *cmd);
+
+int			other_childs(int pipe_r, int pipe_w, t_cmd *cmd);
+
+int			last_child(t_cmd *cmd, int pipe_r);
+
+int			check_paths_ok(t_cmd *cmd);
+
+int			ft_echo(t_cmd *cmd);
