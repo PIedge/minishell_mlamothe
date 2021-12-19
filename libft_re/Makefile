@@ -6,6 +6,7 @@ SRCS	=	ft_printf_double_tab.c	\
 			ft_memcpy.c				\
 			ft_is_white_space.c		\
 			ft_substr.c				\
+			ft_strncmp.c			\
 
 NAME	=	libft.a
 

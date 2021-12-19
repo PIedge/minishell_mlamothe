@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/12 18:40:21 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/19 06:21:50 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@
 
 int	init_mini(t_mini *mini, char **envp)
 {
+	int	i;
+
+	i = 0;
 	mini->cmd = NULL;
-	mini->env = envp;
+	mini->env = copy_env(envp);
+	if (!(mini->env))
+		return (0);
 	return (1);
 }
 
@@ -26,9 +31,10 @@ int	main(int ac, char **av, char **envp)
 	t_mini	mini;
 
 	av = 0;
-	init_mini(&mini, envp);
-	if (ac > 1)
-		destroy(&mini);
+	if (!init_mini(&mini, envp))
+		destroy(&mini, E_MALLOC);
+	// if (ac > 1)
+		// destroy(&mini);
 	/*
 	** This main isn't finished, basicaly serves for test cases rn, you know what that means
 	** TEST ZONE START

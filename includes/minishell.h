@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/12 21:24:12 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/19 06:34:07 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,13 @@
 **							Defines											  **
 *******************************************************************************/
 
-
-/*
-** The next three defines are used for the variable "type" in the structure
-** t_redir described later. The first bit describes wether it is IN or OUT
-** (0 == OUT | 1 == IN). TWO decribes wether it is << or < and >> or >
-** obviously 0 == < and 1 == <<.
-*/
-# define IN 1
-# define TWO 1 << 1
+# define INPUT "<\0"
+# define OUTPUT ">\0"
+# define HEREDOC "<<\0"
+# define D_OUTPUT ">>\0"
 
 # define PROMPT "UwU "
+# define E_MALLOC "Malloc didn't work, your pc is probably dying\n"
 
 /* *****************************************************************************
 **							Structs											  **
@@ -51,7 +47,7 @@ typedef struct s_redir
 	struct s_redir	*prev;
 
 	char			*word;
-	int				type;
+	char			*type;
 }					t_redir;
 
 /*
@@ -72,6 +68,12 @@ typedef struct s_cmd
 	t_redir			*redir;
 }					t_cmd;
 
+typedef struct s_map
+{
+	char			**key;
+	char			**value;
+}					t_map;
+
 /*
 ** Main struture for minishell contains every thing that should be freed in case
 ** of an error.
@@ -82,26 +84,30 @@ typedef struct s_mini
 {
 	char	*cmd_ori;
 	t_cmd	*cmd;
-	char	**env; //
-	
+	char	**env;
 }					t_mini;
 
-
-void	destroy(t_mini *mini);
+/*
+** Core functions
+*/
+void	destroy(t_mini *mini, char *str);
 int		minishell(t_mini *mini);
+char	**copy_env(char **env);
+char	*find_var(char **env, char *var_name);
 
 /*
 ** Split functions
 */
-
 char	**ft_split_pipes(char *s, char c);
 char	**ft_split_wp(char *s);
 
 /*
 ** Utils style functions
 */
+int		get_var_name_end(char *var);
 void	skip_quotes(char *str, int *i, char c);
 t_cmd	*create_cmd(t_cmd *prev);
 t_redir	*create_redir(t_redir *prev, int type);
+void	mv_str_left(char *str);
 
 #endif

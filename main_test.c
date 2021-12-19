@@ -9,7 +9,7 @@ int	main(int ac, char **av)
 	char 	*rl;
 	char	**first;
 
-	while (1)
+	/*while (1)
 	{
 		rl = ft_readline("UwU");
 		if (!rl)
@@ -18,6 +18,6 @@ int	main(int ac, char **av)
 		if (!first)
 			return (printf("Error\n"));
 		ft_printf_double_tab(first, "pipes");
-	}
+	}*/
 	
 }

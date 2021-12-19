@@ -6,10 +6,11 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 09:41:15 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/12 17:22:29 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/19 06:19:43 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
 #include <stdlib.h>
@@ -71,9 +72,10 @@ void	free_cmd(t_cmd *cmd)
 	free_redir(cmd->redir);
 }
 
-void	destroy(t_mini *mini)
+void	destroy(t_mini *mini, char *str)
 {
 	free_cmd(mini->cmd);
-
-	
+	ft_double_tab_free(mini->env);
+	write(2, str, strlen(str));
+	exit(0);
 }

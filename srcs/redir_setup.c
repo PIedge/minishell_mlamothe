@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_double_tab_free.c                               :+:      :+:    :+:   */
+/*   redir_setup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 09:42:19 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/19 06:00:26 by tmerrien         ###   ########.fr       */
+/*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
+/*   Updated: 2021/12/19 16:51:54 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "../includes/minishell.h"
 
-int	ft_double_tab_free(char **tab)
+int	find_redir(char **argv)
 {
-	int	i;
+	int y;
 
-	i = -1;
-	while (tab && tab[++i])
-		free(tab[i]);
-	free(tab);
-	return (0);
+	y = 0;
+	
 }
