@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/21 19:52:06 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:02:51 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ typedef struct s_cmd
 	char			**cm_argv;
 	t_redir			*in;
 	t_redir			*out;
-	t_redir			*heredoc;
-	t_redir			*append;
 }					t_cmd;
 
 typedef struct s_map
