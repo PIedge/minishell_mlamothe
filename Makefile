@@ -3,7 +3,10 @@ SRCS	=	srcs/inits_frees.c		\
 			srcs/split_pipes.c		\
 			srcs/split_mini_utils.c	\
 			srcs/ft_split_wp.c		\
-			main.c					\
+			srcs/expansion.c		\
+			srcs/var_utils.c		\
+			srcs/nv_str.c			\
+			#main.c					\
 
 NAME	=	minishell
 

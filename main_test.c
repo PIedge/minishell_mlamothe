@@ -9,6 +9,8 @@ int	main(int ac, char **av)
 	char 	*rl;
 	char	**first;
 
+	
+
 	/*while (1)
 	{
 		rl = ft_readline("UwU");

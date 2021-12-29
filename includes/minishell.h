@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/23 16:02:51 by tmerrien         ###   ########.fr       */
+/*   Updated: 2021/12/29 17:08:02 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,15 @@
 ** The type variable has been explained above in the Defines section.
 */
 
+int					g_last_return;
+
 typedef struct s_redir
 {
 	struct s_redir	*next;
 	struct s_redir	*prev;
 
 	char			*word;
+	int				type;
 }					t_redir;
 
 /*
@@ -96,6 +99,7 @@ void	destroy(t_mini *mini, char *str);
 int		minishell(t_mini *mini);
 char	**copy_env(char **env);
 char	*find_var(char **env, char *var_name);
+t_cmd	*find_redir(t_cmd *cmd, char **argv);
 
 /*
 ** Split functions
