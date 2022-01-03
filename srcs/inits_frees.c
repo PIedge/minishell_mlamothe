@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 09:41:15 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/19 06:19:43 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:37:17 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_cmd	*create_cmd(t_cmd *prev)
 	new->next = NULL;
 	new->cm_argv = NULL;
 	new->cmd = NULL;
-	new->redir = NULL;
+	new->in = NULL;
+	new->out = NULL;
 	return (new);
 }
 
@@ -64,12 +65,14 @@ void	free_cmd(t_cmd *cmd)
 	{
 		ft_double_tab_free(cmd->cm_argv);
 		free(cmd->cmd);
-		free_redir(cmd->redir);
+		free_redir(cmd->in);
+		free_redir(cmd->out);
 		cmd = cmd->next;
 	}
 	ft_double_tab_free(cmd->cm_argv);
 	free(cmd->cmd);
-	free_redir(cmd->redir);
+	free_redir(cmd->in);
+	free_redir(cmd->out);
 }
 
 void	destroy(t_mini *mini, char *str)
