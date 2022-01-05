@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 04:23:07 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/19 06:08:19 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/05 10:39:00 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ char	*find_var(char **env, char *var_name)
 	y = -1;
 	while (env[++y])
 		if (!(ft_strncmp(env[y], var_name, ft_strlen(var_name))))
+			return (env[y]);
+	return (0);
+}
+
+char	*find_var_with_limit(char **env, char *start, char *end)
+{
+	int	y;
+	int	i;
+
+	y = -1;
+	while (env[++y])
+		if (!(ft_strncmp(env[y], start, end - start)))
 			return (env[y]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/29 17:08:02 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/05 10:38:59 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	destroy(t_mini *mini, char *str);
 int		minishell(t_mini *mini);
 char	**copy_env(char **env);
 char	*find_var(char **env, char *var_name);
+char	*find_var_with_limit(char **env, char *start, char *end);
 t_cmd	*find_redir(t_cmd *cmd, char **argv);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/29 21:40:12 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/05 12:06:47 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,58 @@ int	is_variable_name_valid(char *s)
 	return (1);
 }
 
+int	get_end_index(char *str)
+{
+	int	i;
 
+	i = 0;
+	while (!ft_is_white_space(str[i]))
+		++i;
+	return (i);
+}
+
+int	calc_new_len(char *str, char **env)
+{
+	int	i;
+	int	end;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			++i;
+			end = get_end_index(&(str[i])) + i;
+			len += ft_strlen(find_var_with_limit(env, &str[i], &str[end]));
+		}
+		else
+			++i;
+	}
+	return (len);
+}
+
+void	copy_until_var(char *ori, char *new)
+{
+
+}
+
+char	*var_treat_str(char **str, char **env, t_mini *mini)
+{
+	int	new_len;
+	int	i;
+	char	*new;
+
+	i = 0;
+	new_len = calc_new_len(*str, env);
+	new = malloc(sizeof(char) * (new_len + 1));
+	ft_bzero((void *)new, new_len);
+	while ((*str)[i])
+	{
+		
+	}
+}
 
 /*int	calc_vars_len(t_mini *mini, char *s, int *len_add, int *len_var_name)
 {

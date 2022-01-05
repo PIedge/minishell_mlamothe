@@ -7,6 +7,7 @@ SRCS	=	ft_printf_double_tab.c	\
 			ft_is_white_space.c		\
 			ft_substr.c				\
 			ft_strncmp.c			\
+			ft_realloc.c			\
 
 NAME	=	libft.a
 
