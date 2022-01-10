@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/05 12:06:47 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/06 14:47:24 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,66 @@ int	calc_new_len(char *str, char **env)
 	return (len);
 }
 
-void	copy_until_var(char *ori, char *new)
+void	copy_until_var(char *ori, char *new, int *i, int *y)
 {
+	int	quote;
 
+	quote = 0;
+	while (ori[*i] && (ori[*i] != '$' || quote))
+	{
+		if (ori[*i] == '\'')
+		{
+			if (quote == 0)
+				quote = 1;
+			else
+				quote = 0;
+		}
+		new[*y] = ori[*i];
+		++(*i);
+		++(*y);
+	}
+}
+
+int	copy_var_into_new(char *ori, char *new, char **env, int *y)
+{
+	int	end;
+	char	*var;
+	int	o;
+	int	i;
+	int	quote;
+
+	o = 0;
+	i = 0;
+	if (ori[i] == '$')
+	{
+		end = get_end_index(&(ori[i])) + i;
+		var = find_var_with_limit(env, &ori[i], &ori[end]);
+		ft_strcpy(new, var);
+		*y += ft_strlen(var); 
+	}
+	return (end);
 }
 
 char	*var_treat_str(char **str, char **env, t_mini *mini)
 {
 	int	new_len;
 	int	i;
+	int	y;
 	char	*new;
 
 	i = 0;
+	y = 0;
 	new_len = calc_new_len(*str, env);
 	new = malloc(sizeof(char) * (new_len + 1));
 	ft_bzero((void *)new, new_len);
 	while ((*str)[i])
 	{
-		
+		copy_until_var(*str, new, &i, &y);
+		i += copy_var_into_new(&((*str)[i]), new, env, &y);
 	}
+	free(*str);
+	*str = new;
+	return (new);
 }
 
 /*int	calc_vars_len(t_mini *mini, char *s, int *len_add, int *len_var_name)

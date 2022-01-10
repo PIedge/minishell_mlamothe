@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/12 21:26:14 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/08 00:24:21 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	minishell(t_mini *mini)
 		return (0);
 	if (!set_pipes(mini))
 		return (0);
+	
 	// Test Zone
 	printf("out\n");
 	return (1);

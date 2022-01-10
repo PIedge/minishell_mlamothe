@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/27 21:40:47 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:23:31 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ static int	which_type(char *str)
 	return (0);
 }
 
+void	destroy_redir_from_cli(char **argv, int y)
+{
+	int	size;
+
+	size = -1;
+	while (argv[size])
+		++size;
+	free(argv[y]);
+	free(argv[y + 1]);
+	while (y + 2 <= size)
+		argv[y] = argv[y + 2];
+}
+
 t_cmd	*find_redir(t_cmd *cmd, char **argv)
 {
 	int y;
@@ -49,6 +62,8 @@ t_cmd	*find_redir(t_cmd *cmd, char **argv)
 			cmd->in = new_redir(cmd->in, argv[y + 1], which_type(argv[y]));
 			if (!cmd->in || !(cmd->in->word))
 				return (0);
+			destroy_redir_from_cli(argv, y);
+			--y;
 		}
 		else if (!ft_strncmp((const char *)argv[y], OUTPUT, 
 			ft_strlen(argv[y])) || !ft_strncmp((const char *)argv[y], D_OUTPUT, 
@@ -57,6 +72,8 @@ t_cmd	*find_redir(t_cmd *cmd, char **argv)
 			cmd->out = new_redir(cmd->out, argv[y + 1], which_type(argv[y]));
 			if (!cmd->out || !(cmd->out->word))
 				return (0);
+			destroy_redir_from_cli(argv, y);
+			--y;
 		}
 	}
 	return (cmd);
