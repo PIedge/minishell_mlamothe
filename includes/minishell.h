@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/06 14:48:38 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/13 19:34:05 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*var_treat_str(char **str, char **env, t_mini *mini);
 char	**copy_env(char **env);
 char	*find_var(char **env, char *var_name);
 char	*find_var_with_limit(char **env, char *start, char *end);
-t_cmd	*find_redir(t_cmd *cmd, char **argv);
+t_cmd	*find_redir(t_cmd *cmd, char *cm);
 
 /*
 ** Split functions

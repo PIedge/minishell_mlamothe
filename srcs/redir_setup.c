@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/06 15:23:31 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/13 19:34:06 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,21 @@ void	destroy_redir_from_cli(char **argv, int y)
 		argv[y] = argv[y + 2];
 }
 
-t_cmd	*find_redir(t_cmd *cmd, char **argv)
+t_cmd	*find_redir(t_cmd *cmd, char *cm)
 {
-	int y;
+	int	i;
 
-	y = -1;
-	while (argv[++y])
+	i = -1;
+	while (cm[++i])
+	{
+		if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
+			!ft_strncmp(&cm[i], HEREDOC, ft_strlen(HEREDOC)))
+		{
+			cmd->in = 
+
+		}
+	}
+	/*while (argv[++y])
 	{
 		if (!ft_strncmp((const char *)argv[y], INPUT, ft_strlen(argv[y])) || 
 			!ft_strncmp((const char *)argv[y], HEREDOC, ft_strlen(argv[y])))
@@ -75,6 +84,6 @@ t_cmd	*find_redir(t_cmd *cmd, char **argv)
 			destroy_redir_from_cli(argv, y);
 			--y;
 		}
-	}
+	}*/
 	return (cmd);
 }
