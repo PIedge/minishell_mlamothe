@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/10 14:52:22 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:56:18 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,18 @@ int	set_pipes(t_mini *mini)
 	return (1);
 }
 
-int	var_treat_cmd(t_cmd *cmd)
+int	var_treat_cmd(t_cmd *cmd, t_mini *mini)
 {
 	int	i;
 
 	i = 0;
-	while (cmd->argv[i++])
+	while (cmd->cm_argv[i])
 	{
-		
+		if (!var_treat_str(cmd->cm_argv[i], mini->env, mini))
+			return (0);
+		++i;
 	}
+	return (1);
 }
 
 int	minishell(t_mini *mini)
@@ -65,9 +68,11 @@ int	minishell(t_mini *mini)
 		return (0);
 	while (mini->cmd->next)
 	{
-		if (!var_treat_str(mini->cmd->cm_argv, mini->env, mini))
+		if (!var_treat_cmd(mini->cmd, mini))
 			return (0);
-		if (!)
+		if (!find_redir(mini->cmd, mini->cmd->cm_argv))
+			return (0);
+		
 	}
 	// Test Zone
 	printf("out\n");
