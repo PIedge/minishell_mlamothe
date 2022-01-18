@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 13:39:02 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:57:30 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	main(int ac, char **av, char **envp)
 	av = 0;
 	if (!init_mini(&mini, envp))
 		destroy(&mini, E_MALLOC);
-	ft_printf_double_tab(g_env, "g_env");
 	// if (ac > 1)
 		// destroy(&mini);
 	/*
