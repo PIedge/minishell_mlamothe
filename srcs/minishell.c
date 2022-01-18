@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 13:38:17 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/18 16:00:58 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	set_pipes(t_mini *mini)
 	{
 		printf("work->cmd |%s|\n", work->cmd);
 		ft_printf_double_tab(work->cm_argv, "work->cm_argv");
+		work = work->next;
 		//work = work->next;
 	}
 	printf("work->cmd |%s|\n", work->cmd);
@@ -92,10 +93,10 @@ void	strip_quote_cmd(t_cmd *cmd)
 	int	i;
 	int	y;
 
-	i = 0;
 	y = 0;
 	while (cmd->cm_argv[y])
 	{
+		i = 0;
 		while (cmd->cm_argv[y][i])
 		{
 			if (cmd->cm_argv[y][i] == '\'')
