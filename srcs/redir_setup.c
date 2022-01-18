@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/13 19:34:06 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:59:07 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,14 @@ t_redir	*new_redir(t_redir *prev, char *word, int type)
 
 static int	which_type(char *str)
 {
-	if (ft_strlen(str) > 1)
+
+	if (ft_strncmp(str, INPUT, ft_strlen(INPUT)) || \
+		ft_strncmp(str, OUTPUT, ft_strlen(OUTPUT)))
+		return (0);
+	return (1);
+	/*if (ft_strlen(str) > 1)
 		return (1);
-	return (0);
+	return (0);*/
 }
 
 void	destroy_redir_from_cli(char **argv, int y)
@@ -49,6 +54,18 @@ void	destroy_redir_from_cli(char **argv, int y)
 		argv[y] = argv[y + 2];
 }
 
+char *get_redir_word(char *str)
+{
+	int	end;
+	char	*ret;
+
+	end = 0;
+	while (str[end] || ft_is_white_space(str[end]))
+		++end;
+	ret = ft_substr(str, 0, end);
+	return (ret);
+}
+
 t_cmd	*find_redir(t_cmd *cmd, char *cm)
 {
 	int	i;
@@ -59,7 +76,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 		if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
 			!ft_strncmp(&cm[i], HEREDOC, ft_strlen(HEREDOC)))
 		{
-			cmd->in = 
+			cmd->in = new_redir(cmd->in, get_redir_word(&cm[i]), )
 
 		}
 	}
