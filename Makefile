@@ -5,14 +5,15 @@ SRCS	=	srcs/inits_frees.c		\
 			srcs/ft_split_wp.c		\
 			srcs/expansion.c		\
 			srcs/var_utils.c		\
-			srcs/nv_str.c			\
-			#main.c					\
+			srcs/mv_str.c			\
+			srcs/redir_setup.c		\
+			main.c					\
 
 NAME	=	minishell
 
 CC		=	clang
 
-FLAG	=	-Wall -Wextra -Werror #-fsanitize=address
+FLAG	=	-Wall -Wextra -Werror -fsanitize=address
 
 VALF	=	--tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes --track-origins=yes --log-file=valgrind_log
 

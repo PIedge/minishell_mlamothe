@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 09:41:15 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/03 17:37:17 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/18 12:13:42 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 t_cmd	*create_cmd(t_cmd *prev)
 {
@@ -79,6 +80,6 @@ void	destroy(t_mini *mini, char *str)
 {
 	free_cmd(mini->cmd);
 	ft_double_tab_free(mini->env);
-	write(2, str, strlen(str));
+	write(2, str, ft_strlen(str));
 	exit(0);
 }

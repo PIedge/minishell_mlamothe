@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/13 19:34:05 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/18 12:49:28 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 ** The type variable has been explained above in the Defines section.
 */
 
-int					g_last_return;
+char					**g_env;
 
 typedef struct s_redir
 {

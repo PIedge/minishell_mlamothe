@@ -8,6 +8,9 @@ SRCS	=	ft_printf_double_tab.c	\
 			ft_substr.c				\
 			ft_strncmp.c			\
 			ft_realloc.c			\
+			ft_isalpha.c			\
+			ft_isdigit.c			\
+			ft_bzero.c				\
 
 NAME	=	libft.a
 

@@ -6,12 +6,13 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/06 14:47:24 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:56:49 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft_re/libft_re.h"
 #include "../includes/minishell.h"
+#include <stdlib.h>
 
 int	is_variable_name_valid(char *s)
 {
@@ -21,11 +22,15 @@ int	is_variable_name_valid(char *s)
 	while (!ft_is_white_space(s[++i]))
 	{
 		if (i == 1)
+		{
 			if (!ft_isalpha(s[i]) && s[i] != '_')
 				return (0);
+		}
 		else if (i > 0)
+		{
 			if (!ft_isalpha(s[i]) && !ft_isdigit(s[i]))
 				return (0);
+		}
 	}
 	return (1);
 }
@@ -35,12 +40,12 @@ int	get_end_index(char *str)
 	int	i;
 
 	i = 0;
-	while (!ft_is_white_space(str[i]))
+	while (str[i] && !ft_is_white_space(str[i]))
 		++i;
 	return (i);
 }
 
-int	calc_new_len(char *str, char **env)
+int	calc_new_len(char *str, char **env, int *n)
 {
 	int	i;
 	int	end;
@@ -50,11 +55,14 @@ int	calc_new_len(char *str, char **env)
 	len = 0;
 	while (str[i])
 	{
+		if (str[i] == '\'' || str[i] == '\"')
+			skip_quotes(str, &i, str[i]);
 		if (str[i] == '$')
 		{
 			++i;
 			end = get_end_index(&(str[i])) + i;
 			len += ft_strlen(find_var_with_limit(env, &str[i], &str[end]));
+			*n += 1;
 		}
 		else
 			++i;
@@ -88,16 +96,19 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 	char	*var;
 	int	o;
 	int	i;
-	int	quote;
+	//int	quote;
 
 	o = 0;
 	i = 0;
+	end = 0;
 	if (ori[i] == '$')
 	{
 		end = get_end_index(&(ori[i])) + i;
 		var = find_var_with_limit(env, &ori[i], &ori[end]);
+		if (!var)
+			return (end);
 		ft_strcpy(new, var);
-		*y += ft_strlen(var); 
+		*y += ft_strlen(var);
 	}
 	return (end);
 }
@@ -108,10 +119,15 @@ char	*var_treat_str(char **str, char **env, t_mini *mini)
 	int	i;
 	int	y;
 	char	*new;
+	int	n;
 
 	i = 0;
 	y = 0;
-	new_len = calc_new_len(*str, env);
+	n = 0;
+	printf("not dead var_treat_str\n");
+	new_len = calc_new_len(*str, env, &n);
+	if (n == 0)
+		return (*str);
 	new = malloc(sizeof(char) * (new_len + 1));
 	ft_bzero((void *)new, new_len);
 	while ((*str)[i])
@@ -121,6 +137,7 @@ char	*var_treat_str(char **str, char **env, t_mini *mini)
 	}
 	free(*str);
 	*str = new;
+	mini = 0; //
 	return (new);
 }
 

@@ -6,12 +6,13 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 04:23:07 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/05 10:39:00 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/18 12:28:00 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
+#include <stdlib.h>
 
 /*int	get_var_name_end(char *var)
 {
@@ -29,7 +30,6 @@
 char	*find_var(char **env, char *var_name)
 {
 	int	y;
-	int	i;
 
 	y = -1;
 	while (env[++y])
@@ -41,7 +41,6 @@ char	*find_var(char **env, char *var_name)
 char	*find_var_with_limit(char **env, char *start, char *end)
 {
 	int	y;
-	int	i;
 
 	y = -1;
 	while (env[++y])
@@ -65,8 +64,12 @@ char	**copy_env(char **env)
 		new[y--] = 0;
 	while (env[++y])
 	{
-		env[y] = ft_substr((const char *)env[y], 0, ft_strlen(env[y]));
-		if (!(env[y]))
-			return (ft_double_tab_free(env));
+		new[y] = ft_substr((const char *)env[y], 0, ft_strlen(env[y]));
+		if (!(new[y]))
+		{
+			ft_double_tab_free(new);
+			return (0);
+		}
 	}
+	return (new);
 }
