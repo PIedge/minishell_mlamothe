@@ -6,13 +6,15 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 13:56:49 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:51:18 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft_re/libft_re.h"
 #include "../includes/minishell.h"
 #include <stdlib.h>
+
+#include <stdio.h>
 
 int	is_variable_name_valid(char *s)
 {
@@ -104,7 +106,7 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 	if (ori[i] == '$')
 	{
 		end = get_end_index(&(ori[i])) + i;
-		var = find_var_with_limit(env, &ori[i], &ori[end]);
+		var = find_var_with_limit(env, &ori[i + 1], &ori[end]);
 		if (!var)
 			return (end);
 		ft_strcpy(new, var);
@@ -113,7 +115,7 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 	return (end);
 }
 
-char	*var_treat_str(char **str, char **env, t_mini *mini)
+char	*var_treat_str(char **str, char **env)
 {
 	int	new_len;
 	int	i;
@@ -129,15 +131,18 @@ char	*var_treat_str(char **str, char **env, t_mini *mini)
 	if (n == 0)
 		return (*str);
 	new = malloc(sizeof(char) * (new_len + 1));
+	if (!new)
+		return (0);
 	ft_bzero((void *)new, new_len);
 	while ((*str)[i])
 	{
 		copy_until_var(*str, new, &i, &y);
 		i += copy_var_into_new(&((*str)[i]), new, env, &y);
 	}
+	new[y] = '\0';
+	printf("%p new\n", new);
 	free(*str);
 	*str = new;
-	mini = 0; //
 	return (new);
 }
 

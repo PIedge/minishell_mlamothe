@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:25:26 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/19 06:27:10 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:40:41 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,5 @@ void	mv_str_left(char *str)
 	i = -1;
 	while (str[++i + 1])
 		str[i] = str[i + 1];
+	str[i] = '\0';
 }

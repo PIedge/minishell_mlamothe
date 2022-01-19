@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 05:26:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 17:10:53 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/19 13:55:48 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ static char	**to_all(char *s, char c)
 {
 	int		x;
 	int		y;
-	//int		start_split;
 	char	**ret;
+	int	start;
 
 	ret = malloc(sizeof(char *) * (how_many_split(s, c) + 1));
 	if (ret == NULL)
 		return (0);
 	y = 0;
-	int start = find_start_split(s, 0, c);
+	start = find_start_split(s, 0, c);
 	x = start;
 	while (s[x])
 	{
@@ -102,7 +102,7 @@ static char	**to_all(char *s, char c)
 			skip_quotes(s, &x, s[x]);
 		if (s[x] == c)
 		{
-			if (!free_if_wrong(ret, &s[x - 1], &s[start], y++))
+			if (!free_if_wrong(ret, &s[x], &s[start], y++))
 				return (0);
 			start = find_start_split(s, x, c);
 			x = start;
@@ -110,7 +110,7 @@ static char	**to_all(char *s, char c)
 		else
 			++x;
 	}
-	if (s[x - 1] != c && !free_if_wrong(ret, &s[x - 1], &s[start], y++))
+	if (s[x - 1] != c && !free_if_wrong(ret, &s[x], &s[start], y++))
 		return (0);
 	ret[y] = 0;
 	return (ret);

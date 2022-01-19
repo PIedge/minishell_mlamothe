@@ -6,13 +6,15 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 12:28:28 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:06:34 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
 #include <stdlib.h>
+
+#include <stdio.h>
 
 t_redir	*new_redir(t_redir *prev, char *word, int type)
 {
@@ -75,11 +77,13 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 
 	i = -1;
 	x = -1;
+	printf("\nENTERING FIND REDIR\n");
+	printf("cmd treated |%s|\n", cm);
 	while (cm[++i])
 	{
 		if (cm[i] == '\'' || cm[i] == '\"')
 			skip_quotes(cm, &i, cm[i]);
-		else if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
+		if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
 			!ft_strncmp(&cm[i], HEREDOC, ft_strlen(HEREDOC)))
 		{
 			x = i;

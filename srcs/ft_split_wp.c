@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:43:06 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/14 06:19:57 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:02:34 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,36 @@ static int	how_many_split(char *str)
 
 	i = 0;
 	ret = 0;
-	while (str[++i])
+	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			skip_quotes(str, &i, str[i]);
-		if (ft_is_white_space(str[i]) && !ft_is_white_space(str[i - 1]))
+		if (ft_is_white_space(str[i]))
+		{
+			while (ft_is_white_space(str[i]))
+				++i;
 			++ret;
+		}
+		else
+			++i;
 	}
 	if (!ft_is_white_space(str[i - 1]))
 		++ret;
-	printf("how_many_split return %d\n", ret);
+	//printf("how_many_split return %d\n", ret);
 	return (ret);
 }
 
-static int	find_next_split(char *s, int x)
+/*static int	find_next_split(char *s, int x)
 {
 	while (ft_is_white_space(s[x]))
 		++(x);
 	return (x);
-}
+}*/
 
-static int		free_if_wrong(char **ret, char *s, char *actual, int y)
+
+static int	free_if_wrong(char **ret, char *p_actual, char *p_start, int y)
 {
-	ret[y] = ft_substr(s, 0, actual - s);
+	ret[y] = ft_substr(p_start, 0, p_actual - p_start);
 	if (!(ret[y]))
 	{
 		while (y >= 0)
@@ -57,13 +64,55 @@ static int		free_if_wrong(char **ret, char *s, char *actual, int y)
 	return (1);
 }
 
+/*static int		free_if_wrong(char **ret, char *s, char *actual, int y)
+{
+	ret[y] = ft_substr(s, 0, actual - s);
+	if (!(ret[y]))
+	{
+		while (y >= 0)
+			free(ret[y--]);
+		free(ret);
+		ret = 0;
+		return (0);
+	}
+	return (1);
+}*/
+
+static int	find_start_split(char *str, int i)
+{
+	while (str[i] && ft_is_white_space(str[i]))
+		++i;
+	return (i);
+}
+
 static char	**to_all(char *s, char **ret)
 {
 	int		x;
 	int		y;
-	int		start_split;
+	int		start;
 
-	x = 0;
+	y = 0;
+	start = find_start_split(s, 0);
+	x = start;
+	while (s[x])
+	{
+		if (s[x] == '\'' || s[x] == '\"')
+			skip_quotes(s, &x, s[x]);
+		if (ft_is_white_space(s[x]))
+		{
+			if (!free_if_wrong(ret, &(s[x]), &(s[start]), y++))
+				return (0);
+			start = find_start_split(s, x);
+			x = start;
+		}
+		else
+			++x;
+	}
+	if (!ft_is_white_space(s[x - 1]) && !free_if_wrong(ret, &s[x], &s[start], y++))
+		return (0);
+	ret[y] = 0;
+	return (ret);
+	/*x = 0;
 	y = 0;
 	start_split = find_next_split(s, x);
 	while (s[++x])
@@ -82,7 +131,7 @@ static char	**to_all(char *s, char **ret)
 		return (0);
 	printf("y %d\n", y);
 	ret[y] = 0;
-	return (ret);
+	return (ret);*/
 }
 
 

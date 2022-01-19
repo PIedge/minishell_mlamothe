@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 16:00:58 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:47:58 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,9 @@ int	set_pipes(t_mini *mini)
 		if (!work)
 			return (0);
 		work->cmd = pipes[y];
-		if (!cm_argv_creation(work))
-			return (0);
 	}
 	// Test Zone
-	while (work->prev)
+	/*while (work->prev)
 		work = work->prev;
 	while (work->next)
 	{
@@ -54,7 +52,7 @@ int	set_pipes(t_mini *mini)
 		//work = work->next;
 	}
 	printf("work->cmd |%s|\n", work->cmd);
-	ft_printf_double_tab(work->cm_argv, "work->cm_argv");
+	ft_printf_double_tab(work->cm_argv, "work->cm_argv");*/
 	// Test Zone
 	while (work->prev)
 		work = work->prev;
@@ -62,14 +60,14 @@ int	set_pipes(t_mini *mini)
 	return (1);
 }
 
-int	var_treat_cmd(t_cmd *cmd, t_mini *mini)
+int	var_treat_cmd(t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
 	while (cmd->cm_argv[i])
 	{
-		if (!var_treat_str(&(cmd->cm_argv[i]), g_env, mini))
+		if (!var_treat_str(&(cmd->cm_argv[i]), g_env))
 			return (0);
 		++i;
 	}
@@ -85,7 +83,6 @@ void	until_same(char *str, int *i)
 	while (str[*i] && str[*i] != c)
 		++(*i);
 	mv_str_left(&(str[*i]));
-	--(*i);
 }
 
 void	strip_quote_cmd(t_cmd *cmd)
@@ -115,19 +112,26 @@ int	minishell(t_mini *mini)
 	mini->cmd_ori = ft_readline(PROMPT);
 	if (!(mini->cmd_ori))
 		return (0);
-	var_treat_str(&mini->cmd_ori, g_env, mini);
+	mini->cmd_ori = var_treat_str(&mini->cmd_ori, g_env);
+	if (!mini->cmd_ori)
+		return (0);
+	printf("after var treat |%s|\n", mini->cmd_ori);
 	if (!set_pipes(mini))
 		return (0);
 	while (mini->cmd->next)
 	{
 		//if (!var_treat_cmd(mini->cmd, mini))
 		//	return (0);
-		if (!find_redir(mini->cmd, *mini->cmd->cm_argv))
+		if (!find_redir(mini->cmd, mini->cmd->cmd))
+			return (0);
+		if (!cm_argv_creation(mini->cmd))
 			return (0);
 		strip_quote_cmd(mini->cmd);
 		mini->cmd = mini->cmd->next;
 	}
-	if (!find_redir(mini->cmd, *mini->cmd->cm_argv))
+	if (!find_redir(mini->cmd, mini->cmd->cmd))
+			return (0);
+	if (!cm_argv_creation(mini->cmd))
 			return (0);
 	strip_quote_cmd(mini->cmd);
 	// Test Zone
@@ -142,6 +146,18 @@ int	minishell(t_mini *mini)
 	y = 0;
 	while (mini->cmd->cm_argv[y])
 		printf("%s\n", mini->cmd->cm_argv[y++]);*/
+	t_cmd *work = mini->cmd;
+	while (work->prev)
+		work = work->prev;
+	while (work->next)
+	{
+		printf("work->cmd |%s|\n", work->cmd);
+		ft_printf_double_tab(work->cm_argv, "work->cm_argv");
+		work = work->next;
+		//work = work->next;
+	}
+	printf("work->cmd |%s|\n", work->cmd);
+	ft_printf_double_tab(work->cm_argv, "work->cm_argv");
 	printf("out\n");
 	return (1);
 	// Test Zone

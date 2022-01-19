@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 12:49:28 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:47:05 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_mini
 */
 void	destroy(t_mini *mini, char *str);
 int		minishell(t_mini *mini);
-char	*var_treat_str(char **str, char **env, t_mini *mini);
+char	*var_treat_str(char **str, char **env);
 char	**copy_env(char **env);
 char	*find_var(char **env, char *var_name);
 char	*find_var_with_limit(char **env, char *start, char *end);
