@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 05:26:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/19 13:55:48 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:35:31 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	how_many_split(char *str, char c)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			skip_quotes(str, &i, str[i]);
-		if (str[i] == c)
+		else if (str[i] == c)
 		{
 			while (str[i] == c)
 				++i;
@@ -100,7 +100,7 @@ static char	**to_all(char *s, char c)
 	{
 		if (s[x] == '\'' || s[x] == '\"')
 			skip_quotes(s, &x, s[x]);
-		if (s[x] == c)
+		else if (s[x] == c)
 		{
 			if (!free_if_wrong(ret, &s[x], &s[start], y++))
 				return (0);

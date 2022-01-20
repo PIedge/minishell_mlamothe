@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/19 14:51:18 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:34:25 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	calc_new_len(char *str, char **env, int *n)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			skip_quotes(str, &i, str[i]);
-		if (str[i] == '$')
+		else if (str[i] == '$')
 		{
 			++i;
 			end = get_end_index(&(str[i])) + i;

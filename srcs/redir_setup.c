@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/19 14:06:34 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:41:39 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 	int	i;
 	int	x;
 
-	i = -1;
+	i = 0;
 	x = -1;
 	printf("\nENTERING FIND REDIR\n");
 	printf("cmd treated |%s|\n", cm);
@@ -83,7 +83,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 	{
 		if (cm[i] == '\'' || cm[i] == '\"')
 			skip_quotes(cm, &i, cm[i]);
-		if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
+		else if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
 			!ft_strncmp(&cm[i], HEREDOC, ft_strlen(HEREDOC)))
 		{
 			x = i;
@@ -101,7 +101,12 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 			cmd->out = new_redir(cmd->out, get_redir_word(&cm[x], &i), which_type(&cm[x]));
 			if (!cmd->out || !(cmd->out->word))
 				return (0);
+			--x;
+			while (++x < i)
+				mv_str_left(&(cm[x]));
 		}
+		else
+			++i;
 	}
 	/*while (argv[++y])
 	{
