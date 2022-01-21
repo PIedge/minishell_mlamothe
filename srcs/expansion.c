@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/21 07:06:40 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/21 08:45:24 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	calc_new_len(char *str, char **env, int *n)
 		{
 			++i;
 			end = get_end_index(&(str[i])) + i;
-			printf("char looked at |%c|\n", str[end]);
+			printf("char looked at |%c| before\n", str[end]);
 			printf("calc_new_len |%s|\n", find_var_with_limit(env, &str[i], &str[end]));
 			len += ft_strlen(find_var_with_limit(env, &str[i], &str[end]));
 			*n += 1;
