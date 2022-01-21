@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/20 16:41:39 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/21 00:44:03 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 	x = -1;
 	printf("\nENTERING FIND REDIR\n");
 	printf("cmd treated |%s|\n", cm);
-	while (cm[++i])
+	while (cm[i])
 	{
 		if (cm[i] == '\'' || cm[i] == '\"')
 			skip_quotes(cm, &i, cm[i]);

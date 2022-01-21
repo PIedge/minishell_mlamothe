@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/20 16:34:25 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/21 07:06:40 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_end_index(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && !ft_is_white_space(str[i]))
+	while (str[i] && !ft_is_white_space(str[i]) && str[i] != '"')
 		++i;
 	return (i);
 }
@@ -55,19 +55,24 @@ int	calc_new_len(char *str, char **env, int *n)
 
 	i = 0;
 	len = 0;
+	printf("calc_new_len |%s|\n", str);
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		printf("char looked at |%c|\n", str[i]);
+		if (str[i] == '\'')
 			skip_quotes(str, &i, str[i]);
 		else if (str[i] == '$')
 		{
 			++i;
 			end = get_end_index(&(str[i])) + i;
+			printf("char looked at |%c|\n", str[end]);
+			printf("calc_new_len |%s|\n", find_var_with_limit(env, &str[i], &str[end]));
 			len += ft_strlen(find_var_with_limit(env, &str[i], &str[end]));
 			*n += 1;
 		}
 		else
 			++i;
+		
 	}
 	return (len);
 }
@@ -79,6 +84,7 @@ void	copy_until_var(char *ori, char *new, int *i, int *y)
 	quote = 0;
 	while (ori[*i] && (ori[*i] != '$' || quote))
 	{
+		printf("char looked at |%c|\n", ori[*i]);
 		if (ori[*i] == '\'')
 		{
 			if (quote == 0)
@@ -90,6 +96,9 @@ void	copy_until_var(char *ori, char *new, int *i, int *y)
 		++(*i);
 		++(*y);
 	}
+	if (ori[*i] == '\0')
+		new[*y] = ori[*i];
+	printf("char looked at |%c|\n", ori[*i]);
 }
 
 int	copy_var_into_new(char *ori, char *new, char **env, int *y)
@@ -137,7 +146,10 @@ char	*var_treat_str(char **str, char **env)
 	while ((*str)[i])
 	{
 		copy_until_var(*str, new, &i, &y);
-		i += copy_var_into_new(&((*str)[i]), new, env, &y);
+		if ((*str)[i] == '$')
+			i += copy_var_into_new(&((*str)[i]), new, env, &y);
+		else
+			++i;
 	}
 	new[y] = '\0';
 	printf("%p new\n", new);
