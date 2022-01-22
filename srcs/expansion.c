@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/21 08:45:24 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/22 12:30:34 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ int	calc_new_len(char *str, char **env, int *n)
 			*n += 1;
 		}
 		else
+		{
+			++len;
 			++i;
+		}
 		
 	}
 	return (len);
@@ -84,7 +87,7 @@ void	copy_until_var(char *ori, char *new, int *i, int *y)
 	quote = 0;
 	while (ori[*i] && (ori[*i] != '$' || quote))
 	{
-		printf("char looked at |%c|\n", ori[*i]);
+		printf("copy until char looked at |%c|\n", ori[*i]);
 		if (ori[*i] == '\'')
 		{
 			if (quote == 0)
@@ -98,7 +101,7 @@ void	copy_until_var(char *ori, char *new, int *i, int *y)
 	}
 	if (ori[*i] == '\0')
 		new[*y] = ori[*i];
-	printf("char looked at |%c|\n", ori[*i]);
+	printf("char looked at |%c| end\n", ori[*i]);
 }
 
 int	copy_var_into_new(char *ori, char *new, char **env, int *y)
@@ -139,6 +142,7 @@ char	*var_treat_str(char **str, char **env)
 	new_len = calc_new_len(*str, env, &n);
 	if (n == 0)
 		return (*str);
+	printf("new_len %d\n", new_len);
 	new = malloc(sizeof(char) * (new_len + 1));
 	if (!new)
 		return (0);
@@ -147,10 +151,11 @@ char	*var_treat_str(char **str, char **env)
 	{
 		copy_until_var(*str, new, &i, &y);
 		if ((*str)[i] == '$')
-			i += copy_var_into_new(&((*str)[i]), new, env, &y);
-		else
+			i += copy_var_into_new(&((*str)[i]), &(new[y]), env, &y);
+		else if ((*str)[i])
 			++i;
 	}
+	printf("death\n");
 	new[y] = '\0';
 	printf("%p new\n", new);
 	free(*str);
