@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/22 12:30:34 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/22 16:57:57 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,11 @@ char	*var_treat_str(char **str, char **env)
 	i = 0;
 	y = 0;
 	n = 0;
-	printf("not dead var_treat_str\n");
+	// printf("not dead var_treat_str\n");
 	new_len = calc_new_len(*str, env, &n);
 	if (n == 0)
 		return (*str);
-	printf("new_len %d\n", new_len);
+	// printf("new_len %d\n", new_len);
 	new = malloc(sizeof(char) * (new_len + 1));
 	if (!new)
 		return (0);
@@ -155,9 +155,9 @@ char	*var_treat_str(char **str, char **env)
 		else if ((*str)[i])
 			++i;
 	}
-	printf("death\n");
+	// printf("death\n");
 	new[y] = '\0';
-	printf("%p new\n", new);
+	// printf("%p new\n", new);
 	free(*str);
 	*str = new;
 	return (new);

@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/22 16:52:28 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/22 16:57:41 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char *get_redir_word(char *str, int *i)
 	end = start;
 	while (str[end] && !ft_is_white_space(str[end]))
 		++end;
-	printf("start %d end %d moins %d\n", start, end, end - start);
+	//printf("start %d end %d moins %d\n", start, end, end - start);
 	ret = ft_substr(str, start, end - start);
 	*i += end;
 	return (ret);
@@ -121,24 +121,24 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 	}
 	printf("end\n");
 	// TEST ZONE
-	while (cmd->in && cmd->in->prev)
-		cmd->in = cmd->in->prev;
-	while (cmd->out && cmd->out->prev)
-		cmd->out = cmd->out->prev;
-	while (cmd->in && cmd->in->next)
-	{
-		printf("cmd->in |%s| %d\n", cmd->in->word, cmd->in->type);
-		cmd->in = cmd->in->next;
-	}
-	if (cmd->in)
-		printf("cmd->in |%s| %d\n", cmd->in->word, cmd->in->type);
-	while (cmd->out && cmd->out->next)
-	{
-		printf("cmd->out |%s| %d\n", cmd->out->word, cmd->out->type);
-		cmd->out = cmd->out->next;
-	}
-	if (cmd->out)
-		printf("cmd->out |%s| %d\n", cmd->out->word, cmd->out->type);
+	// while (cmd->in && cmd->in->prev)
+	// 	cmd->in = cmd->in->prev;
+	// while (cmd->out && cmd->out->prev)
+	// 	cmd->out = cmd->out->prev;
+	// while (cmd->in && cmd->in->next)
+	// {
+	// 	printf("cmd->in |%s| %d\n", cmd->in->word, cmd->in->type);
+	// 	cmd->in = cmd->in->next;
+	// }
+	// if (cmd->in)
+	// 	printf("cmd->in |%s| %d\n", cmd->in->word, cmd->in->type);
+	// while (cmd->out && cmd->out->next)
+	// {
+	// 	printf("cmd->out |%s| %d\n", cmd->out->word, cmd->out->type);
+	// 	cmd->out = cmd->out->next;
+	// }
+	// if (cmd->out)
+	// 	printf("cmd->out |%s| %d\n", cmd->out->word, cmd->out->type);
 	// END TEST ZONE
 	/*while (argv[++y])
 	{
