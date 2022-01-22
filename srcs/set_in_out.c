@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:07:52 by mlamothe          #+#    #+#             */
-/*   Updated: 2021/12/13 16:12:52 by mlamothe         ###   ########.fr       */
+/*   Updated: 2021/12/22 13:24:22 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ int	set_out(int *out, t_redir *redir)
 	tmp = redir;
 	while (tmp)
 	{
-		if (!(tmp->type & IN))
-			ret = tmp;
+		ret = tmp;
 		tmp = tmp->next;
 	}
 	if (!ret)
 		return (0);
-	if (ret->type & TWO)
+	if (ret->type)
 		*out = open(tmp->word, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	else
 		*out = open(tmp->word, O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -47,9 +46,8 @@ int	set_in(int *in, t_redir *redir)
 	tmp = redir;
 	while (tmp)
 	{
-		if (tmp->type & IN)
-			if (!(tmp->type & TWO))
-				ret = tmp;
+		if (!tmp->type)
+			ret = tmp;
 		tmp = tmp->next;
 	}
 	if (!ret)
@@ -69,14 +67,14 @@ int	ft_closeem(int in, int out, int ret)
 	return (ret);
 }
 
-int	set_in_n_out(int *in, int *out, t_redir *redir)
+int	set_in_n_out(int *in, int *out, t_cmd *cmd)
 {
-	if (set_in(in, redir))
+	if (set_in(in, cmd->in))
 		return (1);
 	if (*in != -1)
 		if (dup2(*in, 0))
 			return (ft_closeem(*in, *out, 1));
-	if (set_out(out, redir))
+	if (set_out(out, cmd->out))
 		return (ft_closeem(*in, *out, 1));
 	if (*out != -1)
 		if (dup2(*out, 0))

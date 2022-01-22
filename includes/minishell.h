@@ -6,14 +6,14 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2021/12/13 16:26:55 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/22 13:10:25 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/* *****************************************************************************
+/*******************************************************************************
 **							Includes										  **
 *******************************************************************************/
 
@@ -25,20 +25,15 @@
 # include <stdlib.h>
 # include <string.h>
 # include <errno.h>
+# include <sys/wait.h>
+# include <dirent.h>
+# include <readline/readline.h> //may have to delete it later
+# include <readline/history.h>  //may have to delete it later
 
 /* *****************************************************************************
 **							Defines											  **
 *******************************************************************************/
 
-
-/*
-** The next three defines are used for the variable "type" in the structure
-** t_redir described later. The first bit describes wether it is IN or OUT
-** (0 == OUT | 1 == IN). TWO decribes wether it is << or < and >> or >
-** obviously 0 == < and 1 == <<.
-*/
-# define IN 1
-# define TWO 1 << 1
 # define PIPE_R 0
 # define PIPE_W 1
 
@@ -56,7 +51,6 @@ typedef struct s_redir
 {
 	struct s_redir	*next;
 	struct s_redir	*prev;
-
 	char			*word;
 	int				type;
 }					t_redir;
@@ -73,10 +67,10 @@ typedef struct s_cmd
 {
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
-
 	char			*cmd;
 	char			**cm_argv;
-	t_redir			*redir;
+	t_redir			*in;
+	t_redir			*out;
 }					t_cmd;
 
 /*
@@ -84,12 +78,20 @@ typedef struct s_cmd
 ** of an error.
 */
 
+typedef struct s_map
+{
+	char	**key;
+	char	**value;
+}					t_map;
+
 typedef struct s_mini
 {
+	char	*cmd_ori;
 	t_cmd	*cmd;
+	t_map	env;
 }					t_mini;
 
-#endif
+int			exec_cmd(t_cmd *cmd, t_map env);
 
 int			ft_strlen(char *str);
 
@@ -101,18 +103,28 @@ int			set_in(int *in, t_redir *redir);
 
 int			ft_closeem(int in, int out, int ret);
 
-int			set_in_n_out(int *in, int *out, t_redir *redir);
+int			set_in_n_out(int *in, int *out, t_cmd *cmd);
 
 int			**get_pfd(t_cmd *cmd);
 
 int			ft_free_pipefds(int **pipefds, int ret);
 
-int			first_child(int pipe_r, int pipe_w, t_cmd *cmd);
+int			first_child(int pipe_r, int pipe_w, t_cmd *cmd, t_map env);
 
-int			other_childs(int pipe_r, int pipe_w, t_cmd *cmd);
+int			other_childs(int pipe_r, int pipe_w, t_cmd *cmd, t_map env);
 
-int			last_child(t_cmd *cmd, int pipe_r);
+int			last_child(t_cmd *cmd, int pipe_r, t_map env);
 
-int			check_paths_ok(t_cmd *cmd);
+int			check_paths_ok(t_cmd *cmd, t_map env);
 
-int			ft_echo(t_cmd *cmd);
+int			ft_echo(t_cmd *cmd, t_map env);
+
+int			do_cmd(t_cmd *cmd, t_map env);
+
+int			is_builtin(char *cmd, t_map env);
+
+char		*ft_get_var(char *var_name, t_map env);
+
+int			do_builtin(char *cmd, t_map env);
+
+#endif
