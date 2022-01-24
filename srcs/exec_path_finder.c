@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/24 16:30:27 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:04:29 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_paths_ok(t_cmd *cmd)
 	tmp = cmd;
 	while(tmp)
 	{
-		if (!is_builtin(tmp->cm_argv[0]))
+		if (tmp->cm_argv[0] && !is_builtin(tmp->cm_argv[0]))
 			if (check_path_cmd(tmp))
 				return (1);
 		tmp = tmp->next;
