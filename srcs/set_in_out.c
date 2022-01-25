@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:07:52 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 14:45:20 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:34:21 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ int	set_in(int *in, t_redir *redir)
 	tmp = redir;
 	while (tmp)
 	{
-		if (!tmp->type)
-			ret = tmp;
+		ret = tmp;
 		tmp = tmp->next;
 	}
 	if (!ret)
 		return (0);
-	*in = open(ret->word, O_RDONLY);
+	if (ret->type)
+		*in = ft_here_doc(ret->word);
+	else
+		*in = open(ret->word, O_RDONLY);
 	if (*in == -1)
 		return (1);
 	return (0);

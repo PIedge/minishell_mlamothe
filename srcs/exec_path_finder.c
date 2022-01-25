@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 13:46:02 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:55:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int	check_path_cmd(t_cmd *cmd)
 		free(join);
 	}
 	free(splt);
+	write(2, "unknown command\n", 16);
 	return (1);
 }
 
-int	check_path_redir(t_cmd *cmd)	//MODIF DES IN ET OUTS REQUIS
+int	check_path_redir(t_cmd *cmd)
 {
 	t_redir	*tmp;
 
@@ -61,7 +62,10 @@ int	check_path_redir(t_cmd *cmd)	//MODIF DES IN ET OUTS REQUIS
 	{
 		if (!tmp->type)
 			if (access(cmd->in->word, R_OK))
+			{
+				write(2, "unknown file\n", 13);
 				return (1);
+			}
 		tmp = tmp->next;
 	}
 	tmp = cmd->out;

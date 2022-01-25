@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 19:36:08 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:55:57 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	do_builtin(t_cmd *cmd)
 
 int	do_cmd(t_cmd *cmd)
 {
+	if (!cmd->cm_argv || !cmd->cm_argv[0])
+		return (0);
 	if (is_builtin(cmd->cm_argv[0]))
 	{
 		if (do_builtin(cmd))
@@ -85,7 +87,6 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds)
 	int		**pipefds;
 	int		i;
 
-	printf("nb cmd : %d\n", nb_cmds);
 	pipefds = get_pfd(cmd);
 	if (!pipefds)
 		return (1);
@@ -108,12 +109,8 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds)
 	}
 	if (last_child(cmd->next, pipefds[i][PIPE_R]))
 		return (1);
-	//(void)nb_cmds;
 	while (--nb_cmds >= 0)
-	{
-		printf("loop\n");
 		waitpid(-1, NULL, WUNTRACED);
-	}
 	return (0);
 }
 
@@ -124,7 +121,6 @@ int	cmd_nopipe(t_cmd *cmd)
 
 	if (set_in_n_out(&in, &out, cmd))
 		return (1);
-	//printf("in : %d\n out : %d\n", in, out);
 	if (do_cmd(cmd))
 		return (1);
 	return (0);
@@ -167,24 +163,23 @@ int	ft_here_doc(char *str)
 	int		fd;
 	char	*rdline;
 
-																//Check si écriture ok dans /tmp
-	fd = open("/tmp/minishell-here_doc", O_WRONLY, O_CREAT);
+	fd = open("./minishell-here_doc", O_WRONLY | O_CREAT, 0666);
 	if (fd == -1)
-		return (1);
-	rdline = ft_readline(NULL);
+		return (-1);
+	rdline = readline("> ");
 	while(ft_strcmp(rdline, str))
 	{
 		write(fd, rdline, ft_strlen(rdline));
-		rdline = ft_readline(NULL);
+		write(fd, "\n", 1);
+		rdline = readline("> ");
 	}
 	close (fd);
-	fd = open("/tmp/minishell-here_doc", O_RDONLY);
+	fd = open("./minishell-here_doc", O_RDONLY);
 	if (fd == -1)
-		return (1);
-	if (unlink("/tmp/minishell-here_doc"))
-		return (1);
+		return (-1);
+	if (unlink("./minishell-here_doc"))
+		return (-1);
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return (1);
-																// CHECK SI NE PAS LE CLOSE CA PUE
-	return (0);
+		return (-1);
+	return (fd);
 }
