@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/22 16:57:57 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:31:45 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	calc_new_len(char *str, char **env, int *n)
 			++len;
 			++i;
 		}
-		
 	}
 	return (len);
 }
@@ -110,19 +109,23 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 	char	*var;
 	int	o;
 	int	i;
+	int	a;
 	//int	quote;
 
 	o = 0;
 	i = 0;
 	end = 0;
+	a = 0;
 	if (ori[i] == '$')
 	{
 		end = get_end_index(&(ori[i])) + i;
 		var = find_var_with_limit(env, &ori[i + 1], &ori[end]);
 		if (!var)
 			return (end);
-		ft_strcpy(new, var);
-		*y += ft_strlen(var);
+		while (var[a] != '=')
+			++a;
+		ft_strcpy(new, &var[++a]);
+		*y += ft_strlen(&var[a]);
 	}
 	return (end);
 }
