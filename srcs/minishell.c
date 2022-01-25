@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 20:10:08 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:14:37 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ int	minishell(t_mini *mini)
 		return(printf("no_hist\n"));*/
 
 	printf("here\n");
-	if (!(mini->cmd_ori))
-		return (0);
+	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
+		return (1);
 	mini->cmd_ori = var_treat_str(&mini->cmd_ori, g_env);
 	if (!mini->cmd_ori)
 		return (0);
@@ -143,9 +143,7 @@ int	minishell(t_mini *mini)
 			return (0);
 	if (!cm_argv_creation(mini->cmd))
 			return (0);
-	printf("là\n");
 	strip_quote_cmd(mini->cmd);
-	printf("là\n");
 	// Test Zone
 	/*int	y = 0;
 	while (mini->cmd->next)
