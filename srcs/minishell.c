@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 17:27:15 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:10:08 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void	strip_quote_cmd(t_cmd *cmd)
 		while (cmd->cm_argv[y][i])
 		{
 			if (cmd->cm_argv[y][i] == '\'')
-				until_same(&(cmd->cm_argv[y][i]), &i);
+				until_same(cmd->cm_argv[y], &i);
 			else if (cmd->cm_argv[y][i] == '"')
-				until_same(&(cmd->cm_argv[y][i]), &i);
+				until_same(cmd->cm_argv[y], &i);
 			else
 				++i;
 		}
@@ -143,7 +143,9 @@ int	minishell(t_mini *mini)
 			return (0);
 	if (!cm_argv_creation(mini->cmd))
 			return (0);
+	printf("là\n");
 	strip_quote_cmd(mini->cmd);
+	printf("là\n");
 	// Test Zone
 	/*int	y = 0;
 	while (mini->cmd->next)

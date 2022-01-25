@@ -1,0 +1,4 @@
+"echo oui | > caca" segfault
+
+"< oui" should print error. (segf rn)
+
