@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 09:41:15 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 12:13:42 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:46:31 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,30 +50,38 @@ t_redir	*create_redir(t_redir *prev, int type)
 
 void	free_redir(t_redir *redir)
 {
-	while (redir->next)
+	while (redir && redir->next)
 	{
 		free(redir->word);
 		redir = redir->next;
 		free(redir->prev);
 	}
-	free(redir->word);
-	free(redir);
+	if (redir)
+	{
+		free(redir->word);
+		free(redir);
+	}
 }
 
 void	free_cmd(t_cmd *cmd)
 {
-	while (cmd->next)
+	while (cmd && cmd->next)
 	{
 		ft_double_tab_free(cmd->cm_argv);
 		free(cmd->cmd);
 		free_redir(cmd->in);
 		free_redir(cmd->out);
 		cmd = cmd->next;
+		free(cmd->prev);
 	}
-	ft_double_tab_free(cmd->cm_argv);
-	free(cmd->cmd);
-	free_redir(cmd->in);
-	free_redir(cmd->out);
+	if (cmd)
+	{
+		ft_double_tab_free(cmd->cm_argv);
+		free(cmd->cmd);
+		free_redir(cmd->in);
+		free_redir(cmd->out);
+		free(cmd);
+	}
 }
 
 void	destroy(t_mini *mini, char *str)

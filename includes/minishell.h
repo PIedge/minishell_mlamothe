@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/24 13:28:03 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:34:57 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 ** The type variable has been explained above in the Defines section.
 */
 
-char					**g_env;
+static char					**g_env;
 
 typedef struct s_redir
 {
@@ -163,5 +163,7 @@ int		ft_cd(t_cmd *cmd);
 int		ft_pwd(void);
 
 int		ft_strcmp(char *s1, char *s2);
+
+void	free_cmd(t_cmd *cmd);
 
 #endif

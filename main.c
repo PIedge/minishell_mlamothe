@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/18 13:57:30 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:42:16 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ int	main(int ac, char **av, char **envp)
 	** TEST ZONE START
 	*/
 	ac = 0; //compilation problem if unused
-	minishell(&mini);
+	int	ret = 1;
+	while (ret)
+	{
+		ret = minishell(&mini);
+		free_cmd(mini.cmd);
+		mini.cmd = NULL;
+	}
+	printf("minishell done\n");
 	/*
 	** TEST ZONE END
 	*/
