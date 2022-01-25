@@ -38,7 +38,7 @@ LPATH	=	./libft_re
 all:	$(LNAME) $(NAME)
 
 $(NAME):	$(OBJS)
-				$(CC) $(FLAG) $(OBJS) $(LNAME) -o $(NAME)
+				$(CC) $(FLAG) $(OBJS) $(LNAME) -I/usr/include/readline -lreadline -o $(NAME)
 
 ${LNAME}:
 			rm -f ${LNAME}

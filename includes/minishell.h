@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 11:34:57 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:27:18 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <dirent.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 /* *****************************************************************************
 **							Defines											  **
@@ -37,7 +39,7 @@
 # define HEREDOC "<<\0"
 # define D_OUTPUT ">>\0"
 
-# define PROMPT "UwU "
+# define PROMPT "\e[1;34mUwU\e[0m $ "
 # define E_MALLOC "Malloc didn't work, your pc is probably dying\n"
 
 # define PIPE_R 0
@@ -53,7 +55,7 @@
 ** The type variable has been explained above in the Defines section.
 */
 
-static char					**g_env;
+char					**g_env;
 
 typedef struct s_redir
 {
@@ -83,12 +85,6 @@ typedef struct s_cmd
 	t_redir			*out;
 }					t_cmd;
 
-typedef struct s_map
-{
-	char			**key;
-	char			**value;
-}					t_map;
-
 /*
 ** Main struture for minishell contains every thing that should be freed in case
 ** of an error.
@@ -100,7 +96,6 @@ typedef struct s_mini
 	char	*cmd_ori;
 	t_cmd	*cmd;
 	char	**env;
-
 
 }					t_mini;
 
@@ -147,7 +142,7 @@ char    *ft_join_cmd(char *str1, char *str2);
 ** Execution' functions
 */
 
-int		exec_cmd(t_cmd *cmd);
+int		exec_cmd(t_cmd *cmd, int nb_cmds);
 int		first_child(int pipe_r, int pipe_w, t_cmd *cmd);
 int		other_childs(int pipe_r, int pipe_w, t_cmd *cmd);
 int		last_child(t_cmd *cmd, int pipe_r);

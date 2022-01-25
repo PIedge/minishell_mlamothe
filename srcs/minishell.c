@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 11:46:08 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:27:15 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,16 @@ void	strip_quote_cmd(t_cmd *cmd)
 
 int	minishell(t_mini *mini)
 {
-	mini->cmd_ori = ft_readline(PROMPT);
+	mini->cmd_ori = readline(PROMPT);
+
+	//HISTORY
+	add_history(mini->cmd_ori);
+/*	mini->history = history_list();
+	if (mini->history)
+		return(printf("hist 0 : %s\n", mini->history));
+	else
+		return(printf("no_hist\n"));*/
+
 	printf("here\n");
 	if (!(mini->cmd_ori))
 		return (0);
@@ -161,10 +170,12 @@ int	minishell(t_mini *mini)
 	ft_printf_double_tab(work->cm_argv, "work->cm_argv");
 	printf("out\n");
 	printf("\e[1;36mEXECUTION\e[0m\n");
-	while(mini->cmd->prev)
+	int nb;							//nb commands
+
+	nb = 1;
+	while(mini->cmd->prev && ++nb)
 		mini->cmd = mini->cmd->prev;
-	exec_cmd(mini->cmd);
-	wait(0);
+	exec_cmd(mini->cmd, nb);
 	return (1);
 	// Test Zone
 	// Execution

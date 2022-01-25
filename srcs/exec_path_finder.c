@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/24 19:04:29 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:46:02 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	check_path_cmd(t_cmd *cmd)
 			return (ft_free_split(splt, 1));
 		if (!access(join, R_OK))
 		{
+			printf("access granted with %s\n", join);
 			free(cmd->cmd);
 			cmd->cmd = join;
 			return (ft_free_split(splt, 0));

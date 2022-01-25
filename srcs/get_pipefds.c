@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:13:49 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/24 13:01:01 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:33:12 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ int	**get_pfd(t_cmd *cmd)
 	tmp = cmd;
 	while (tmp->next && ++i)
 		tmp = tmp->next;
-	pipefds = malloc((i + 1) * sizeof(int *));
+	printf("i : %d\n", i);
+	pipefds = malloc(i * sizeof(int *));
 	if (!pipefds)
 		return (NULL);
-	pipefds[i] = NULL;
 	j = -1;
 	while (++j < i)
 	{
 		pipefds[j] = malloc (2 * sizeof(int));
+		printf("i : %d\n", pipefds[j][0]);
 		if (!pipefds[j])
 		{
 			ft_free_pipefds(pipefds, 0);

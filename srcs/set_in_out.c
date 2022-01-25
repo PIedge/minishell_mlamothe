@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:07:52 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/24 15:45:09 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/25 14:45:20 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ int	set_in_n_out(int *in, int *out, t_cmd *cmd)
 	if (set_in(in, cmd->in))
 		return (1);
 	if (*in != -1)
-		if (dup2(*in, 0) == -1)
+		if (dup2(*in, STDIN_FILENO) == -1)
 			return (ft_closeem(*in, *out, 1));
 	if (set_out(out, cmd->out))
 		return (ft_closeem(*in, *out, 1));
 	if (*out != -1)
-		if (dup2(*out, 1) == -1)
+		if (dup2(*out, STDOUT_FILENO) == -1)
 			return (ft_closeem(*in, *out, 1));
 	return (ft_closeem(*in, *out, 0));
 }
