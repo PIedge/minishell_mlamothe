@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/22 16:57:41 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/26 00:18:09 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 	printf("cmd treated |%s|\n", cm);
 	while (cm[i])
 	{
+		printf("char looked at find_redir |%c|\n", cm[i]);
 		if (cm[i] == '\'' || cm[i] == '\"')
 			skip_quotes(cm, &i, cm[i]);
 		else if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
@@ -104,10 +105,12 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 			stand = x;
 			while (++x <= i)
 				mv_str_left(&(cm[stand]));
+			i = stand;
 		}
 		else if (!ft_strncmp(&cm[i], OUTPUT, ft_strlen(OUTPUT)) || 
 			!ft_strncmp(&cm[i], D_OUTPUT, ft_strlen(D_OUTPUT)))
 		{
+			printf("la\n");
 			x = i;
 			cmd->out = new_redir(cmd->out, get_redir_word(&cm[x], &i), which_type(&cm[x]));
 			if (!cmd->out || !(cmd->out->word))
