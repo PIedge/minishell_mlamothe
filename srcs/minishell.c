@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 17:13:50 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:57:52 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ int	set_pipes(t_mini *mini)
 	{
 		work = create_cmd(work);
 		if (!work)
+		{
+			mini->cmd = work;
+			while (pipes[y])
+				free(pipes[y++]);
+			free(pipes);
 			return (0);
+		}
 		work->cmd = pipes[y];
 	}
 	// Test Zone
@@ -57,6 +63,7 @@ int	set_pipes(t_mini *mini)
 	while (work->prev)
 		work = work->prev;
 	mini->cmd = work;
+	free(pipes);
 	return (1);
 }
 
