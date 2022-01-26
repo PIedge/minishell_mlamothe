@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 20:57:33 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:48:34 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	if (!pipefds)
 		return (1);
 	if (pipe(pipefds[0]))
-		return (set_error(mini, 2, 1));
+		return (set_error(mini, 2, 1, NULL));
 	if (first_child(pipefds[0][PIPE_R], pipefds[0][PIPE_W], cmd, mini))
 		return (1);
 	i = 0;
@@ -30,7 +30,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	{
 		cmd = cmd->next;
 		if (pipe(pipefds[i]))
-			return (set_error(mini, 1, 2));
+			return (set_error(mini, 1, 2, NULL));
 		if (other_childs(pipefds[i - 1][PIPE_R], pipefds[i][PIPE_W], \
 			cmd, mini))
 			return (1);
@@ -68,7 +68,7 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	tmp = cmd;
 	pid = fork();
 	if (pid < 0)
-		return (set_error(mini, 4, 1));
+		return (set_error(mini, 4, 1, NULL));
 	if (pid)
 		waitpid(-1, NULL, WUNTRACED);
 	else if (tmp->next)

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 17:08:40 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:32:18 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_mini
 	t_cmd	*cmd;
 	char	**env;
 	int		err;
+	char	*err_word;
 }					t_mini;
 
 /*
@@ -138,8 +139,8 @@ void	mv_str_left(char *str);
 int		ft_atoi(const char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	free_cmd(t_cmd *cmd);
-int		set_error(t_mini *mini, int err, int ret);
-void	select_err(int err);
+int		set_error(t_mini *mini, int err, int ret, char *str);
+void	select_err(int err, char *str);
 
 /*
 ** Utils for execution

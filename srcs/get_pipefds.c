@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:13:49 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 13:54:44 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:49:04 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	**get_pfd(t_cmd *cmd, t_mini *mini)
 		tmp = tmp->next;
 	pipefds = malloc(i * sizeof(int *));
 	if (!pipefds)
-		if (!set_error(mini, 0, 0))
+		if (!set_error(mini, 0, 0, NULL))
 			return (NULL);
 	j = -1;
 	while (++j < i)
@@ -35,7 +35,7 @@ int	**get_pfd(t_cmd *cmd, t_mini *mini)
 		if (!pipefds[j])
 		{
 			ft_free_pipefds(pipefds, 0);
-			set_error(mini, 0, 0);
+			set_error(mini, 0, 0, NULL);
 			return (NULL);
 		}
 	}

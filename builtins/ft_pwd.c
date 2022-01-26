@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 13:15:30 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 15:48:31 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:30:43 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ int	ft_pwd(t_mini *mini)
 		write(1, "\n", 1);
 		return (0);
 	}
-	return (set_error(mini, 23, 1));
+	return (set_error(mini, 23, 1, NULL));
 }

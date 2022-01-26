@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 12:23:31 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 16:40:57 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:30:25 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_join_cmd(char *str1, char *str2, t_mini *mini)
 		str_ret = malloc((ft_strlen(str1) + ft_strlen(str2) + 1) * \
 		sizeof(char));
 	if (!str_ret)
-		if (!set_error(mini, 0, 0))
+		if (!set_error(mini, 0, 0, NULL))
 			return (NULL);
 	i = -1;
 	while (++i < (int)ft_strlen(str1))
@@ -64,7 +64,7 @@ char	*ft_join(char *str1, char *str2, t_mini *mini)
 
 	str_ret = malloc((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
 	if (!str_ret)
-		if (!set_error(mini, 0, 0))
+		if (!set_error(mini, 0, 0, NULL))
 			return (NULL);
 	i = -1;
 	while (++i < (int)ft_strlen(str1))
@@ -84,7 +84,7 @@ char	*ft_strdup(const char *src, t_mini *mini)
 	i = -1;
 	res = malloc((ft_strlen((char *)src) + 1) * sizeof(char));
 	if (!(res))
-		if (set_error(mini, 0, 0))
+		if (set_error(mini, 0, 0, NULL))
 			return (NULL);
 	while (src[++i])
 			res[i] = src[i];

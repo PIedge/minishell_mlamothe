@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 21:16:12 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:31:14 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	init_mini(t_mini *mini, char **envp)
 	char	*nbr;
 
 	mini->err = -1;
+	mini->err_word = NULL;
 	mini->cmd = NULL;
 	g_env = copy_env(envp);
 	if (!(g_env))

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:07:52 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 13:44:27 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:45:22 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	ft_gethdoc(char *word, t_mini *mini)
 
 	fd = open(word, O_RDONLY);
 	if (fd == -1)
-		return (set_error(mini, 6, -1));
+		return (set_error(mini, 6, -1, word));
 	if (unlink(word))
-		return (set_error(mini, 7, -1));
+		return (set_error(mini, 7, -1, NULL));
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return (set_error(mini, 3, -1));
+		return (set_error(mini, 3, -1, NULL));
 	return (fd);
 }
 
@@ -47,7 +47,7 @@ int	set_out(int *out, t_redir *redir, t_mini *mini)
 	else
 		*out = open(ret->word, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (*out == -1)
-		return (set_error(mini, 6, 1));
+		return (set_error(mini, 6, 1, ret->word));
 	return (0);
 }
 
@@ -71,7 +71,7 @@ int	set_in(int *in, t_redir *redir, t_mini *mini)
 	else
 		*in = open(ret->word, O_RDONLY);
 	if (*in == -1)
-		return (set_error(mini, 6, 1));
+		return (set_error(mini, 6, 1, ret->word));
 	return (0);
 }
 

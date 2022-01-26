@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 16:12:29 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:54:01 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,33 @@ int	check_path_cmd(t_cmd *cmd, t_mini *mini)
 		}
 		free(join);
 	}
-	free(splt);
-	return (1);
+	ft_free_split(splt, 0);
+	return (set_error(mini, 8, 1, cmd->cm_argv[0]));
+}
+
+int	check_path_out(t_cmd *cmd, t_mini *mini)
+{
+	int		fd;
+	t_redir	*tmp;
+
+	tmp = cmd->out;
+	while (tmp)
+	{
+		if (access(tmp->word, W_OK))
+		{
+			if (errno != ENOENT)
+				return (set_error(mini, 8, 1, tmp->word));
+			else
+			{
+				fd = open(tmp->word, O_WRONLY | O_CREAT, 0666);
+				if (fd == -1)
+					return (set_error(mini, 8, 1, tmp->word));
+				close(fd);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 int	check_path_redir(t_cmd *cmd, t_mini *mini)
@@ -61,26 +86,19 @@ int	check_path_redir(t_cmd *cmd, t_mini *mini)
 	while (tmp)
 	{
 		if (access(cmd->in->word, R_OK))
-			return (set_error(mini, 8, 1));
+			return (set_error(mini, 8, 1, cmd->in->word));
 		tmp = tmp->next;
 	}
-	tmp = cmd->out;
-	while (tmp)
-	{
-		if (access(tmp->word, W_OK))
-		{
-			if (errno != ENOENT)
-				return (set_error(mini, 8, 1));
-		}
-		tmp = tmp->next;
-	}
-	return (0);
+	return (check_path_out(cmd, mini));
 }
 
 int	check_paths_ok(t_cmd *cmd, t_mini *mini)
 {
 	t_cmd	*tmp;
 
+	tmp = cmd;
+	if (check_path_redir(tmp, mini))
+		return (1);
 	tmp = cmd;
 	while (tmp)
 	{
@@ -89,8 +107,5 @@ int	check_paths_ok(t_cmd *cmd, t_mini *mini)
 				return (1);
 		tmp = tmp->next;
 	}
-	tmp = cmd;
-	if (check_path_redir(tmp, mini))
-		return (1);
 	return (0);
 }
