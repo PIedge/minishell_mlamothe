@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 20:35:38 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:57:33 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	int		dup_in;
 	int		dup_out;
 
+	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
+		return (0);
 	if (exec_init(mini, cmd, &dup_in, &dup_out))
-		return (ft_reset_dups(dup_in, dup_out, 1));
+		return (ft_reset_dups(dup_in, dup_out, 2));
 	tmp = cmd;
 	pid = fork();
 	if (pid < 0)
@@ -72,12 +74,12 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	else if (tmp->next)
 	{
 		if (cmd_wpipe(tmp, nb_cmds, mini))
-			return (ft_reset_dups(dup_in, dup_out, 1));
+			return (ft_reset_dups(dup_in, dup_out, 2));
 	}
 	else
 		if (cmd_nopipe(tmp, mini))
-			return (ft_reset_dups(dup_in, dup_out, 1));
-	return (ft_reset_dups(dup_in, dup_out, 0));
+			return (ft_reset_dups(dup_in, dup_out, 2));
+	return (ft_reset_dups(dup_in, dup_out, 1));
 }
 
 char	*ft_here_doc(char *str, int i, t_mini *mini)
