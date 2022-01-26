@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 20:40:58 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:16:12 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int	main(int ac, char **av, char **envp)
 	int	ret = 1;
 	while (ret)
 	{
+		mini.cmd_ori = NULL;
 		ret = minishell(&mini);
+		free(mini.cmd_ori);
 		free_cmd(mini.cmd);
 		mini.cmd = NULL;
 	}
