@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 12:23:31 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 21:30:25 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 23:08:21 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ char	*ft_join(char *str1, char *str2, t_mini *mini)
 		if (!set_error(mini, 0, 0, NULL))
 			return (NULL);
 	i = -1;
-	while (++i < (int)ft_strlen(str1))
+	while (str1[++i])
 		str_ret[i] = str1[i];
 	j = -1;
-	while (++j < (int)ft_strlen(str2))
+	while (str2[++j])
 			str_ret[i + j] = str2[j];
 	str_ret[i + j] = 0;
 	return (str_ret);
