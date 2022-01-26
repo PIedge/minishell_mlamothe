@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 22:13:59 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/26 22:25:33 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,10 +187,7 @@ int	minishell(t_mini *mini)
 	if (retexec == 0)
 		return (0);
 	if (retexec == 2)
-	{
 		select_err(mini->err, mini->err_word);
-		return (0);
-	}
 	return (1);
 	// Test Zone
 	// Execution
