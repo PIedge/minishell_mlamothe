@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 20:11:01 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 02:59:52 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,9 @@ int		ft_free_pipefds(int **pipefds, int ret);
 int		check_paths_ok(t_cmd *cmd);
 int		is_builtin(char *cmd);
 char    *ft_join_cmd(char *str1, char *str2);
-int		ft_here_doc(char *str);
+char	*ft_join(char *str1, char *str2);
+char	*ft_here_doc(char *str, int i);
+char    *ft_strdup(const char *src);
 
 /*
 ** Execution' functions
@@ -157,6 +159,9 @@ int		do_builtin(t_cmd *cmd);
 int		ft_echo(t_cmd *cmd);
 int		ft_cd(t_cmd *cmd);
 int		ft_pwd(void);
+int		ft_export(t_cmd *cmd);
+int		ft_unset(t_cmd *cmd);
+int		ft_env(t_cmd *cmd);
 
 int		ft_strcmp(char *s1, char *s2);
 

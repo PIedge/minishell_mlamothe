@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 11:58:35 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 02:24:09 by mlamothe         ###   ########.fr       */
+/*   Created: 2022/01/26 02:54:09 by mlamothe          #+#    #+#             */
+/*   Updated: 2022/01/26 03:09:41 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../includes/minishell.h"
+#include "../libft_re/libft_re.h"
 
-size_t	ft_strlen(char *s)
+int	ft_unset(t_cmd *cmd)
 {
-	size_t	i;
+	int	alrd_here;
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (*s)
+	alrd_here = get_var_name_end(cmd->cm_argv[1]);
+	if (alrd_here != -1)
 	{
-		++s;
-		++i;
+		while(g_env[alrd_here])
+		{
+			g_env[alrd_here] = g_env[alrd_here + 1];
+			++alrd_here;
+		}		
 	}
-	return (i);
+	return (0);
 }

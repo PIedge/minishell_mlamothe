@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_setup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 00:18:09 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/26 01:36:21 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 		{
 			printf("here\n");
 			x = i;
-			cmd->in = new_redir(cmd->in, get_redir_word(&cm[x], &i), which_type(&cm[x]));
+			if (which_type(&cm[x]))																						//HEREDOC
+				cmd->in = new_redir(cmd->in, ft_here_doc(get_redir_word(&cm[x], &i), x), which_type(&cm[x]));
+			else
+				cmd->in = new_redir(cmd->in, get_redir_word(&cm[x], &i), which_type(&cm[x]));
 			if (!cmd->in || !(cmd->in->word))
 				return (0);
 			stand = x;

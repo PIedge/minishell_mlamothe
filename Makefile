@@ -16,13 +16,16 @@ SRCS	=	srcs/inits_frees.c		\
 			builtins/ft_cd.c		\
 			builtins/ft_echo.c		\
 			builtins/ft_pwd.c		\
+			builtins/ft_export.c	\
+			builtins/ft_unset.c		\
+			builtins/ft_env.c		\
 			main.c					\
 
 NAME	=	minishell
 
 CC		=	clang
 
-FLAG	=	-Wall -Wextra -Werror -g3
+FLAG	=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 VALF	=	--tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes --track-origins=yes --log-file=valgrind_log
 

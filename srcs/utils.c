@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 12:23:31 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 17:35:37 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 03:08:50 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,59 @@ char	*ft_join_cmd(char *str1, char *str2)
 				str_ret[i + j] = str2[j];
 		str_ret[i + j] = 0;
 		return (str_ret);
+}
+
+char	*ft_join(char *str1, char *str2)
+{
+		int		i;
+		int		j;
+		char	*str_ret;
+
+		str_ret = malloc((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
+		if (!str_ret)
+			return (NULL);
+		i = -1;
+		while (++i < (int)ft_strlen(str1))
+			str_ret[i] = str1[i];
+		j = -1;
+		while (++j < (int)ft_strlen(str2))
+				str_ret[i + j] = str2[j];
+		str_ret[i + j] = 0;
+		return (str_ret);
+}
+
+char    *ft_strdup(const char *src)
+{
+        int             i;
+        char    *res;
+
+        i = -1;
+        res = malloc((ft_strlen((char *)src) + 1) * sizeof(char));
+        if (!(res))
+                return (NULL);
+        while (src[++i])
+                res[i] = src[i];
+        res[i] = 0;
+        return (res);
+}
+
+int	get_var_name_end(char *str)
+{
+	int ret;
+	int	i;
+
+	ret = -1;
+	while (g_env[++ret])
+	{
+		i = 0;
+		while (str[i] && g_env[ret][i] && str[i] == g_env[ret][i])
+		{
+			if (str[i] == '=')
+				return (ret);
+			++i;
+		}
+		if (!str[i] && g_env[ret][i] == '=')
+			return (ret);
+	}
+	return (-1);
 }

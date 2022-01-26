@@ -6,12 +6,26 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:07:52 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 20:34:21 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 01:42:46 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
+
+int	ft_gethdoc(char *word)
+{
+	int	fd;
+
+	fd = open(word, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	if (unlink(word))
+		return (-1);
+	if (dup2(fd, STDIN_FILENO) == -1)
+		return (-1);
+	return (fd);
+}
 
 int	set_out(int *out, t_redir *redir)
 {
@@ -53,7 +67,7 @@ int	set_in(int *in, t_redir *redir)
 	if (!ret)
 		return (0);
 	if (ret->type)
-		*in = ft_here_doc(ret->word);
+		*in = ft_gethdoc(ret->word);
 	else
 		*in = open(ret->word, O_RDONLY);
 	if (*in == -1)

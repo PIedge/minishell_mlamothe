@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 22:31:45 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/26 02:21:54 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,11 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 
 char	*var_treat_str(char **str, char **env)
 {
-	int	new_len;
-	int	i;
-	int	y;
+	int		new_len;
+	int		i;
+	int		y;
 	char	*new;
-	int	n;
+	int		n;
 
 	i = 0;
 	y = 0;

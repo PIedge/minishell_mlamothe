@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 20:55:57 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 03:02:28 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	is_builtin(char	*cmd)
 	else if (!ft_strcmp(cmd, "pwd"))
 		return (1);
 	else if (!ft_strcmp(cmd, "export"))
-		return (0);
+		return (1);
 	else if (!ft_strcmp(cmd, "unset"))
-		return (0);
+		return (1);
 	else if (!ft_strcmp(cmd, "env"))
-		return (0);
+		return (1);
 	else if (!ft_strcmp(cmd, "exit"))
 		return (0);
 	return (0);
@@ -50,11 +50,11 @@ int	do_builtin(t_cmd *cmd)
 	else if (!ft_strcmp(cmd->cm_argv[0], "pwd"))
 		return (ft_pwd());
 	else if (!ft_strcmp(cmd->cm_argv[0], "export"))
-		return (0);
+		return (ft_export(cmd));
 	else if (!ft_strcmp(cmd->cm_argv[0], "unset"))
-		return (0);
+		return (ft_unset(cmd));
 	else if (!ft_strcmp(cmd->cm_argv[0], "env"))
-		return (0);
+		return (ft_env(cmd));
 	else if (!ft_strcmp(cmd->cm_argv[0], "exit"))
 		return (0);
 	return (0);
@@ -130,8 +130,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds)
 {
 	pid_t	pid;
 	t_cmd	*tmp;
-	int	dup_in;
-	int	dup_out;
+	int		dup_in;
+	int		dup_out;
 
 	dup_in = dup(STDIN_FILENO);
 	dup_out = dup(STDOUT_FILENO);
@@ -158,14 +158,24 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds)
 	return (ft_reset_dups(dup_in, dup_out, 0));
 }
 
-int	ft_here_doc(char *str)
+char	*ft_here_doc(char *str, int i)
 {
 	int		fd;
 	char	*rdline;
+	char	*path;
+	char	*nbr;
 
-	fd = open("./minishell-here_doc", O_WRONLY | O_CREAT, 0666);
+	nbr = ft_itoa(i);
+	if (!nbr)
+		return (NULL);
+	path = ft_join("./tmp/minishell-here_doc", nbr);
+	free (nbr);
+	fd = open(path , O_WRONLY | O_CREAT, 0666);
 	if (fd == -1)
-		return (-1);
+	{
+		free(path);
+		return (NULL);
+	}
 	rdline = readline("> ");
 	while(ft_strcmp(rdline, str))
 	{
@@ -174,12 +184,5 @@ int	ft_here_doc(char *str)
 		rdline = readline("> ");
 	}
 	close (fd);
-	fd = open("./minishell-here_doc", O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	if (unlink("./minishell-here_doc"))
-		return (-1);
-	if (dup2(fd, STDIN_FILENO) == -1)
-		return (-1);
-	return (fd);
+	return (path);
 }

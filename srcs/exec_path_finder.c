@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 20:55:38 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 01:38:04 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,11 @@ int	check_path_redir(t_cmd *cmd)
 	tmp = cmd->in;
 	while (tmp)
 	{
-		if (!tmp->type)
-			if (access(cmd->in->word, R_OK))
-			{
-				write(2, "unknown file\n", 13);
-				return (1);
-			}
+		if (access(cmd->in->word, R_OK))
+		{
+			write(2, "unknown file\n", 13);
+			return (1);
+		}
 		tmp = tmp->next;
 	}
 	tmp = cmd->out;

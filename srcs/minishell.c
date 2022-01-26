@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 20:14:37 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/26 02:33:52 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	strip_quote_cmd(t_cmd *cmd)
 
 int	minishell(t_mini *mini)
 {
+	//printf("g : %s\n",g_env[31]);
 	mini->cmd_ori = readline(PROMPT);
-
 	//HISTORY
 	add_history(mini->cmd_ori);
 /*	mini->history = history_list();

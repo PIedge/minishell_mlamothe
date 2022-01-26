@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 11:58:35 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 02:24:09 by mlamothe         ###   ########.fr       */
+/*   Created: 2022/01/26 02:57:51 by mlamothe          #+#    #+#             */
+/*   Updated: 2022/01/26 03:03:05 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../includes/minishell.h"
+#include "../libft_re/libft_re.h"
 
-size_t	ft_strlen(char *s)
+int	ft_env(t_cmd *cmd)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (*s)
-	{
-		++s;
-		++i;
-	}
-	return (i);
+	(void)cmd;
+	i = -1;
+	while(g_env[++i])
+		printf("%s\n", g_env[i]);
+	return (0);
 }

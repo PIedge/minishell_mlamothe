@@ -12,6 +12,7 @@ SRCS	=	ft_printf_double_tab.c	\
 			ft_isdigit.c			\
 			ft_bzero.c				\
 			ft_split.c				\
+			ft_itoa.c				\
 
 NAME	=	libft.a
 

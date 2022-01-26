@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:37:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/24 13:26:53 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 01:26:27 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_bzero(void *b, size_t n);
+char	**ft_split(char *str, char c);
+char	*ft_itoa(int n);
 
 /*
 ** New functions
@@ -53,5 +55,4 @@ char	*ft_readline(char *prompt);
 void	ft_printf_double_tab(char **av, char *name);
 int		ft_double_tab_free(char **tab);
 int		ft_is_white_space(char c);
-char	**ft_split(char *str, char c);
 #endif
