@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 22:25:33 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/27 00:12:36 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,9 +183,13 @@ int	minishell(t_mini *mini)
 	while(mini->cmd->prev && ++nb)
 		mini->cmd = mini->cmd->prev;
 	int retexec;
+	//return (0);
 	retexec = exec_cmd(mini->cmd, nb, mini);
 	if (retexec == 0)
+	{
+		rl_clear_history();
 		return (0);
+	}
 	if (retexec == 2)
 		select_err(mini->err, mini->err_word);
 	return (1);

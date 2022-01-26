@@ -29,7 +29,7 @@ NAME	=	minishell
 
 CC		=	clang
 
-FLAG	=	-Wall -Wextra -Werror -g3 -fsanitize=address
+FLAG	=	-Wall -Wextra -Werror -g3
 
 VALF	=	--tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes --track-origins=yes --log-file=valgrind_log
 

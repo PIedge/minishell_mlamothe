@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 21:48:34 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 22:39:12 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	else
 		if (cmd_nopipe(tmp, mini))
 			return (ft_reset_dups(dup_in, dup_out, 2));
+	mini->err = -1;
 	return (ft_reset_dups(dup_in, dup_out, 1));
 }
 
