@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 12:32:35 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 16:27:46 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@
 
 # define PROMPT "\e[1;34mUwU\e[0m $ "
 # define E_MALLOC "Malloc didn't work, your pc is probably dying\n"
+# define E_PIPE "Error with pipe"
+# define E_DUP2 "Error with dup2"
+# define E_FORK "Error with fork"
+# define E_OPENDIR "Error with opendir"
+# define E_OPEN "Error with open"
+# define E_UNLINK "Error with unlink"
+# define E_ACCESS "Error with access"
+# define E_CDMARGS "cd : too many args"
+# define E_CDFARGS "cd : too few args"
+# define E_CDCHDIR "Error with chdir in cd"
+# define E_PWD "Error, can\'t get pwd because of getcwd"
 
 # define PIPE_R 0
 # define PIPE_W 1
@@ -96,7 +107,7 @@ typedef struct s_mini
 	char	*cmd_ori;
 	t_cmd	*cmd;
 	char	**env;
-
+	int		err;
 }					t_mini;
 
 /*
@@ -108,7 +119,7 @@ char	*var_treat_str(char **str, char **env);
 char	**copy_env(char **env);
 char	*find_var(char **env, char *var_name);
 char	*find_var_with_limit(char **env, char *start, char *end);
-t_cmd	*find_redir(t_cmd *cmd, char *cm);
+t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini);
 
 /*
 ** Split functions
@@ -127,44 +138,51 @@ void	mv_str_left(char *str);
 int		ft_atoi(const char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	free_cmd(t_cmd *cmd);
+int		set_error(t_mini *mini, int err, int ret);
+void	select_err(int err);
 
 /*
 ** Utils for execution
 */
-int		set_out(int *out, t_redir *redir);
-int		set_in(int *in, t_redir *redir);
+int		set_out(int *out, t_redir *redir, t_mini *mini);
+int		set_in(int *in, t_redir *redir, t_mini *mini);
 int		ft_closeem(int in, int out, int ret);
-int		set_in_n_out(int *in, int *out, t_cmd *cmd);
-int		**get_pfd(t_cmd *cmd);
+int		set_in_n_out(int *in, int *out, t_cmd *cmd, t_mini *mini);
+int		**get_pfd(t_cmd *cmd, t_mini *mini);
 int		ft_free_pipefds(int **pipefds, int ret);
-int		check_paths_ok(t_cmd *cmd);
+int		check_paths_ok(t_cmd *cmd, t_mini *mini);
 int		is_builtin(char *cmd);
-char    *ft_join_cmd(char *str1, char *str2);
-char	*ft_join(char *str1, char *str2);
-char	*ft_here_doc(char *str, int i);
-char    *ft_strdup(const char *src);
+char    *ft_join_cmd(char *str1, char *str2, t_mini *mini);
+char	*ft_join(char *str1, char *str2, t_mini *mini);
+char	*ft_here_doc(char *str, int i, t_mini *mini);
+char    *ft_strdup(const char *src, t_mini *mini);
+int		ft_reset_dups(int in, int out, int ret);
+char	*get_path_hd(t_mini *mini, int i);
 
 /*
 ** Execution' functions
 */
 
-int		exec_cmd(t_cmd *cmd, int nb_cmds);
-int		first_child(int pipe_r, int pipe_w, t_cmd *cmd);
-int		other_childs(int pipe_r, int pipe_w, t_cmd *cmd);
-int		last_child(t_cmd *cmd, int pipe_r);
-int		do_cmd(t_cmd *cmd);
-int		do_builtin(t_cmd *cmd);
+int		exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini);
+int		exec_init(t_mini *mini, t_cmd *cmd, int *dup_in, int *dup_out);
+int		first_child(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini);
+int		other_childs(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini);
+int		last_child(t_cmd *cmd, int pipe_r, t_mini *mini);
+int		do_cmd(t_cmd *cmd, t_mini *mini);
+int		do_builtin(t_cmd *cmd, t_mini *mini);
+int		is_builtin(char	*cmd);
+int		do_cmd(t_cmd *cmd, t_mini *mini);
 
 /*
 ** Bultins fucntions
 */
 
-int		ft_echo(t_cmd *cmd);
-int		ft_cd(t_cmd *cmd);
-int		ft_pwd(void);
-int		ft_export(t_cmd *cmd);
-int		ft_unset(t_cmd *cmd);
-int		ft_env(t_cmd *cmd);
-int		ft_exit(void);
+int		ft_echo(t_cmd *cmd, t_mini *mini);
+int		ft_cd(t_cmd *cmd, t_mini *mini);
+int		ft_pwd(t_mini *mini);
+int		ft_export(t_cmd *cmd, t_mini *mini);
+int		ft_unset(t_cmd *cmd, t_mini *mini);
+int		ft_env(t_cmd *cmd, t_mini *mini);
+int		ft_exit(t_mini *mini);
 
 #endif

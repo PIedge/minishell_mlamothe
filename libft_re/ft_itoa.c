@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 18:42:42 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 01:26:22 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 16:18:49 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	*ft_itoa2(int n, long *nbr, int *i, int *j)
 	}
 	++(*i);
 	word = set_word(n, *i);
+	if (!word)
+		return (NULL);
 	if (n < 0)
 		*j = 0;
 	else
@@ -64,6 +66,8 @@ char	*ft_itoa(int n)
 	char	*word;
 
 	word = ft_itoa2(n, &nbr, &i, &j);
+	if (!word)
+		return (NULL);
 	word[i] = 0;
 	nbr = n;
 	if (n < 0)

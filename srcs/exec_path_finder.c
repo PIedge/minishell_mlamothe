@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 12:39:57 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 16:12:29 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_free_split(char	**splt, int ret)
 	return (ret);
 }
 
-int	check_path_cmd(t_cmd *cmd)
+int	check_path_cmd(t_cmd *cmd, t_mini *mini)
 {
 	char	**splt;
 	char	*join;
@@ -38,12 +38,11 @@ int	check_path_cmd(t_cmd *cmd)
 	i = -1;
 	while (splt[++i])
 	{
-		join = ft_join_cmd(splt[i], cmd->cm_argv[0]);
+		join = ft_join_cmd(splt[i], cmd->cm_argv[0], mini);
 		if (!join)
 			return (ft_free_split(splt, 1));
 		if (!access(join, R_OK))
 		{
-			printf("access granted with %s\n", join);
 			free(cmd->cm_argv[0]);
 			cmd->cm_argv[0] = join;
 			return (ft_free_split(splt, 0));
@@ -51,11 +50,10 @@ int	check_path_cmd(t_cmd *cmd)
 		free(join);
 	}
 	free(splt);
-	write(2, "unknown command\n", 16);
 	return (1);
 }
 
-int	check_path_redir(t_cmd *cmd)
+int	check_path_redir(t_cmd *cmd, t_mini *mini)
 {
 	t_redir	*tmp;
 
@@ -63,10 +61,7 @@ int	check_path_redir(t_cmd *cmd)
 	while (tmp)
 	{
 		if (access(cmd->in->word, R_OK))
-		{
-			write(2, "unknown file\n", 13);
-			return (1);
-		}
+			return (set_error(mini, 8, 1));
 		tmp = tmp->next;
 	}
 	tmp = cmd->out;
@@ -75,29 +70,27 @@ int	check_path_redir(t_cmd *cmd)
 		if (access(tmp->word, W_OK))
 		{
 			if (errno != ENOENT)
-				return (1);
+				return (set_error(mini, 8, 1));
 		}
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-int	check_paths_ok(t_cmd *cmd)
+int	check_paths_ok(t_cmd *cmd, t_mini *mini)
 {
 	t_cmd	*tmp;
 
 	tmp = cmd;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->cm_argv[0] && !is_builtin(tmp->cm_argv[0]))
-			if (check_path_cmd(tmp))
+			if (check_path_cmd(tmp, mini))
 				return (1);
 		tmp = tmp->next;
 	}
-	printf("    check_path_cmd\t\e[1;32mV\e[0m\n");
 	tmp = cmd;
-	if (check_path_redir(tmp))
-			return (1);
-	printf("    check_path_redir\t\e[1;32mV\e[0m\n");
+	if (check_path_redir(tmp, mini))
+		return (1);
 	return (0);
 }

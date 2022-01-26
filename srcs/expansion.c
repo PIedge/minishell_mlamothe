@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 02:21:54 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 14:09:58 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ int	calc_new_len(char *str, char **env, int *n)
 
 	i = 0;
 	len = 0;
-	printf("calc_new_len |%s|\n", str);
+	//printf("calc_new_len |%s|\n", str);
 	while (str[i])
 	{
-		printf("char looked at |%c|\n", str[i]);
+		//printf("char looked at |%c|\n", str[i]);
 		if (str[i] == '\'')
 			skip_quotes(str, &i, str[i]);
 		else if (str[i] == '$')
 		{
 			++i;
 			end = get_end_index(&(str[i])) + i;
-			printf("char looked at |%c| before\n", str[end]);
-			printf("calc_new_len |%s|\n", find_var_with_limit(env, &str[i], &str[end]));
+			//printf("char looked at |%c| before\n", str[end]);
+			//printf("calc_new_len |%s|\n", find_var_with_limit(env, &str[i], &str[end]));
 			len += ft_strlen(find_var_with_limit(env, &str[i], &str[end]));
 			*n += 1;
 		}

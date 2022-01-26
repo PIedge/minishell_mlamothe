@@ -6,14 +6,14 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:16:19 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/25 20:55:31 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 13:38:24 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
 
-int	first_child(int pipe_r, int pipe_w, t_cmd *cmd)
+int	first_child(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini)
 {
 	int		in;
 	int		out;
@@ -25,13 +25,13 @@ int	first_child(int pipe_r, int pipe_w, t_cmd *cmd)
 	if (pid == 0)
 	{
 		close(pipe_r);
-		if (set_in_n_out(&in, &out, cmd))
+		if (set_in_n_out(&in, &out, cmd, mini))
 			exit(1);
 		if (out == -1)
 			if (dup2(pipe_w, STDOUT_FILENO) == -1)
 				exit(1);
 		close(pipe_w);
-		if (do_cmd(cmd))
+		if (do_cmd(cmd, mini))
 			exit(1);
 		exit(0);
 	}
@@ -40,7 +40,7 @@ int	first_child(int pipe_r, int pipe_w, t_cmd *cmd)
 	return (0);
 }
 
-int	other_childs(int pipe_r, int pipe_w, t_cmd *cmd)
+int	other_childs(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini)
 {
 	int		in;
 	int		out;
@@ -51,7 +51,7 @@ int	other_childs(int pipe_r, int pipe_w, t_cmd *cmd)
 		exit(1);
 	if (pid == 0)
 	{
-		if (set_in_n_out(&in, &out, cmd))
+		if (set_in_n_out(&in, &out, cmd, mini))
 			exit(1);
 		if (in == -1)
 			if (dup2(pipe_r, STDIN_FILENO) == -1)
@@ -60,14 +60,14 @@ int	other_childs(int pipe_r, int pipe_w, t_cmd *cmd)
 			if (dup2(pipe_w, STDOUT_FILENO) == -1)
 				exit(1);
 		ft_closeem(pipe_r, pipe_w, 0);
-		if (do_cmd(cmd))
+		if (do_cmd(cmd, mini))
 			exit(1);
 		exit(0);
 	}
 	return (ft_closeem(pipe_r, pipe_w, 0));
 }
 
-int	last_child(t_cmd *cmd, int pipe_r)
+int	last_child(t_cmd *cmd, int pipe_r, t_mini *mini)
 {
 	int		in;
 	int		out;
@@ -78,13 +78,13 @@ int	last_child(t_cmd *cmd, int pipe_r)
 		exit(1);
 	if (pid == 0)
 	{
-		if (set_in_n_out(&in, &out, cmd))
+		if (set_in_n_out(&in, &out, cmd, mini))
 			exit(1);
 		if (in == -1)
 			if (dup2(pipe_r, STDIN_FILENO) == -1)
 				exit(1);
 		close(pipe_r);
-		if (do_cmd(cmd))
+		if (do_cmd(cmd, mini))
 			exit(1);
 		exit(0);
 	}

@@ -9,10 +9,13 @@ SRCS	=	srcs/inits_frees.c		\
 			srcs/redir_setup.c		\
 			srcs/exec_childs.c		\
 			srcs/exec_cmd.c			\
+			srcs/exec_core.c		\
+			srcs/exec_utils.c		\
 			srcs/exec_path_finder.c	\
 			srcs/get_pipefds.c		\
 			srcs/set_in_out.c		\
 			srcs/utils.c			\
+			srcs/handle_errors.c	\
 			builtins/ft_cd.c		\
 			builtins/ft_echo.c		\
 			builtins/ft_pwd.c		\

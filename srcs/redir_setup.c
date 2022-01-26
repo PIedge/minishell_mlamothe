@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 01:36:21 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 14:10:50 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_redir	*new_redir(t_redir *prev, char *word, int type)
 	new->prev = prev;
 	new->next = NULL;
 	new->word = word;
-	printf("type new_redir %d\n", type);
+	//printf("type new_redir %d\n", type);
 	new->type = type;
 	if (prev)
 		prev->next = new;
@@ -35,7 +35,7 @@ t_redir	*new_redir(t_redir *prev, char *word, int type)
 
 static int	which_type(char *str)
 {
-	printf("which_type |%s| %d %d\n", str, ft_strncmp(str, INPUT, ft_strlen(INPUT)), ft_strncmp(str, INPUT, ft_strlen(OUTPUT)));
+	//printf("which_type |%s| %d %d\n", str, ft_strncmp(str, INPUT, ft_strlen(INPUT)), ft_strncmp(str, INPUT, ft_strlen(OUTPUT)));
 	if (!ft_strncmp(str, HEREDOC, ft_strlen(HEREDOC)) || 
 		!ft_strncmp(str, D_OUTPUT, ft_strlen(D_OUTPUT)))
 		return (1);
@@ -79,7 +79,7 @@ char *get_redir_word(char *str, int *i)
 	return (ret);
 }
 
-t_cmd	*find_redir(t_cmd *cmd, char *cm)
+t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini)
 {
 	int	i;
 	int	x;
@@ -87,20 +87,20 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 
 	i = 0;
 	x = -1;
-	printf("\nENTERING FIND REDIR\n");
-	printf("cmd treated |%s|\n", cm);
+	//printf("\nENTERING FIND REDIR\n");
+	//printf("cmd treated |%s|\n", cm);
 	while (cm[i])
 	{
-		printf("char looked at find_redir |%c|\n", cm[i]);
+		//printf("char looked at find_redir |%c|\n", cm[i]);
 		if (cm[i] == '\'' || cm[i] == '\"')
 			skip_quotes(cm, &i, cm[i]);
 		else if (!ft_strncmp(&cm[i], INPUT, ft_strlen(INPUT)) || 
 			!ft_strncmp(&cm[i], HEREDOC, ft_strlen(HEREDOC)))
 		{
-			printf("here\n");
+		//	printf("here\n");
 			x = i;
 			if (which_type(&cm[x]))																						//HEREDOC
-				cmd->in = new_redir(cmd->in, ft_here_doc(get_redir_word(&cm[x], &i), x), which_type(&cm[x]));
+				cmd->in = new_redir(cmd->in, ft_here_doc(get_redir_word(&cm[x], &i), x, mini), which_type(&cm[x]));
 			else
 				cmd->in = new_redir(cmd->in, get_redir_word(&cm[x], &i), which_type(&cm[x]));
 			if (!cmd->in || !(cmd->in->word))
@@ -113,7 +113,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 		else if (!ft_strncmp(&cm[i], OUTPUT, ft_strlen(OUTPUT)) || 
 			!ft_strncmp(&cm[i], D_OUTPUT, ft_strlen(D_OUTPUT)))
 		{
-			printf("la\n");
+			//printf("la\n");
 			x = i;
 			cmd->out = new_redir(cmd->out, get_redir_word(&cm[x], &i), which_type(&cm[x]));
 			if (!cmd->out || !(cmd->out->word))
@@ -125,7 +125,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm)
 		else
 			++i;
 	}
-	printf("end\n");
+	//printf("end\n");
 	// TEST ZONE
 	// while (cmd->in && cmd->in->prev)
 	// 	cmd->in = cmd->in->prev;

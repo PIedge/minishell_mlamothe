@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 12:47:27 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:27:25 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,27 +119,27 @@ int	minishell(t_mini *mini)
 	else
 		return(printf("no_hist\n"));*/
 
-	printf("here\n");
+	//printf("here\n");
 	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
 		return (1);
 	mini->cmd_ori = var_treat_str(&mini->cmd_ori, g_env);
 	if (!mini->cmd_ori)
 		return (0);
-	printf("after var treat |%s|\n", mini->cmd_ori);
+	//printf("after var treat |%s|\n", mini->cmd_ori);
 	if (!set_pipes(mini))
 		return (0);
 	while (mini->cmd->next)
 	{
 		//if (!var_treat_cmd(mini->cmd, mini))
 		//	return (0);
-		if (!find_redir(mini->cmd, mini->cmd->cmd))
+		if (!find_redir(mini->cmd, mini->cmd->cmd, mini))
 			return (0);
 		if (!cm_argv_creation(mini->cmd))
 			return (0);
 		strip_quote_cmd(mini->cmd);
 		mini->cmd = mini->cmd->next;
 	}
-	if (!find_redir(mini->cmd, mini->cmd->cmd))
+	if (!find_redir(mini->cmd, mini->cmd->cmd, mini))
 			return (0);
 	if (!cm_argv_creation(mini->cmd))
 			return (0);
@@ -161,21 +161,22 @@ int	minishell(t_mini *mini)
 		work = work->prev;
 	while (work->next)
 	{
-		printf("work->cmd |%s|\n", work->cmd);
-		ft_printf_double_tab(work->cm_argv, "work->cm_argv");
+	//	printf("work->cmd |%s|\n", work->cmd);
+	//	ft_printf_double_tab(work->cm_argv, "work->cm_argv");
 		work = work->next;
 		//work = work->next;
 	}
-	printf("work->cmd |%s|\n", work->cmd);
-	ft_printf_double_tab(work->cm_argv, "work->cm_argv");
-	printf("out\n");
-	printf("\e[1;36mEXECUTION\e[0m\n");
+	//printf("work->cmd |%s|\n", work->cmd);
+	//ft_printf_double_tab(work->cm_argv, "work->cm_argv");
+	//printf("out\n");
+	//printf("\e[1;36mEXECUTION\e[0m\n");
 	int nb;							//nb commands
 
 	nb = 1;
 	while(mini->cmd->prev && ++nb)
 		mini->cmd = mini->cmd->prev;
-	exec_cmd(mini->cmd, nb);
+	if (exec_cmd(mini->cmd, nb, mini))
+		select_err(mini->err);
 	return (1);
 	// Test Zone
 	// Execution
