@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 02:59:52 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 12:32:35 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ void	skip_quotes(char *str, int *i, char c);
 t_cmd	*create_cmd(t_cmd *prev);
 t_redir	*create_redir(t_redir *prev, int type);
 void	mv_str_left(char *str);
+int		ft_atoi(const char *str);
+int		ft_strcmp(char *s1, char *s2);
+void	free_cmd(t_cmd *cmd);
 
 /*
 ** Utils for execution
@@ -162,9 +165,6 @@ int		ft_pwd(void);
 int		ft_export(t_cmd *cmd);
 int		ft_unset(t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
-
-int		ft_strcmp(char *s1, char *s2);
-
-void	free_cmd(t_cmd *cmd);
+int		ft_exit(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 01:38:04 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 12:39:57 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	check_path_cmd(t_cmd *cmd)
 	char	*join;
 	int		i;
 
+	if (!access(cmd->cm_argv[0], X_OK))
+		return (0);
 	splt = ft_split(find_var(g_env, "PATH") + 5, ':');
 	if (!splt)
 		return (1);
@@ -42,8 +44,8 @@ int	check_path_cmd(t_cmd *cmd)
 		if (!access(join, R_OK))
 		{
 			printf("access granted with %s\n", join);
-			free(cmd->cmd);
-			cmd->cmd = join;
+			free(cmd->cm_argv[0]);
+			cmd->cm_argv[0] = join;
 			return (ft_free_split(splt, 0));
 		}
 		free(join);

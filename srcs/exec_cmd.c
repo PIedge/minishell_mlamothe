@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 03:02:28 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 12:40:22 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_builtin(char	*cmd)
 	else if (!ft_strcmp(cmd, "env"))
 		return (1);
 	else if (!ft_strcmp(cmd, "exit"))
-		return (0);
+		return (1);
 	return (0);
 }
 
@@ -56,7 +56,7 @@ int	do_builtin(t_cmd *cmd)
 	else if (!ft_strcmp(cmd->cm_argv[0], "env"))
 		return (ft_env(cmd));
 	else if (!ft_strcmp(cmd->cm_argv[0], "exit"))
-		return (0);
+		return (ft_exit());
 	return (0);
 }
 
@@ -73,7 +73,7 @@ int	do_cmd(t_cmd *cmd)
 	}
 	else
 	{
-		if (execve(cmd->cmd, cmd->cm_argv, NULL))
+		if (execve(cmd->cm_argv[0], cmd->cm_argv, g_env))
 		{
 			perror("execve");
 			return (1);
@@ -140,8 +140,11 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds)
 	if (!cmd)
 		return (1);
 	tmp = cmd;
+	if (!ft_strcmp(cmd->cm_argv[0], "exit"))
+		return (ft_exit());
 	if (check_paths_ok(tmp))
 		return (1);
+	printf("%s\n", cmd->cmd);
 	pid = fork();
 	if (pid < 0)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 02:34:06 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 12:47:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,23 @@
 
 int	init_mini(t_mini *mini, char **envp)
 {
-	int	i;
+	int		i;
+	int		n;
+	char	*nbr;
 
-	i = 0;
 	mini->cmd = NULL;
 	g_env = copy_env(envp);
 	if (!(g_env))
 		return (0);
+	i = get_var_name_end("SHLVL");
+	if (i != -1)
+	{
+		n = ft_atoi(g_env[i] + 6);
+		free(g_env[i]);
+		nbr = ft_itoa(n + 1);
+		g_env[i] = ft_join("SHLVL=", nbr);
+		free(nbr);
+	}
 	return (1);
 }
 
