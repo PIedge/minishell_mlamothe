@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 17:13:50 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:58:17 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,10 +175,12 @@ int	minishell(t_mini *mini)
 	nb = 1;
 	while(mini->cmd->prev && ++nb)
 		mini->cmd = mini->cmd->prev;
-	if (exec_cmd(mini->cmd, nb, mini))
-	{
+	int retexec;
+	retexec = exec_cmd(mini->cmd, nb, mini);
+	if (retexec == 0)
+		return (0);
+	if (retexec == 2)
 		select_err(mini->err);
-	}
 	return (1);
 	// Test Zone
 	// Execution

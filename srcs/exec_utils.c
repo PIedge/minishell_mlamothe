@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:19:45 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 20:18:11 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:46:46 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	exec_init(t_mini *mini, t_cmd *cmd, int *dup_in, int *dup_out)
 	if (*dup_in == -1 || *dup_out == -1)
 		return (set_error(mini, 3, 1));
 	tmp = cmd;
-	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
-		return (ft_exit(mini));
 	if (check_paths_ok(tmp, mini))
 		return (1);
 	return (0);
