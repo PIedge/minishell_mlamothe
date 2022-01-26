@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 16:26:42 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:35:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		return (1);
 	while (--nb_cmds >= 0)
 		waitpid(-1, NULL, WUNTRACED);
-	return (0);
+	exit(0);
 }
 
 int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
