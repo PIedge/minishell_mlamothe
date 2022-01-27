@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 23:06:56 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 01:03:07 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,16 @@ int	main(int ac, char **av, char **envp)
 	int	ret = 1;
 	while (ret)
 	{
-		mini.cmd_ori = NULL;
 		ret = minishell(&mini);
 		free(mini.cmd_ori);
+		mini.cmd_ori = NULL;
 		free_cmd(mini.cmd);
 		mini.cmd = NULL;
 	}
-	//printf("minishell done\n");
+	free(mini.cmd_ori);
+	free_cmd(mini.cmd);
+	ft_double_tab_free(g_env);
+	printf("minishell done\n");
 	/*
 	** TEST ZONE END
 	*/

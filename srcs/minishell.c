@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/27 00:12:36 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 01:44:54 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,19 @@ void	strip_quote_cmd(t_cmd *cmd)
 
 int	minishell(t_mini *mini)
 {
+	//static int stop = 0;
 	//printf("g : %s\n",g_env[31]);
 	mini->cmd_ori = readline(PROMPT);
 	//HISTORY
 	add_history(mini->cmd_ori);
+	/*if (!stop)
+	{
+		++stop;
+		mini->cmd_ori = ft_strdup("echo test | cat > oui", mini);
+	}
+	else
+		mini->cmd_ori = ft_strdup("exit", mini);*/
+
 /*	mini->history = history_list();
 	if (mini->history)
 		return(printf("hist 0 : %s\n", mini->history));

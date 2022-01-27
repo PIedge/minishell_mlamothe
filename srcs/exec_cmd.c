@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 22:39:12 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 01:41:01 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		return (1);
 	while (--nb_cmds >= 0)
 		waitpid(-1, NULL, WUNTRACED);
-	exit(0);
+	ft_free_pipefds(pipefds, 0);
+	ft_free_exit(mini, 0);
+	return (ft_free_pipefds(pipefds, 0));
 }
 
 int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
@@ -48,10 +50,11 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 	int		out;
 
 	if (set_in_n_out(&in, &out, cmd, mini))
-		exit (1);
+		ft_free_exit(mini, 1);
 	if (do_cmd(cmd, mini))
-		exit (1);
-	exit (0);
+		ft_free_exit(mini, 1);
+	ft_free_exit(mini, 0);
+	return (0);
 }
 
 int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)

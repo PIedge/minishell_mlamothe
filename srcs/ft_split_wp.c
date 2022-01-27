@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_wp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:43:06 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/20 16:35:46 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/27 00:58:50 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,10 @@ static char	**to_all(char *s, char **ret)
 		else
 			++x;
 	}
+	//printf("%d\n", y);
 	if (!ft_is_white_space(s[x - 1]) && !free_if_wrong(ret, &s[x], &s[start], y++))
 		return (0);
+	//printf("%d\n", y);
 	ret[y] = 0;
 	return (ret);
 	/*x = 0;
