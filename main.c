@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/27 01:03:07 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 16:10:43 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ int	init_mini(t_mini *mini, char **envp)
 	int		n;
 	char	*nbr;
 
-	mini->err = -1;
+	mini->err = 0;
 	mini->err_word = NULL;
 	mini->cmd = NULL;
-	g_env = copy_env(envp);
-	if (!(g_env))
+	mini->env = copy_env(envp);
+	if (!(mini->env))
 		return (0);
-	i = get_var_name_end("SHLVL");
+	i = get_var_name_end("SHLVL", mini);
 	if (i != -1)
 	{
-		n = ft_atoi(g_env[i] + 6);
-		free(g_env[i]);
+		n = ft_atoi(mini->env[i] + 6);
+		free(mini->env[i]);
 		nbr = ft_itoa(n + 1);
 		if (!nbr)
 			return (0);
-		g_env[i] = ft_join("SHLVL=", nbr, mini);
+		mini->env[i] = ft_join("SHLVL=", nbr, mini);
 		free(nbr);
-		if (!g_env[i])
+		if (!mini->env[i])
 			return(0);
 	}
 	return (1);
@@ -64,10 +64,12 @@ int	main(int ac, char **av, char **envp)
 		mini.cmd_ori = NULL;
 		free_cmd(mini.cmd);
 		mini.cmd = NULL;
+		if(mini.err)
+			printf("\e[1;31merr code : %d\e[0m\n", mini.err);
 	}
 	free(mini.cmd_ori);
 	free_cmd(mini.cmd);
-	ft_double_tab_free(g_env);
+	ft_double_tab_free(mini.env);
 	printf("minishell done\n");
 	/*
 	** TEST ZONE END

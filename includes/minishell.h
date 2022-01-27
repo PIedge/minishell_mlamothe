@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/27 01:20:24 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 16:12:13 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,34 @@
 # define D_OUTPUT ">>\0"
 
 # define PROMPT "\e[1;34mUwU\e[0m $ "
+
+# define N_MALLOC 2
+# define N_PIPE 3
+# define N_DUP2 4
+# define N_FORK 5
+# define N_OPENDIR 6
+# define N_OPEN 7
+# define N_UNLINK 8
+# define N_ACCESS 9
+# define N_EXECVE 10
+# define N_CDMARGS 20
+# define N_CDFARGS 21
+# define N_CDCHDIR 22
+# define N_PWD 23
+
 # define E_MALLOC "Malloc didn't work, your pc is probably dying\n"
-# define E_PIPE "Error with pipe"
-# define E_DUP2 "Error with dup2"
-# define E_FORK "Error with fork"
-# define E_OPENDIR "Error with opendir"
-# define E_OPEN "Error with open"
-# define E_UNLINK "Error with unlink"
-# define E_ACCESS "Error with access"
-# define E_CDMARGS "cd : too many args"
-# define E_CDFARGS "cd : too few args"
-# define E_CDCHDIR "Error with chdir in cd"
-# define E_PWD "Error, can\'t get pwd because of getcwd"
+# define E_PIPE "Error with pipe\n"
+# define E_DUP2 "Error with dup2\n"
+# define E_FORK "Error with fork\n"
+# define E_OPENDIR "Error with opendir\n"
+# define E_OPEN "Error with open\n"
+# define E_UNLINK "Error with unlink\n"
+# define E_ACCESS "Error with access\n"
+# define E_EXECVE "Error with execve\n"
+# define E_CDMARGS "cd : too many args\n"
+# define E_CDFARGS "cd : too few args\n"
+# define E_CDCHDIR "Error with chdir in cd\n"
+# define E_PWD "Error, can\'t get pwd because of getcwd\n"
 
 # define PIPE_R 0
 # define PIPE_W 1
@@ -65,8 +81,6 @@
 ** the name of the file to redirect to.
 ** The type variable has been explained above in the Defines section.
 */
-
-char					**g_env;
 
 typedef struct s_redir
 {
@@ -131,7 +145,7 @@ char	**ft_split_wp(char *s);
 /*
 ** Utils style functions
 */
-int		get_var_name_end(char *var);
+int		get_var_name_end(char *var, t_mini *mini);
 void	skip_quotes(char *str, int *i, char c);
 t_cmd	*create_cmd(t_cmd *prev);
 t_redir	*create_redir(t_redir *prev, int type);

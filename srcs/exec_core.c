@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:13:06 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 21:28:39 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 16:02:49 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	do_cmd(t_cmd *cmd, t_mini *mini)
 	}
 	else
 	{
-		if (execve(cmd->cm_argv[0], cmd->cm_argv, g_env))
-			return (set_error(mini, 1, 1, NULL));
+		if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
+			return (set_error(mini, N_EXECVE, 1, NULL));
 	}
 	return (1);
 }

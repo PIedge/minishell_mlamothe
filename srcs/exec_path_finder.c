@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 01:12:02 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 16:04:13 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_path_cmd(t_cmd *cmd, t_mini *mini)
 
 	if (!access(cmd->cm_argv[0], X_OK))
 		return (0);
-	splt = ft_split(find_var(g_env, "PATH") + 5, ':');
+	splt = ft_split(find_var(mini->env, "PATH") + 5, ':');
 	if (!splt)
 		return (1);
 	i = -1;
@@ -50,7 +50,7 @@ int	check_path_cmd(t_cmd *cmd, t_mini *mini)
 		free(join);
 	}
 	ft_free_split(splt, 0);
-	return (set_error(mini, 8, 1, cmd->cm_argv[0]));
+	return (set_error(mini, N_ACCESS, 1, cmd->cm_argv[0]));
 }
 
 int	check_path_out(t_cmd *cmd, t_mini *mini)
@@ -64,12 +64,12 @@ int	check_path_out(t_cmd *cmd, t_mini *mini)
 		if (access(tmp->word, W_OK))
 		{
 			if (errno != ENOENT)
-				return (set_error(mini, 8, 1, tmp->word));
+				return (set_error(mini, N_ACCESS, 1, tmp->word));
 			else
 			{
 				fd = open(tmp->word, O_WRONLY | O_CREAT, 0666);
 				if (fd == -1)
-					return (set_error(mini, 8, 1, tmp->word));
+					return (set_error(mini, N_OPEN, 1, tmp->word));
 				close(fd);
 			}
 		}
@@ -86,7 +86,7 @@ int	check_path_redir(t_cmd *cmd, t_mini *mini)
 	while (tmp)
 	{
 		if (access(cmd->in->word, R_OK))
-			return (set_error(mini, 8, 1, cmd->in->word));
+			return (set_error(mini, N_ACCESS, 1, cmd->in->word));
 		tmp = tmp->next;
 	}
 	return (check_path_out(cmd, mini));

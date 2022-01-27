@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/27 01:44:54 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:10:15 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int	set_pipes(t_mini *mini)
 	return (1);
 }
 
-int	var_treat_cmd(t_cmd *cmd)
+int	var_treat_cmd(t_cmd *cmd, t_mini *mini)
 {
 	int	i;
 
 	i = 0;
 	while (cmd->cm_argv[i])
 	{
-		if (!var_treat_str(&(cmd->cm_argv[i]), g_env))
+		if (!var_treat_str(&(cmd->cm_argv[i]), mini->env))
 			return (0);
 		++i;
 	}
@@ -117,7 +117,7 @@ void	strip_quote_cmd(t_cmd *cmd)
 int	minishell(t_mini *mini)
 {
 	//static int stop = 0;
-	//printf("g : %s\n",g_env[31]);
+	//printf("g : %s\n",mini->env[31]);
 	mini->cmd_ori = readline(PROMPT);
 	//HISTORY
 	add_history(mini->cmd_ori);
@@ -138,7 +138,7 @@ int	minishell(t_mini *mini)
 	//printf("here\n");
 	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
 		return (1);
-	mini->cmd_ori = var_treat_str(&mini->cmd_ori, g_env);
+	mini->cmd_ori = var_treat_str(&mini->cmd_ori, mini->env);
 	if (!mini->cmd_ori)
 		return (0);
 	//printf("after var treat |%s|\n", mini->cmd_ori);

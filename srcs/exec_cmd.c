@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 01:41:01 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 16:02:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	if (!pipefds)
 		return (1);
 	if (pipe(pipefds[0]))
-		return (set_error(mini, 2, 1, NULL));
+		return (set_error(mini, N_PIPE, 1, NULL));
 	if (first_child(pipefds[0][PIPE_R], pipefds[0][PIPE_W], cmd, mini))
 		return (1);
 	i = 0;
@@ -30,7 +30,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	{
 		cmd = cmd->next;
 		if (pipe(pipefds[i]))
-			return (set_error(mini, 1, 2, NULL));
+			return (set_error(mini, N_FORK, 2, NULL));
 		if (other_childs(pipefds[i - 1][PIPE_R], pipefds[i][PIPE_W], \
 			cmd, mini))
 			return (1);
@@ -38,9 +38,10 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	if (last_child(cmd->next, pipefds[i][PIPE_R], mini))
 		return (1);
 	while (--nb_cmds >= 0)
-		waitpid(-1, NULL, WUNTRACED);
-	ft_free_pipefds(pipefds, 0);
-	ft_free_exit(mini, 0);
+	{
+		waitpid(-1, &mini->err, WUNTRACED);
+		mini->err = WEXITSTATUS(mini->err);
+	}
 	return (ft_free_pipefds(pipefds, 0));
 }
 
@@ -48,41 +49,57 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 {
 	int		in;
 	int		out;
+	pid_t	pid;
 
 	if (set_in_n_out(&in, &out, cmd, mini))
-		ft_free_exit(mini, 1);
-	if (do_cmd(cmd, mini))
-		ft_free_exit(mini, 1);
-	ft_free_exit(mini, 0);
+		ft_free_exit(mini, mini->err);
+	if (!cmd->cm_argv || !cmd->cm_argv[0])
+		return (0);
+	if (is_builtin(cmd->cm_argv[0]))
+	{
+		if (do_builtin(cmd, mini))
+			return (1);
+		else
+			return (0);
+	}
+	else
+	{
+		pid = fork();
+		if (pid < 0)
+			return (set_error(mini, N_FORK, 1, NULL));
+		if (pid)
+		{
+			waitpid(-1, &mini->err, WUNTRACED);
+			mini->err = WEXITSTATUS(mini->err);
+		}
+		else if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
+		{
+			set_error(mini, N_EXECVE, 1, NULL);
+			ft_free_exit(mini, mini->err);
+		}
+	}
 	return (0);
 }
 
 int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 {
-	pid_t	pid;
 	t_cmd	*tmp;
 	int		dup_in;
 	int		dup_out;
 
+	mini->err = 0;
 	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
 		return (0);
 	if (exec_init(mini, cmd, &dup_in, &dup_out))
 		return (ft_reset_dups(dup_in, dup_out, 2));
 	tmp = cmd;
-	pid = fork();
-	if (pid < 0)
-		return (set_error(mini, 4, 1, NULL));
-	if (pid)
-		waitpid(-1, NULL, WUNTRACED);
-	else if (tmp->next)
+	if (tmp->next)
 	{
 		if (cmd_wpipe(tmp, nb_cmds, mini))
 			return (ft_reset_dups(dup_in, dup_out, 2));
 	}
-	else
-		if (cmd_nopipe(tmp, mini))
-			return (ft_reset_dups(dup_in, dup_out, 2));
-	mini->err = -1;
+	else if (cmd_nopipe(tmp, mini))
+		return (ft_reset_dups(dup_in, dup_out, 2));
 	return (ft_reset_dups(dup_in, dup_out, 1));
 }
 

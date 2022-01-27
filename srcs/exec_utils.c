@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:19:45 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 01:51:47 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:06:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,22 @@ int	exec_init(t_mini *mini, t_cmd *cmd, int *dup_in, int *dup_out)
 	return (0);
 }
 
-int	get_var_name_end(char *str)
+int	get_var_name_end(char *str, t_mini *mini)
 {
 	int	ret;
 	int	i;
 
 	ret = -1;
-	while (g_env[++ret])
+	while (mini->env[++ret])
 	{
 		i = 0;
-		while (str[i] && g_env[ret][i] && str[i] == g_env[ret][i])
+		while (str[i] && mini->env[ret][i] && str[i] == mini->env[ret][i])
 		{
 			if (str[i] == '=')
 				return (ret);
 			++i;
 		}
-		if (!str[i] && g_env[ret][i] == '=')
+		if (!str[i] && mini->env[ret][i] == '=')
 			return (ret);
 	}
 	return (-1);
@@ -70,7 +70,7 @@ void ft_free_exit(t_mini *mini, int ret)
 {
 	free(mini->cmd_ori);
 	free_cmd(mini->cmd);
-	ft_double_tab_free(g_env);
+	ft_double_tab_free(mini->env);
 	rl_clear_history();
 	exit(ret);
 }
