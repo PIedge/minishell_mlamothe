@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/28 10:17:11 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:33:31 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 	pid_t	pid;
 
 	if (set_in_n_out(&in, &out, cmd, mini))
-		ft_free_exit(mini, mini->err);
+		return (1);
 	if (!cmd->cm_argv || !cmd->cm_argv[0])
 		return (0);
 	if (is_builtin(cmd->cm_argv[0]))
@@ -69,13 +69,13 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 			return (set_error(mini, N_FORK, 1, NULL));
 		if (pid)
 		{
-			waitpid(-1, &mini->err, WUNTRACED);
-			mini->err = WEXITSTATUS(mini->err);
+			waitpid(-1, &g_lrest, WUNTRACED);
+			g_lrest = WEXITSTATUS(g_lrest);
 		}
 		else if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
 		{
 			set_error(mini, N_EXECVE, 1, NULL);
-			ft_free_exit(mini, mini->err);
+			ft_free_exit(mini, g_lrest);
 		}
 	}
 	return (0);

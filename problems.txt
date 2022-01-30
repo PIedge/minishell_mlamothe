@@ -1,4 +1,5 @@
 "echo oui | > caca" segfault
 
-"< oui" should print error. (segf rn)
+FIXED "< oui" should print error. Check again later to see another fix didn't disrupt 
+
 

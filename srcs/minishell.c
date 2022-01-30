@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/28 10:17:26 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:28:54 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int	minishell(t_mini *mini)
 {
 	//static int stop = 0;
 	//printf("g : %s\n",mini->env[31]);
-	mini->err = 0;
 	mini->cmd_ori = readline(PROMPT);
 	//HISTORY
 	add_history(mini->cmd_ori);

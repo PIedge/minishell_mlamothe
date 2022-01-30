@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/27 16:10:43 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:27:19 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	init_mini(t_mini *mini, char **envp)
 	char	*nbr;
 
 	mini->err = 0;
+	g_lrest = 0;
 	mini->err_word = NULL;
 	mini->cmd = NULL;
 	mini->env = copy_env(envp);
@@ -74,5 +75,5 @@ int	main(int ac, char **av, char **envp)
 	/*
 	** TEST ZONE END
 	*/
-	return (1);
+	return (0);
 }
