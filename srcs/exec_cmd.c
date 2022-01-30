@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/30 19:33:31 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:58:23 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		waitpid(-1, &mini->err, WUNTRACED);
 		mini->err = WEXITSTATUS(mini->err);
 	}
-	return (ft_free_pipefds(pipefds, 0));
+	return (ft_free_pipefds(pipefds, 0, mini));
 }
 
 int	cmd_nopipe(t_cmd *cmd, t_mini *mini)

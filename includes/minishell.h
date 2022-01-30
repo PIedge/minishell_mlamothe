@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/30 17:19:33 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:58:12 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int		set_in(int *in, t_redir *redir, t_mini *mini);
 int		ft_closeem(int in, int out, int ret);
 int		set_in_n_out(int *in, int *out, t_cmd *cmd, t_mini *mini);
 int		**get_pfd(t_cmd *cmd, t_mini *mini);
-int		ft_free_pipefds(int **pipefds, int ret);
+int		ft_free_pipefds(int **pipefds, int ret, t_mini *mini);
 int		check_paths_ok(t_cmd *cmd, t_mini *mini);
 int		is_builtin(char *cmd);
 char    *ft_join_cmd(char *str1, char *str2, t_mini *mini);
