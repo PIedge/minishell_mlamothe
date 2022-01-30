@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:13:49 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 16:04:31 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:55:22 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	**get_pfd(t_cmd *cmd, t_mini *mini)
 	tmp = cmd;
 	while (tmp->next && ++i)
 		tmp = tmp->next;
-	pipefds = malloc(i * sizeof(int *));
+	pipefds = malloc((i + 1) * sizeof(int *));
 	if (!pipefds)
 		if (!set_error(mini, N_MALLOC, 0, NULL))
 			return (NULL);
@@ -34,21 +34,26 @@ int	**get_pfd(t_cmd *cmd, t_mini *mini)
 		pipefds[j] = malloc (2 * sizeof(int));
 		if (!pipefds[j])
 		{
-			ft_free_pipefds(pipefds, 0);
-			set_error(mini, N_MALLOC, 0, NULL);
+			ft_free_pipefds(pipefds, 1, mini);	
 			return (NULL);
 		}
 	}
+	pipefds[j] = NULL;
 	return (pipefds);
 }
 
-int	ft_free_pipefds(int **pipefds, int ret)
+int	ft_free_pipefds(int **pipefds, int ret, t_mini *mini)
 {
 	int	i;
 
 	i = -1;
-	while (pipefds[++i])
-		free(pipefds[i]);
-	free(pipefds);
+	if (ret)
+		set_error(mini, N_MALLOC, 0, NULL);
+	if (pipefds)
+	{
+		while (pipefds[++i])
+			free(pipefds[i]);
+		free(pipefds);
+	}
 	return (ret);
 }

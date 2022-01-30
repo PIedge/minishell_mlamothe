@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/28 10:17:11 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:53:25 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		waitpid(-1, &mini->err, WUNTRACED);
 		mini->err = WEXITSTATUS(mini->err);
 	}
-	return (ft_free_pipefds(pipefds, 0));
+	return (ft_free_pipefds(pipefds, 0, mini));
 }
 
 int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
@@ -52,7 +52,7 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 	pid_t	pid;
 
 	if (set_in_n_out(&in, &out, cmd, mini))
-		ft_free_exit(mini, mini->err);
+		return (1);
 	if (!cmd->cm_argv || !cmd->cm_argv[0])
 		return (0);
 	if (is_builtin(cmd->cm_argv[0]))
