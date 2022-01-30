@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/30 19:58:12 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:22:17 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int		**get_pfd(t_cmd *cmd, t_mini *mini);
 int		ft_free_pipefds(int **pipefds, int ret, t_mini *mini);
 int		check_paths_ok(t_cmd *cmd, t_mini *mini);
 int		is_builtin(char *cmd);
+int		ft_free_split(char	**splt, int ret);
 char    *ft_join_cmd(char *str1, char *str2, t_mini *mini);
 char	*ft_join(char *str1, char *str2, t_mini *mini);
 char	*ft_here_doc(char *str, int i, t_mini *mini);

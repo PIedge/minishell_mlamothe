@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 18:29:50 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/24 12:56:34 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:13:37 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	calc_words(char *str, char c)
 
 	i = -1;
 	nb = 0;
+	if (!str)
+		return (0);
 	while (str[++i])
 	{
 		while (str[i] && str[i] == c)

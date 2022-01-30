@@ -6,22 +6,27 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 16:04:13 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:22:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
 
-int	ft_free_split(char	**splt, int ret)
+char	**get_split(t_cmd *cmd, t_mini *mini)
 {
-	int	i;
+	char	*var;
+	char	**splt;
 
-	i = -1;
-	while (splt[++i])
-		free(splt[i]);
-	free(splt);
-	return (ret);
+	var = find_var(mini->env, "PATH");
+	if (!var)
+	{
+		set_error(mini, N_ACCESS, 1, cmd->cm_argv[0]);
+		return (NULL);
+	}
+	var += 5;
+	splt = ft_split(var, ':');
+	return (splt);
 }
 
 int	check_path_cmd(t_cmd *cmd, t_mini *mini)
@@ -32,7 +37,7 @@ int	check_path_cmd(t_cmd *cmd, t_mini *mini)
 
 	if (!access(cmd->cm_argv[0], X_OK))
 		return (0);
-	splt = ft_split(find_var(mini->env, "PATH") + 5, ':');
+	splt = get_split(cmd, mini);
 	if (!splt)
 		return (1);
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 04:23:07 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/25 12:10:30 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:02:02 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*find_var(char **env, char *var_name)
 		if (!(ft_strncmp(env[y], var_name, ft_strlen(var_name))))
 			return (env[y]);
 	}
-	return (0);
+	return (NULL);
 }
 
 char	*find_var_with_limit(char **env, char *start, char *end)

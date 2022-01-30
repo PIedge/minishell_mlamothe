@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:19:45 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 13:06:38 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:22:04 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,15 @@ void ft_free_exit(t_mini *mini, int ret)
 	ft_double_tab_free(mini->env);
 	rl_clear_history();
 	exit(ret);
+}
+
+int	ft_free_split(char	**splt, int ret)
+{
+	int	i;
+
+	i = -1;
+	while (splt[++i])
+		free(splt[i]);
+	free(splt);
+	return (ret);
 }
