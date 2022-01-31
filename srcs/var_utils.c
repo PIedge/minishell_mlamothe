@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 04:23:07 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 14:33:44 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:49:23 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,7 @@ void	EOF_in_cmd(t_mini *mini)
 	i = 0;
 	b = mini->cmd_ori;
 	if (!b)
-		printf("lmao fdp\n");
-	printf("miaou |%c|\n", b[i]);
-	while (b[i] && b[i] != EOF)
-	{
-
-		puts("miaou");
-		++i;
-	}
-	if (b[i] == EOF)
-	{
-		puts("miaou");
 		ft_free_exit(mini, 0);
-	}
 }
 
 char	*find_var(char **env, char *var_name)
