@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 09:09:02 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:04:11 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	init_mini(t_mini *mini, char **envp)
 	int		n;
 	char	*nbr;
 
-	init_signals();
+	init_signals(mini);
 	mini->err = 0;
 	g_lrest = 0;
 	mini->err_word = NULL;

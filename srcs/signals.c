@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 11:28:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 16:05:05 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:06:59 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ctrl_back(int sig)
 	g_lrest = 0;
 }
 
-void	init_signals(void)
+void	init_signals(t_mini *mini)
 {
 	struct sigaction	sig_c;
 	// struct sigaction	sig_d;
@@ -50,8 +50,8 @@ void	init_signals(void)
 	sig_c.sa_handler = ctrl_c;
 	// sig_d.sa_handler = ctrl_d;
 	sig_back.sa_handler = ctrl_back;
-	sigaction(SIGINT, &sig_c, 0);
+	sigaction(SIGINT, &sig_c, &mini->old_c);
 	// sigaction(SIGQUIT, &sig_d, 0);
-	// sigaction(SIGQUIT, &sig_back, 0);
-
+	sigaction(SIGQUIT, &sig_back, &mini->old_bs);
+		
 }

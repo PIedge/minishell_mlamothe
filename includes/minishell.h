@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 16:06:38 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:03:29 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 **							Includes										  **
 *******************************************************************************/
 
+#include <sys/types.h>
+#include <signal.h>
+#include <sys/ucontext.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/types.h>
@@ -29,6 +32,7 @@
 # include <dirent.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+
 
 /* *****************************************************************************
 **							Defines											  **
@@ -136,6 +140,8 @@ typedef struct s_mini
 	char	**env;
 	int		err;
 	char	*err_word;
+	struct sigaction	old_c;
+	struct sigaction	old_bs;
 }					t_mini;
 
 /* *****************************************************************************
@@ -152,7 +158,7 @@ char	**copy_env(char **env);
 char	*find_var(char **env, char *var_name);
 char	*find_var_with_limit(char **env, char *start, char *end);
 t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini);
-void	init_signals(void);
+void	init_signals(t_mini *mini);
 void	EOF_in_cmd(t_mini *mini);
 
 /*

@@ -2,6 +2,7 @@
 	"files.associations": {
 		"dirent.h": "c",
 		"readline.h": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"ucontext.h": "c"
 	}
 }
