@@ -1,0 +1,7 @@
+RET="2"
+while [ $RET -eq "2" ]
+do
+	make
+	RET=$?
+done
+echo "Make worked"

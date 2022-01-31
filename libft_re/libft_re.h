@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_re.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:37:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 01:26:27 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 08:44:51 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_bzero(void *b, size_t n);
 char	**ft_split(char *str, char c);
 char	*ft_itoa(int n);
+void	ft_memset(void *b, int n);
 
 /*
 ** New functions

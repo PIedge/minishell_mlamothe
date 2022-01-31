@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 04:23:07 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 06:26:51 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:33:44 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,28 @@
 #include "../libft_re/libft_re.h"
 #include <stdlib.h>
 
-/*int	get_var_name_end(char *var)
+void	EOF_in_cmd(t_mini *mini)
 {
-	int	i;
+	int		i;
+	char	*b;
 
 	i = 0;
-	while (*var != '=')
+	b = mini->cmd_ori;
+	if (!b)
+		printf("lmao fdp\n");
+	printf("miaou |%c|\n", b[i]);
+	while (b[i] && b[i] != EOF)
 	{
-		++var;
+
+		puts("miaou");
 		++i;
 	}
-	return (i);
-}*/
+	if (b[i] == EOF)
+	{
+		puts("miaou");
+		ft_free_exit(mini, 0);
+	}
+}
 
 char	*find_var(char **env, char *var_name)
 {
