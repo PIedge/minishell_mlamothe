@@ -6,13 +6,14 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/30 19:27:19 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/31 09:09:02 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "libft_re/libft_re.h"
 
+int	g_lrest;
 
 int	init_mini(t_mini *mini, char **envp)
 {
@@ -20,6 +21,7 @@ int	init_mini(t_mini *mini, char **envp)
 	int		n;
 	char	*nbr;
 
+	init_signals();
 	mini->err = 0;
 	g_lrest = 0;
 	mini->err_word = NULL;

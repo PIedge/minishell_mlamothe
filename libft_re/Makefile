@@ -13,6 +13,7 @@ SRCS	=	ft_printf_double_tab.c	\
 			ft_bzero.c				\
 			ft_split.c				\
 			ft_itoa.c				\
+			ft_memset.c				\
 
 NAME	=	libft.a
 

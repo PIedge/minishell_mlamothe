@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 15:28:28 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:04:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	minishell(t_mini *mini)
 	//static int stop = 0;
 	//printf("g : %s\n",mini->env[31]);
 	mini->cmd_ori = readline(PROMPT);
+	EOF_in_cmd(mini);
 	//HISTORY
 	add_history(mini->cmd_ori);
 	/*if (!stop)

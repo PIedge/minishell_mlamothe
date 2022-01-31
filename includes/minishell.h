@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/01/31 16:01:11 by mlamothe         ###   ########.fr       */
+=======
+/*   Updated: 2022/01/31 11:45:37 by tmerrien         ###   ########.fr       */
+>>>>>>> 34524dc78ed6138dee69d47a3450c22f2c4086db
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +76,18 @@
 # define PIPE_R 0
 # define PIPE_W 1
 
+# ifndef __USE_POSIX
+#  define __USE_POSIX
+# endif
+# ifndef __USE_MISC
+#  define __USE_MISC
+# endif
+
 /* *****************************************************************************
 **							Global											  **
 *******************************************************************************/
 
-int					g_lrest;
+extern int					g_lrest;
 
 /* *****************************************************************************
 **							Structs											  **
@@ -145,6 +156,8 @@ char	**copy_env(char **env);
 char	*find_var(char **env, char *var_name);
 char	*find_var_with_limit(char **env, char *start, char *end);
 t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini);
+void	init_signals(void);
+void	EOF_in_cmd(t_mini *mini);
 
 /*
 ** Split functions
