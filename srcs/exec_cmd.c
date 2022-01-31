@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/31 16:47:38 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:15:29 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,17 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	return (ft_reset_dups(dup_in, dup_out, 1));
 }
 
+char	*ft_warn_heredoc(int fd, char *path, char *str, int pr)
+{
+	if (pr)
+	{
+		printf("minishell: warning: here-document" \
+				" delimited by EOF (wanted \'%s\')\n", str);
+	}
+	close(fd);
+	return (path);
+}
+
 char	*ft_here_doc(char *str, int i, t_mini *mini)
 {
 	int		fd;
@@ -134,12 +145,15 @@ char	*ft_here_doc(char *str, int i, t_mini *mini)
 		return (NULL);
 	}
 	rdline = readline("> ");
+	if (!rdline)
+		return (ft_warn_heredoc(fd, path, str, 1));
 	while (ft_strcmp(rdline, str))
 	{
 		write(fd, rdline, ft_strlen(rdline));
 		write(fd, "\n", 1);
 		rdline = readline("> ");
+		if (!rdline)
+			return (ft_warn_heredoc(fd, path, str, 1));
 	}
-	close (fd);
-	return (path);
+	return (ft_warn_heredoc(fd, path, str, 0));
 }
