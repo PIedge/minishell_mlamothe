@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/30 19:58:23 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:20:11 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
+
+void	waitall(int nb_cmds, t_mini *mini)
+{
+	int	status;
+
+	while (--nb_cmds >= 0)
+	{
+		waitpid(-1, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			WTERMSIG(status);
+		mini->err = status;
+	}
+}
 
 int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 {
@@ -37,11 +52,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	}
 	if (last_child(cmd->next, pipefds[i][PIPE_R], mini))
 		return (1);
-	while (--nb_cmds >= 0)
-	{
-		waitpid(-1, &mini->err, WUNTRACED);
-		mini->err = WEXITSTATUS(mini->err);
-	}
+	waitall(nb_cmds, mini);
 	return (ft_free_pipefds(pipefds, 0, mini));
 }
 
@@ -68,10 +79,7 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 		if (pid < 0)
 			return (set_error(mini, N_FORK, 1, NULL));
 		if (pid)
-		{
-			waitpid(-1, &g_lrest, WUNTRACED);
-			g_lrest = WEXITSTATUS(g_lrest);
-		}
+			waitall(1, mini);
 		else if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
 		{
 			set_error(mini, N_EXECVE, 1, NULL);
