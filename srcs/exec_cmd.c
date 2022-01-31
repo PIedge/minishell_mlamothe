@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/31 15:20:11 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:47:38 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,17 @@ void	waitall(int nb_cmds, t_mini *mini)
 	{
 		waitpid(-1, &status, WUNTRACED);
 		if (WIFEXITED(status))
+		{
+			printf("Exited normally\n");
 			WEXITSTATUS(status);
+		}
 		else if (WIFSIGNALED(status))
+		{
+			printf("Exited via signal\n");
 			WTERMSIG(status);
+		}
+		else if (WCOREDUMP(status))
+			printf("Exited via core dump\n");
 		mini->err = status;
 	}
 }
