@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 04:23:07 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/30 20:02:02 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 06:26:51 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*find_var_with_limit(char **env, char *start, char *end)
 	int	y;
 
 	y = -1;
+	if (*start == '?')
+		return (ft_itoa(g_lrest));
 	while (env[++y])
 		if (!(ft_strncmp(env[y], start, end - start)))
 			return (env[y]);

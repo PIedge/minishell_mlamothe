@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:26:14 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 16:05:54 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 06:04:24 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	set_error(t_mini *mini, int err, int ret, char *str)
 {
 	mini->err = err;
+	g_lrest = err;
 	mini->err_word = str;
 	return (ret);
 }

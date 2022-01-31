@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/30 19:28:54 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/01/31 06:05:18 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ int	minishell(t_mini *mini)
 	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
 		return (1);
 	mini->cmd_ori = var_treat_str(&mini->cmd_ori, mini->env);
+	mini->err = 0;
+	g_lrest = 0;
 	if (!mini->cmd_ori)
 		return (0);
 	//printf("after var treat |%s|\n", mini->cmd_ori);

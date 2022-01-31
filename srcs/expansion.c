@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 14:09:58 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/01/31 06:41:28 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	get_end_index(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '?')
+		return (1);
 	while (str[i] && !ft_is_white_space(str[i]) && str[i] != '"')
 		++i;
 	return (i);
@@ -52,6 +54,7 @@ int	calc_new_len(char *str, char **env, int *n)
 	int	i;
 	int	end;
 	int	len;
+	char	*var;
 
 	i = 0;
 	len = 0;
@@ -67,8 +70,11 @@ int	calc_new_len(char *str, char **env, int *n)
 			end = get_end_index(&(str[i])) + i;
 			//printf("char looked at |%c| before\n", str[end]);
 			//printf("calc_new_len |%s|\n", find_var_with_limit(env, &str[i], &str[end]));
-			len += ft_strlen(find_var_with_limit(env, &str[i], &str[end]));
+			var = find_var_with_limit(env, &str[i], &str[end]);
+			len += ft_strlen(var);
 			*n += 1;
+			if (str[i] == '?')
+				free(var);
 		}
 		else
 		{
@@ -86,7 +92,7 @@ void	copy_until_var(char *ori, char *new, int *i, int *y)
 	quote = 0;
 	while (ori[*i] && (ori[*i] != '$' || quote))
 	{
-		printf("copy until char looked at |%c|\n", ori[*i]);
+		// printf("copy until char looked at |%c|\n", ori[*i]);
 		if (ori[*i] == '\'')
 		{
 			if (quote == 0)
@@ -100,7 +106,7 @@ void	copy_until_var(char *ori, char *new, int *i, int *y)
 	}
 	if (ori[*i] == '\0')
 		new[*y] = ori[*i];
-	printf("char looked at |%c| end\n", ori[*i]);
+	// printf("char looked at |%c| end\n", ori[*i]);
 }
 
 int	copy_var_into_new(char *ori, char *new, char **env, int *y)
@@ -122,10 +128,15 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 		var = find_var_with_limit(env, &ori[i + 1], &ori[end]);
 		if (!var)
 			return (end);
-		while (var[a] != '=')
+		while (ori[i + 1] != '?' && var[a] != '=')
 			++a;
-		ft_strcpy(new, &var[++a]);
+		if (var[a] == '=')
+			++a;
+		ft_strcpy(new, &var[a]);
 		*y += ft_strlen(&var[a]);
+		//printf("coucou %c %c + 1\n", ori[i], ori[i + 1]);
+		if (ori[i + 1] == '?')
+			free(var);
 	}
 	return (end);
 }

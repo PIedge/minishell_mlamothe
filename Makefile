@@ -23,6 +23,7 @@ SRCS	=	srcs/inits_frees.c		\
 			builtins/ft_unset.c		\
 			builtins/ft_env.c		\
 			builtins/ft_exit.c		\
+			srcs/signals.c			\
 			main.c					\
 
 NAME	=	minishell
