@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 18:59:35 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 21:23:20 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ void	waitall(int nb_cmds, t_mini *mini)
 		}
 		else
 		{
-			if (WEXITSTATUS(status))
-				g_lrest = 1;
-			else
-				g_lrest = 0;
+			g_lrest = status >> 8;
 			mini->err = status;
 		}
 	}
@@ -46,12 +43,12 @@ void	waithd(t_mini *mini)
 	{
 		WTERMSIG(status);
 		g_lrest = 130;
-		mini->err = status;
+		mini->err = status >> 8;
 	}
 	else
 	{
 		WEXITSTATUS(status);
-		mini->err = status;
+		mini->err = status >> 8;
 		if (status)
 			g_lrest = 1;
 	}
@@ -118,6 +115,13 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 	return (0);
 }
 
+int	select_return(t_mini *mini)
+{
+	if (mini->err == 1 || mini->err == 0)
+		return (1);
+	return (2);
+}
+
 int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 {
 	t_cmd	*tmp;
@@ -125,6 +129,13 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	int		dup_out;
 	pid_t	pid;
 
+	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
+	{
+		mini->err = 0;
+		return (0);
+	}
+	if (exec_init(mini, cmd, &dup_in, &dup_out))
+			return (2);
 	pid = fork();
 	if (pid == -1)
 		return (set_error(mini, N_FORK, 2, NULL));
@@ -132,10 +143,6 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		waithd(mini);
 	else
 	{
-		if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
-			exit(0);
-		if (exec_init(mini, cmd, &dup_in, &dup_out))
-			ft_reset_dups(mini, dup_in, dup_out);
 		tmp = cmd;
 		if (tmp->next)
 			cmd_wpipe(tmp, nb_cmds, mini);
@@ -143,7 +150,7 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 			cmd_nopipe(tmp, mini);
 		ft_reset_dups(mini, dup_in, dup_out);
 	}
-	return (1);
+	return (select_return(mini));
 }
 
 char	*ft_warn_heredoc(int fd, char *str, int ret)
