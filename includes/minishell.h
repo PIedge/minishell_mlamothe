@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 17:03:29 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:18:08 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ typedef struct s_mini
 	char	*err_word;
 	struct sigaction	old_c;
 	struct sigaction	old_bs;
+	struct sigaction	new_c;
+	struct sigaction	new_bs;
 }					t_mini;
 
 /* *****************************************************************************
@@ -160,6 +162,7 @@ char	*find_var_with_limit(char **env, char *start, char *end);
 t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini);
 void	init_signals(t_mini *mini);
 void	EOF_in_cmd(t_mini *mini);
+void	cancel_sig(t_mini *mini, char val);
 
 /*
 ** Split functions
@@ -197,7 +200,7 @@ char    *ft_join_cmd(char *str1, char *str2, t_mini *mini);
 char	*ft_join(char *str1, char *str2, t_mini *mini);
 char	*ft_here_doc(char *str, int i, t_mini *mini);
 char    *ft_strdup(const char *src, t_mini *mini);
-int		ft_reset_dups(int in, int out, int ret);
+int		ft_reset_dups(t_mini *mini, int in, int out, int ret);
 char	*get_path_hd(t_mini *mini, int i);
 void	ft_free_exit(t_mini *mini, int ret);
 
@@ -226,5 +229,7 @@ int		ft_export(t_cmd *cmd, t_mini *mini);
 int		ft_unset(t_cmd *cmd, t_mini *mini);
 int		ft_env(t_cmd *cmd, t_mini *mini);
 int		ft_exit(t_mini *mini);
+
+void	ctrl_c(int sig);
 
 #endif
