@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 11:28:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/01 11:46:50 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:21:29 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 #include <signal.h>
 #include <sys/ucontext.h>
 #include <unistd.h>
+
+void	cancel_sig(t_mini *mini, char val)
+{
+	if (val)
+	{
+		signal(SIGINT, SIG_DFL);
+		return ;
+	}
+	signal(SIGINT, mini->new_c.sa_handler);
+}
 
 void	ctrl_c(int sig)
 {
@@ -38,14 +48,8 @@ void	ctrl_back(int sig)
 
 void	init_signals(t_mini *mini)
 {
-	struct sigaction	sig_c;
-	struct sigaction	sig_back;
-
-	ft_memset((void *)&sig_c, sizeof(sig_c));
-	ft_memset((void *)&sig_back, sizeof(sig_back));
-	sig_c.sa_handler = ctrl_c;
-	sig_back.sa_handler = ctrl_back;
-	sigaction(SIGINT, &sig_c, &mini->old_c);
-	sigaction(SIGQUIT, &sig_back, &mini->old_bs);
-		
+	signal(SIGQUIT, SIG_IGN);
+	ft_memset((void *)&mini->new_c, sizeof(mini->new_c));
+	mini->new_c.sa_handler = ctrl_c;
+	sigaction(SIGINT, &mini->new_c, &mini->old_c);
 }
