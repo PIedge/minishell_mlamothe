@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:19:45 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 15:12:30 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:02:56 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,20 @@ char	*get_path_hd(t_mini *mini, int i)
 int	exec_init(t_mini *mini, t_cmd *cmd, int *dup_in, int *dup_out)
 {
 	t_cmd	*tmp;
+	int		i;
 
+	tmp = cmd;
+	i = 1;
+	while(tmp->in)
+	{
+		++i;
+		if (tmp->in->type)
+		{
+			tmp->in->word = ft_here_doc(tmp->in->word, mini, i);
+			if (!tmp->in->word)
+				return (0);
+		}
+	}
 	*dup_in = dup(STDIN_FILENO);
 	*dup_out = dup(STDOUT_FILENO);
 	if (*dup_in == -1 || *dup_out == -1)
