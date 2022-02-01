@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 22:30:04 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:40:12 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	handle_hd(t_mini *mini, t_redir *tmp)
 	{
 		free(tmp->word);
 		tmp->word = get_path_hd(mini, i);
-		waithd(mini);
+		waitparent(mini);
 	}
 	else
 		ft_here_doc(tmp->word, mini, i);

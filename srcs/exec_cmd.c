@@ -6,14 +6,14 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 22:24:28 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:40:37 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
 
-void	waitall(int nb_cmds, t_mini *mini)
+void	waitchild(int nb_cmds, t_mini *mini)
 {
 	int	status;
 
@@ -22,9 +22,10 @@ void	waitall(int nb_cmds, t_mini *mini)
 		waitpid(-1, &status, WUNTRACED);
 		if (WIFSIGNALED(status))
 		{
-			WTERMSIG(status);
-			g_lrest = 130;
 			mini->err = status;
+			g_lrest = 130;
+			if (WTERMSIG(status))
+				ft_free_exit(mini, mini->err);
 		}
 		else
 		{
@@ -34,7 +35,7 @@ void	waitall(int nb_cmds, t_mini *mini)
 	}
 }
 
-void	waithd(t_mini *mini)
+void	waitparent(t_mini *mini)
 {
 	int	status;
 
@@ -78,7 +79,7 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	}
 	if (last_child(cmd->next, pipefds[i][PIPE_R], mini))
 		return (1);
-	waitall(nb_cmds, mini);
+	waitchild(nb_cmds, mini);
 	return (ft_free_pipefds(pipefds, 0, mini));
 }
 
@@ -105,7 +106,7 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 		if (pid < 0)
 			return (set_error(mini, N_FORK, 1, NULL));
 		if (pid)
-			waitall(1, mini);
+			waitchild(1, mini);
 		else if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
 		{
 			set_error(mini, N_EXECVE, 1, NULL);
@@ -140,7 +141,7 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	if (pid == -1)
 		return (set_error(mini, N_FORK, 2, NULL));
 	if (pid)
-		waithd(mini);
+		waitparent(mini);
 	else
 	{
 		tmp = cmd;

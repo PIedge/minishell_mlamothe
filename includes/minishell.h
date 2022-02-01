@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/01 22:21:17 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:40:04 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,8 @@ char    *ft_strdup(const char *src, t_mini *mini);
 void	ft_reset_dups(t_mini *mini, int in, int out);
 char	*get_path_hd(t_mini *mini, int i);
 void	ft_free_exit(t_mini *mini, int ret);
-void	waitall(int nb_cmds, t_mini *mini);
-void	waithd(t_mini *mini);
+void	waitchild(int nb_cmds, t_mini *mini);
+void	waitparent(t_mini *mini);
 
 /*
 ** Execution' functions

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/31 17:04:11 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:44:56 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	main(int ac, char **av, char **envp)
 		mini.cmd_ori = NULL;
 		free_cmd(mini.cmd);
 		mini.cmd = NULL;
-		if(mini.err)
-			printf("\e[1;31merr code : %d\e[0m\n", mini.err);
+	//	if(mini.err)
+	//		printf("\e[1;31merr code : %d\e[0m\n", mini.err);
 	}
 	free(mini.cmd_ori);
 	free_cmd(mini.cmd);
