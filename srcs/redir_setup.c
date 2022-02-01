@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/26 14:10:50 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:35:30 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,11 @@ char *get_redir_word(char *str, int *i)
 
 t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini)
 {
-	int	i;
-	int	x;
-	int	stand;
+	int		i;
+	int		x;
+	int		stand;
+	pid_t	pid;
+	char	*p_hd;
 
 	i = 0;
 	x = -1;
@@ -99,8 +101,23 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini)
 		{
 		//	printf("here\n");
 			x = i;
-			if (which_type(&cm[x]))																						//HEREDOC
-				cmd->in = new_redir(cmd->in, ft_here_doc(get_redir_word(&cm[x], &i), x, mini), which_type(&cm[x]));
+			if (which_type(&cm[x]))	//HEREDOC
+			{
+				p_hd = get_path_hd(mini, i);
+				if (!p_hd)				//frees ptet nécessaires jsp
+					return (NULL);
+				pid = fork();
+				if (pid == -1)			//frees ptet nécessaires jsp
+					return (NULL);
+				if (pid)
+				{
+					waitall(1, mini);
+					cmd->in = new_redir(cmd->in, p_hd, which_type(&cm[x]));
+					get_redir_word(&cm[x], &i);
+				}
+				else
+					ft_here_doc(get_redir_word(&cm[x], &i), mini, p_hd);
+			}
 			else
 				cmd->in = new_redir(cmd->in, get_redir_word(&cm[x], &i), which_type(&cm[x]));
 			if (!cmd->in || !(cmd->in->word))

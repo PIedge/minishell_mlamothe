@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_core.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:13:06 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 14:31:05 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:35:37 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	ft_reset_dups(t_mini *mini, int in, int out, int ret)
 {
+	(void)mini;
 	if (dup2(in, STDIN_FILENO) == -1)
 		return (1);
 	if (dup2(out, STDOUT_FILENO) == -1)

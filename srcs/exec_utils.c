@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:19:45 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/30 20:22:04 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:12:30 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ char	*get_path_hd(t_mini *mini, int i)
 	path = ft_join("./tmp/minishell-here_doc", nbr, mini);
 	free(nbr);
 	if (!path)
+	{
+		set_error(mini, 30, 0, NULL);
 		return (NULL);
+	}
 	return (path);
 }
 
@@ -67,6 +70,15 @@ int	get_var_name_end(char *str, t_mini *mini)
 }
 
 void ft_free_exit(t_mini *mini, int ret)
+{
+	free(mini->cmd_ori);
+	free_cmd(mini->cmd);
+	ft_double_tab_free(mini->env);
+	rl_clear_history();
+	exit(ret);
+}
+
+void ft_free_exit_hd(t_mini *mini, int ret)
 {
 	free(mini->cmd_ori);
 	free_cmd(mini->cmd);

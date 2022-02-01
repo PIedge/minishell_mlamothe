@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/01 13:18:08 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:34:43 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,11 +198,12 @@ int		is_builtin(char *cmd);
 int		ft_free_split(char	**splt, int ret);
 char    *ft_join_cmd(char *str1, char *str2, t_mini *mini);
 char	*ft_join(char *str1, char *str2, t_mini *mini);
-char	*ft_here_doc(char *str, int i, t_mini *mini);
+void	ft_here_doc(char *str, t_mini *mini, char *p_hd);
 char    *ft_strdup(const char *src, t_mini *mini);
 int		ft_reset_dups(t_mini *mini, int in, int out, int ret);
 char	*get_path_hd(t_mini *mini, int i);
 void	ft_free_exit(t_mini *mini, int ret);
+void	waitall(int nb_cmds, t_mini *mini);
 
 /*
 ** Execution' functions

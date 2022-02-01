@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 14:31:51 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:36:14 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,44 +122,38 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	return (ft_reset_dups(mini, dup_in, dup_out, 1));
 }
 
-char	*ft_warn_heredoc(char *str, int fd, char *path, int pr)
+void	ft_warn_heredoc(t_mini *mini, int fd, char *str)
 {
-	if (pr)
-	{
-		printf("minishell: warning: here-document" \
-				" delimited by EOF (%s)\n", str);
-	}
+	printf("minishell: warning: here-document" \
+			" delimited by EOF (wanted \'%s\')\n", str);
 	close(fd);
-	return (path);
+	ft_free_exit(mini, mini->err);
 }
 
-char	*ft_here_doc(char *str, int i, t_mini *mini)
+void	ft_here_doc(char *str,t_mini *mini, char *p_hd)
 {
 	int		fd;
 	char	*rdline;
-	char	*path;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	path = get_path_hd(mini, i);
-	if (!path)
-		return (NULL);
-	fd = open(path, O_WRONLY | O_CREAT, 0666);
+	fd = open(p_hd, O_WRONLY | O_CREAT, 0666);
 	if (fd == -1)
 	{
-		free(path);
-		return (NULL);
+		free(p_hd);
+		ft_free_exit(mini, mini->err);
 	}
 	rdline = readline("> ");
 	if (!rdline)
-		return (ft_warn_heredoc(str, fd, path, 1));
+		ft_warn_heredoc(mini, fd, str);
 	while (ft_strcmp(rdline, str))
 	{
 		write(fd, rdline, ft_strlen(rdline));
 		write(fd, "\n", 1);
 		rdline = readline("> ");
 		if (!rdline)
-			return (ft_warn_heredoc(str, fd, path, 1));
+			ft_warn_heredoc(mini, fd, str);
 	}
-	return (ft_warn_heredoc(str, fd, path, 0));
+	close(fd);
+	ft_free_exit(mini, 0);
 }
