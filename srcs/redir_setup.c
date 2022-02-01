@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/01 18:05:11 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 21:31:51 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini)
 		{
 		//	printf("here\n");
 			x = i;
-			if (which_type(&cm[x]))	//TU TE DEMERDES ICI PAR CONTRE (HEREDOC)
-			{
-				
-			}
-			else
-				cmd->in = new_redir(cmd->in, get_redir_word(&cm[x], &i), which_type(&cm[x]));
+			cmd->in = new_redir(cmd->in, get_redir_word(&cm[x], &i), which_type(&cm[x]));
 			if (!cmd->in || !(cmd->in->word))
 				return (0);
 			stand = x;

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 21:00:26 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:30:04 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,26 @@ int	check_path_out(t_cmd *cmd, t_mini *mini)
 	return (0);
 }
 
+int	handle_hd(t_mini *mini, t_redir *tmp)
+{
+	pid_t		pid;
+	static int	i = 1;
+
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid)
+	{
+		free(tmp->word);
+		tmp->word = get_path_hd(mini, i);
+		waithd(mini);
+	}
+	else
+		ft_here_doc(tmp->word, mini, i);
+	++i;
+	return (0);
+}
+
 int	check_path_redir(t_cmd *cmd, t_mini *mini)
 {
 	t_redir	*tmp;
@@ -90,7 +110,12 @@ int	check_path_redir(t_cmd *cmd, t_mini *mini)
 	tmp = cmd->in;
 	while (tmp)
 	{
-		if (access(cmd->in->word, R_OK))
+		if (tmp->type)
+		{
+			if (handle_hd(mini, tmp))
+				return (1);
+		}
+		else if (access(cmd->in->word, R_OK))
 			return (set_error(mini, N_ACCESS, 1, cmd->in->word));
 		tmp = tmp->next;
 	}
@@ -102,8 +127,12 @@ int	check_paths_ok(t_cmd *cmd, t_mini *mini)
 	t_cmd	*tmp;
 
 	tmp = cmd;
-	if (check_path_redir(tmp, mini))
-		return (1);
+	while (tmp)
+	{
+		if (check_path_redir(tmp, mini))
+			return (1);
+		tmp = tmp->next;
+	}
 	tmp = cmd;
 	while (tmp)
 	{

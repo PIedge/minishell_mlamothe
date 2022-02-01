@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 21:23:20 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:24:28 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,18 +153,18 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	return (select_return(mini));
 }
 
-char	*ft_warn_heredoc(int fd, char *str, int ret)
+void	ft_warn_heredoc(int fd, char *str, t_mini *mini)
 {
-	if (ret)
+	if (mini->err)
 	{
 		printf("minishell: warning: here-document" \
 			" delimited by EOF (wanted \'%s\')\n", str);
 	}
 	close(fd);
-	return (NULL);
+	ft_free_exit(mini, mini->err);
 }
 
-char	*ft_here_doc(char *str, t_mini *mini, int i)
+void	ft_here_doc(char *str, t_mini *mini, int i)
 {
 	int		fd;
 	char	*rdline;
@@ -174,7 +174,7 @@ char	*ft_here_doc(char *str, t_mini *mini, int i)
 	signal(SIGQUIT, SIG_DFL);
 	p_hd = get_path_hd(mini, i);
 		if (!p_hd)
-			return (NULL);
+			ft_free_exit(mini, mini->err);
 	fd = open(p_hd, O_WRONLY | O_CREAT, 0666);
 	if (fd == -1)
 	{
@@ -183,15 +183,14 @@ char	*ft_here_doc(char *str, t_mini *mini, int i)
 	}
 	rdline = readline("> ");
 	if (!rdline)
-		ft_warn_heredoc(fd, str, 1);
+		ft_warn_heredoc(fd, str, mini);
 	while (ft_strcmp(rdline, str))
 	{
 		write(fd, rdline, ft_strlen(rdline));
 		write(fd, "\n", 1);
 		rdline = readline("> ");
 		if (!rdline)
-			return (ft_warn_heredoc(fd, str, 1));
+			ft_warn_heredoc(fd, str, mini);
 	}
-	ft_warn_heredoc(fd, str, 0);
-	return (p_hd);
+	ft_warn_heredoc(fd, str, mini);
 }
