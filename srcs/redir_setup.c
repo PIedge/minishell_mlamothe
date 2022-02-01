@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 06:27:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/01 15:35:30 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 16:04:47 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini)
 					return (NULL);
 				if (pid)
 				{
-					waitall(1, mini);
+					waithd(mini);
 					cmd->in = new_redir(cmd->in, p_hd, which_type(&cm[x]));
 					get_redir_word(&cm[x], &i);
 				}

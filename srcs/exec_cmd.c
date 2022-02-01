@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 15:36:14 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 16:04:59 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ void	waitall(int nb_cmds, t_mini *mini)
 		}
 		mini->err = status;
 	}
+}
+
+void	waithd(t_mini *mini)
+{
+	int	status;
+
+	waitpid(-1, &status, WUNTRACED);
+	if (WIFSIGNALED(status))
+	{
+		WTERMSIG(status);
+		g_lrest = 130;
+	}
+	else
+		WEXITSTATUS(status);
+	mini->err = status;
 }
 
 int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
