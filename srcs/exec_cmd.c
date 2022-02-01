@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 13:44:25 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:31:51 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	int		dup_in;
 	int		dup_out;
 
-	cancel_sig(mini, '1');
 	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
 		return (0);
 	if (exec_init(mini, cmd, &dup_in, &dup_out))
@@ -123,16 +122,14 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	return (ft_reset_dups(mini, dup_in, dup_out, 1));
 }
 
-char	*ft_warn_heredoc(t_mini *mini, int fd, char *path, int pr)
+char	*ft_warn_heredoc(char *str, int fd, char *path, int pr)
 {
 	if (pr)
 	{
 		printf("minishell: warning: here-document" \
-				" delimited by EOF\n");
+				" delimited by EOF (%s)\n", str);
 	}
 	close(fd);
-	signal(SIGINT, mini->new_c.sa_handler);
-	signal(SIGQUIT, SIG_IGN);
 	return (path);
 }
 
@@ -155,14 +152,14 @@ char	*ft_here_doc(char *str, int i, t_mini *mini)
 	}
 	rdline = readline("> ");
 	if (!rdline)
-		return (ft_warn_heredoc(mini, fd, path, 1));
+		return (ft_warn_heredoc(str, fd, path, 1));
 	while (ft_strcmp(rdline, str))
 	{
 		write(fd, rdline, ft_strlen(rdline));
 		write(fd, "\n", 1);
 		rdline = readline("> ");
 		if (!rdline)
-			return (ft_warn_heredoc(mini, fd, path, 1));
+			return (ft_warn_heredoc(str, fd, path, 1));
 	}
-	return (ft_warn_heredoc(mini, fd, path, 0));
+	return (ft_warn_heredoc(str, fd, path, 0));
 }
