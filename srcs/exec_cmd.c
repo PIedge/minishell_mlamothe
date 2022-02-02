@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 12:44:22 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/02 15:11:15 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void	ft_here_doc(char *str, t_mini *mini, int i)
 	char	*rdline;
 	char	*p_hd;
 
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, ctrl_heredoc_c);
 	signal(SIGQUIT, SIG_DFL);
 	p_hd = get_path_hd(mini, i);
 		if (!p_hd)
