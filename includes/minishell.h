@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/02 15:10:59 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/02 15:51:08 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ typedef struct s_mini
 	struct sigaction	old_c;
 	struct sigaction	old_bs;
 	struct sigaction	new_c;
+	struct sigaction	new_exec_c;
 	struct sigaction	new_bs;
 }					t_mini;
 
@@ -204,7 +205,7 @@ void	ft_reset_dups(t_mini *mini, int in, int out);
 char	*get_path_hd(t_mini *mini, int i);
 void	ft_free_exit(t_mini *mini, int ret);
 void	waitchild(int nb_cmds, t_mini *mini);
-void	waitparent(t_mini *mini);
+int		waitparent(t_mini *mini);
 
 /*
 ** Execution' functions
@@ -234,5 +235,5 @@ int		ft_exit(t_mini *mini);
 
 void	ctrl_c(int sig);
 void	ctrl_heredoc_c(int sig);
-
+void	ctrl_exec_c(int sig);
 #endif

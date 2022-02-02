@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 15:11:15 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:03:57 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,10 @@ void	waitchild(int nb_cmds, t_mini *mini)
 	while (--nb_cmds >= 0)
 	{
 		waitpid(-1, &status, WUNTRACED);
-		//printf("hello\n");
-		//printf("status : %d\n", status >> 8);
-		//printf("g_lrest : %d\n", g_lrest);
 		if (WIFSIGNALED(status))
 		{
-			//printf("sigterm\n");
-			printf("signaled\n");
 			if (WTERMSIG(status) || g_lrest == 130)
 			{
-				printf("sigterm\n");
-
 				ft_free_exit(mini, mini->err);
 			}
 			mini->err = status;
@@ -44,7 +37,7 @@ void	waitchild(int nb_cmds, t_mini *mini)
 	}
 }
 
-void	waitparent(t_mini *mini)
+int	waitparent(t_mini *mini)
 {
 	int	status;
 
@@ -53,7 +46,11 @@ void	waitparent(t_mini *mini)
 	{
 		g_lrest = status >> 8;
 		if (WTERMSIG(status))
+		{
+			mini->err = status >> 8;
 			g_lrest = 130;
+			return (1);
+		}
 		mini->err = status >> 8;
 	}
 	else
@@ -63,6 +60,7 @@ void	waitparent(t_mini *mini)
 		if (status)
 			g_lrest = 1;
 	}
+	return (0);
 }
 
 int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
@@ -99,6 +97,7 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 	int		out;
 	pid_t	pid;
 
+	//signal(SIGINT, ctrl_heredoc_c);
 	if (set_in_n_out(&in, &out, cmd, mini))
 		return (1);
 	if (!cmd->cm_argv || !cmd->cm_argv[0])
@@ -140,6 +139,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	int		dup_out;
 	pid_t	pid;
 
+	//signal(SIGQUIT, ctrl_exec_c);
+	sigaction(SIGINT, &mini->new_exec_c, NULL);
 	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
 	{
 		mini->err = 0;
@@ -154,8 +155,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		waitparent(mini);
 	else
 	{
-		//signal(SIGINT, SIG_DFL);
-		//signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		tmp = cmd;
 		if (tmp->next)
 			cmd_wpipe(tmp, nb_cmds, mini);
