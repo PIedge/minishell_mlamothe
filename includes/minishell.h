@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/02 15:51:08 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:12:03 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ typedef struct s_mini
 	struct sigaction	new_c;
 	struct sigaction	new_exec_c;
 	struct sigaction	new_bs;
+	struct sigaction	lol;
 }					t_mini;
 
 /* *****************************************************************************
@@ -236,4 +237,6 @@ int		ft_exit(t_mini *mini);
 void	ctrl_c(int sig);
 void	ctrl_heredoc_c(int sig);
 void	ctrl_exec_c(int sig);
+
+void	ctrl_cmd_c(int sig); // having fun
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 11:28:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/02 16:05:46 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:10:55 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ void	ctrl_exec_c(int sig)
 	g_lrest = 130;
 }
 
+void	ctrl_cmd_c(int sig)
+{
+	sig = 0;
+	g_lrest = 130;
+	exit(3);
+}
+
 void	ctrl_heredoc_c(int sig)
 {
 	printf("\n");
@@ -70,7 +77,9 @@ void	init_signals(t_mini *mini)
 	signal(SIGQUIT, SIG_IGN);
 	ft_memset((void *)&mini->new_c, sizeof(mini->new_c));
 	ft_memset((void *)&mini->new_exec_c, sizeof(mini->new_exec_c));
+	ft_memset((void *)&mini->lol, sizeof(mini->lol));
 	mini->new_c.sa_handler = ctrl_c;
 	mini->new_exec_c.sa_handler = ctrl_exec_c;
+	mini->lol.sa_handler = ctrl_cmd_c;
 	sigaction(SIGINT, &mini->new_c, &mini->old_c);
 }

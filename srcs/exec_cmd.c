@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 16:21:13 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:45:45 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	pid_t	pid;
 
 	//signal(SIGQUIT, ctrl_exec_c);
-	sigaction(SIGINT, &mini->new_exec_c, NULL);
+	// sigaction(SIGINT, &mini->new_exec_c, NULL);
+	signal(SIGINT, SIG_IGN);
 	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
 	{
 		mini->err = 0;
@@ -155,8 +156,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		waitparent(mini);
 	else
 	{
-		sigaction(SIGINT, &mini->old_c, NULL);
-		signal(SIGQUIT, SIG_DFL);
+		sigaction(SIGINT, &mini->lol, NULL);
+		//signal(SIGQUIT, SIG_DFL);
 		tmp = cmd;
 		if (tmp->next)
 			cmd_wpipe(tmp, nb_cmds, mini);

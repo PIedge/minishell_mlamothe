@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/02 00:32:41 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:38:28 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	minishell(t_mini *mini)
 {
 	//static int stop = 0;
 	//printf("g : %s\n",mini->env[31]);
+	printf("before read\n");
 	mini->cmd_ori = readline(PROMPT);
 	EOF_in_cmd(mini);
 	//HISTORY
@@ -204,6 +205,7 @@ int	minishell(t_mini *mini)
 	}
 	if (retexec == 2)
 		select_err(mini->err, mini->err_word);
+	printf("end minishell\n");
 	return (1);
 	// Test Zone
 	// Execution
