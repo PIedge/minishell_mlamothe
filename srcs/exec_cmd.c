@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 17:45:45 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:15:34 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	waitchild(int nb_cmds, t_mini *mini)
 			{
 				ft_free_exit(mini, mini->err);
 			}
-			mini->err = status;
+			mini->err = status >> 8;
 			g_lrest = 130;
 		}
 		else
 		{
 			g_lrest = status >> 8;
-			mini->err = status;
+			mini->err = status >> 8;
 		}
 	}
 }
