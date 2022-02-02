@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 16:03:57 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:21:13 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		waitparent(mini);
 	else
 	{
-		signal(SIGINT, SIG_DFL);
+		sigaction(SIGINT, &mini->old_c, NULL);
 		signal(SIGQUIT, SIG_DFL);
 		tmp = cmd;
 		if (tmp->next)
@@ -164,6 +164,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 			cmd_nopipe(tmp, mini);
 		ft_reset_dups(mini, dup_in, dup_out);
 	}
+	sigaction(SIGINT, &mini->new_c, NULL);
+	// printf("here\n");
 	return (select_return(mini));
 }
 
