@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 17:45:45 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:14:03 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void	ft_here_doc(char *str, t_mini *mini, int i)
 	char	*rdline;
 	char	*p_hd;
 
-	signal(SIGINT, ctrl_heredoc_c);
+	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	p_hd = get_path_hd(mini, i);
 		if (!p_hd)
