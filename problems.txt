@@ -4,3 +4,6 @@ FIXED "< oui" should print error. Check again later to see another fix didn't di
 
 FIXED "unset PATH" -> "env | grep PATH" segfault
 
+
+CTRL C doesn't work well when launched with a command (example : cat witout parameters or cat with a heredoc)
+
