@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 01:10:17 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:18:14 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	int		dup_out;
 	pid_t	pid;
 
-	//sigaction(SIGINT, &mini->old_c, &mini->old_c);
 	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
 	{
 		mini->err = 0;
