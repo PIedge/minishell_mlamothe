@@ -6,21 +6,12 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 12:18:14 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:44:22 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
-
-void ft_free_kill(t_mini *mini)
-{
-	free(mini->cmd_ori);
-	free_cmd(mini->cmd);
-	ft_double_tab_free(mini->env);
-	rl_clear_history();
-	kill(0, SIGTERM);
-}
 
 void	waitchild(int nb_cmds, t_mini *mini)
 {
@@ -29,13 +20,17 @@ void	waitchild(int nb_cmds, t_mini *mini)
 	while (--nb_cmds >= 0)
 	{
 		waitpid(-1, &status, WUNTRACED);
+		//printf("hello\n");
 		//printf("status : %d\n", status >> 8);
 		//printf("g_lrest : %d\n", g_lrest);
 		if (WIFSIGNALED(status))
 		{
-			//printf("signaled\n");
+			//printf("sigterm\n");
+			printf("signaled\n");
 			if (WTERMSIG(status) || g_lrest == 130)
 			{
+				printf("sigterm\n");
+
 				ft_free_exit(mini, mini->err);
 			}
 			mini->err = status;
@@ -159,8 +154,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		waitparent(mini);
 	else
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		//signal(SIGINT, SIG_DFL);
+		//signal(SIGQUIT, SIG_DFL);
 		tmp = cmd;
 		if (tmp->next)
 			cmd_wpipe(tmp, nb_cmds, mini);
@@ -171,9 +166,9 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	return (select_return(mini));
 }
 
-void	ft_warn_heredoc(int fd, char *str, t_mini *mini)
+void	ft_warn_heredoc(int fd, char *str, t_mini *mini, int ret)
 {
-	if (mini->err)
+	if (ret)
 	{
 		printf("minishell: warning: here-document" \
 			" delimited by EOF (wanted \'%s\')\n", str);
@@ -201,14 +196,14 @@ void	ft_here_doc(char *str, t_mini *mini, int i)
 	}
 	rdline = readline("> ");
 	if (!rdline)
-		ft_warn_heredoc(fd, str, mini);
+		ft_warn_heredoc(fd, str, mini, 1);
 	while (ft_strcmp(rdline, str))
 	{
 		write(fd, rdline, ft_strlen(rdline));
 		write(fd, "\n", 1);
 		rdline = readline("> ");
 		if (!rdline)
-			ft_warn_heredoc(fd, str, mini);
+			ft_warn_heredoc(fd, str, mini, 1);
 	}
-	ft_warn_heredoc(fd, str, mini);
+	ft_warn_heredoc(fd, str, mini, 0);
 }
