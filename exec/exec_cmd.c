@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 10:52:52 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:43:15 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,29 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	}
 	if (last_child(cmd->next, pipefds[i][PIPE_R], mini))
 		return (1);
-	waitchild(nb_cmds, mini);
-	return (ft_free_pipefds(pipefds, 0, mini));
+	waitparent(nb_cmds, mini);
+	return (0);
+}
+
+int	fork_nopipe(t_cmd *cmd, t_mini *mini)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (set_error(mini, N_FORK, 1, NULL));
+	if (pid)
+		waitparent(1, mini);
+	else
+	{
+		sigaction(SIGINT, &mini->lol, NULL);
+		if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
+		{
+			set_error(mini, N_EXECVE, 1, NULL);
+			ft_free_exit(mini, g_lrest);
+		}
+	}
+	return (0);
 }
 
 int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
@@ -58,41 +79,15 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 			return (0);
 	}
 	else
-	{
-		if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
-		{
-			set_error(mini, N_EXECVE, 1, NULL);
-			ft_free_exit(mini, g_lrest);
-		}
-	}
+		return (fork_nopipe(cmd, mini));
 	return (0);
-}
-
-int	select_return(t_mini *mini)
-{
-	if (mini->err == 1 || mini->err == 0)
-		return (1);
-	return (2);
-}
-
-int	select_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
-{
-	t_cmd	*tmp;
-
-	sigaction(SIGINT, &mini->lol, NULL);
-	tmp = cmd;
-	if (tmp->next)
-		cmd_wpipe(tmp, nb_cmds, mini);
-	else
-		cmd_nopipe(tmp, mini);
-	return (1);
 }
 
 int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 {
+	t_cmd	*tmp;
 	int		dup_in;
 	int		dup_out;
-	pid_t	pid;
 
 	signal(SIGINT, SIG_IGN);
 	if (cmd->cm_argv[0] && !cmd->next && \
@@ -103,13 +98,10 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	}
 	if (exec_init(mini, cmd, &dup_in, &dup_out))
 		return (2);
-	pid = fork();
-	if (pid == -1)
-		return (set_error(mini, N_FORK, 2, NULL));
-	if (pid)
-		waitparent(mini);
-	else if (select_cmd(cmd, nb_cmds, mini))
-		ft_reset_dups(mini, dup_in, dup_out);
-	sigaction(SIGINT, &mini->new_c, NULL);
-	return (select_return(mini));
+	tmp = cmd;
+	if (tmp->next)
+		cmd_wpipe(tmp, nb_cmds, mini);
+	else
+		cmd_nopipe(tmp, mini);
+	return (ft_reset_dups(mini, dup_in, dup_out));
 }

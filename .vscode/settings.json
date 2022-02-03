@@ -4,6 +4,7 @@
 		"readline.h": "c",
 		"minishell.h": "c",
 		"ucontext.h": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"libft_re.h": "c"
 	}
 }

@@ -6,21 +6,22 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:13:06 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 12:41:09 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:26:06 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft_re/libft_re.h"
 
-void	ft_reset_dups(t_mini *mini, int in, int out)
+int	ft_reset_dups(t_mini *mini, int in, int out)
 {
-	(void)mini;
 	if (dup2(in, STDIN_FILENO) == -1)
-		ft_free_exit(mini, mini->err >> 8);
+		set_error(mini, N_DUP2, 0, NULL);
 	if (dup2(out, STDOUT_FILENO) == -1)
-		ft_free_exit(mini, mini->err >> 8);
-	ft_free_exit(mini, mini->err >> 8);
+		set_error(mini, N_DUP2, 0, NULL);
+	if (mini->err == 1 || mini->err == 0)
+		return (1);
+	return (2);
 }
 
 int	is_builtin(char	*cmd)
