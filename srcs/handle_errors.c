@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:26:14 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 16:32:18 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:57:04 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	wr_perror(int err, char *str)
 	if (err == 5)
 		return (perror("fork"));
 	if (err == 6)
-		return (perror("opendir"));
+		return (perror(str));
 	if (err == 7)
 		return (perror("open"));
 	if (err == 8)

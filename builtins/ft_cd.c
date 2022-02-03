@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 12:42:24 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 16:26:55 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:56:41 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	open_home(t_mini *mini)
 		home = mini->env[i] + 5;
 		dir = opendir(home);
 		if (!dir)
-			return (set_error(mini, N_OPENDIR, 1, NULL));
+			return (set_error(mini, N_OPENDIR, 1, "~"));
 		closedir(dir);
 		if (chdir(home))
 			return (set_error(mini, N_CDCHDIR, 1, NULL));
 		return (0);
 	}
-	return (set_error(mini, N_VAR, 1, "HOME"));
+	return (set_error(mini, 1, 1, NULL));
 }
 
 int	ft_cd(t_cmd *cmd, t_mini *mini)
@@ -47,7 +47,7 @@ int	ft_cd(t_cmd *cmd, t_mini *mini)
 		else
 			dir = opendir(cmd->cm_argv[1]);
 		if (!dir)
-			return (set_error(mini, N_OPENDIR, 1, NULL));
+			return (set_error(mini, N_OPENDIR, 1, cmd->cm_argv[1]));
 		closedir(dir);
 		if (chdir(cmd->cm_argv[1]))
 			return (set_error(mini, N_CDCHDIR, 1, NULL));
