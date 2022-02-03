@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:13:52 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 11:39:06 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:30:58 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ft_here_doc(char *str, t_mini *mini, int i)
 	char	*p_hd;
 
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	p_hd = get_path_hd(mini, i);
 	if (!p_hd)
 		ft_free_exit(mini, mini->err);
