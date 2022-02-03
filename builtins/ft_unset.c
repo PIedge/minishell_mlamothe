@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 02:54:09 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/30 20:25:58 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 14:29:18 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	ft_unset(t_cmd *cmd, t_mini *mini)
 {
 	int	alrd_here;
 
-	(void)mini;
+	if (!cmd->cm_argv[1])
+		return (0);
 	alrd_here = get_var_name_end(cmd->cm_argv[1], mini);
 	if (alrd_here != -1)
 	{
