@@ -3,6 +3,7 @@
 		"dirent.h": "c",
 		"readline.h": "c",
 		"minishell.h": "c",
-		"ucontext.h": "c"
+		"ucontext.h": "c",
+		"errno.h": "c"
 	}
 }

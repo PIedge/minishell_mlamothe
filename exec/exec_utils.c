@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:19:45 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/01 21:56:45 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:26:15 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,33 +67,4 @@ int	get_var_name_end(char *str, t_mini *mini)
 			return (ret);
 	}
 	return (-1);
-}
-
-void ft_free_exit(t_mini *mini, int ret)
-{
-	free(mini->cmd_ori);
-	free_cmd(mini->cmd);
-	ft_double_tab_free(mini->env);
-	rl_clear_history();
-	exit(ret);
-}
-
-void ft_free_exit_hd(t_mini *mini, int ret)
-{
-	free(mini->cmd_ori);
-	free_cmd(mini->cmd);
-	ft_double_tab_free(mini->env);
-	rl_clear_history();
-	exit(ret);
-}
-
-int	ft_free_split(char	**splt, int ret)
-{
-	int	i;
-
-	i = -1;
-	while (splt[++i])
-		free(splt[i]);
-	free(splt);
-	return (ret);
 }

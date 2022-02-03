@@ -7,13 +7,17 @@ SRCS	=	srcs/inits_frees.c		\
 			srcs/var_utils.c		\
 			srcs/mv_str.c			\
 			srcs/redir_setup.c		\
-			srcs/exec_childs.c		\
-			srcs/exec_cmd.c			\
-			srcs/exec_core.c		\
-			srcs/exec_utils.c		\
-			srcs/exec_path_finder.c	\
-			srcs/get_pipefds.c		\
-			srcs/set_in_out.c		\
+			exec/ft_heredoc.c		\
+			exec/exec_waits.c		\
+			exec/exec_childs.c		\
+			exec/exec_cmd.c			\
+			exec/exec_core.c		\
+			exec/exec_utils.c		\
+			exec/exec_frees.c		\
+			exec/exec_path_finder.c	\
+			exec/get_pipefds.c		\
+			exec/set_in_out.c		\
+			srcs/signals.c			\
 			srcs/utils.c			\
 			srcs/handle_errors.c	\
 			builtins/ft_cd.c		\
@@ -23,7 +27,6 @@ SRCS	=	srcs/inits_frees.c		\
 			builtins/ft_unset.c		\
 			builtins/ft_env.c		\
 			builtins/ft_exit.c		\
-			srcs/signals.c			\
 			main.c					\
 
 NAME	=	minishell

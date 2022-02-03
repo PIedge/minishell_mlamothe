@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 15:25:03 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:24:10 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,6 @@ int	check_path_out(t_cmd *cmd, t_mini *mini)
 		}
 		tmp = tmp->next;
 	}
-	return (0);
-}
-
-int	handle_hd(t_mini *mini, t_redir *tmp)
-{
-	pid_t		pid;
-	static int	i = 1;
-
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	if (pid)
-	{
-		free(tmp->word);
-		tmp->word = get_path_hd(mini, i);
-		if(waitparent(mini))
-			return(1);
-	}
-	else
-		ft_here_doc(tmp->word, mini, i);
-	++i;
 	return (0);
 }
 

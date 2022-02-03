@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/02 17:12:03 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:45:19 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/* *****************************************************************************
-**							Includes										  **
-*******************************************************************************/
+/* ****************************************************************************
+**							Includes									  	 **
+******************************************************************************/
 
-#include <sys/types.h>
-#include <signal.h>
-#include <sys/ucontext.h>
+# include <sys/types.h>
+# include <signal.h>
+# include <sys/ucontext.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/types.h>
@@ -33,10 +33,9 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-
-/* *****************************************************************************
-**							Defines											  **
-*******************************************************************************/
+/* ****************************************************************************
+**							Defines											 **
+******************************************************************************/
 
 # define INPUT "<\0"
 # define OUTPUT ">\0"
@@ -83,15 +82,15 @@
 #  define __USE_MISC
 # endif
 
-/* *****************************************************************************
-**							Global											  **
-*******************************************************************************/
+/* ****************************************************************************
+**							Global											 **
+******************************************************************************/
 
 extern int					g_lrest;
 
-/* *****************************************************************************
-**							Structs											  **
-*******************************************************************************/
+/* ****************************************************************************
+**							Structs											 **
+******************************************************************************/
 
 /*
 ** The s_redir is a double chained list containing "word" a char* wich is
@@ -135,22 +134,22 @@ typedef struct s_cmd
 
 typedef struct s_mini
 {
-	char	*cmd_ori;
-	t_cmd	*cmd;
-	char	**env;
-	int		err;
-	char	*err_word;
+	char				*cmd_ori;
+	t_cmd				*cmd;
+	char				**env;
+	int					err;
+	char				*err_word;
 	struct sigaction	old_c;
 	struct sigaction	old_bs;
 	struct sigaction	new_c;
 	struct sigaction	new_exec_c;
 	struct sigaction	new_bs;
 	struct sigaction	lol;
-}					t_mini;
+}						t_mini;
 
-/* *****************************************************************************
-**							Functions										  **
-*******************************************************************************/
+/* ****************************************************************************
+**							Functions									     **
+******************************************************************************/
 
 /*
 ** Core functions
@@ -198,10 +197,11 @@ int		ft_free_pipefds(int **pipefds, int ret, t_mini *mini);
 int		check_paths_ok(t_cmd *cmd, t_mini *mini);
 int		is_builtin(char *cmd);
 int		ft_free_split(char	**splt, int ret);
-char    *ft_join_cmd(char *str1, char *str2, t_mini *mini);
+char	*ft_join_cmd(char *str1, char *str2, t_mini *mini);
 char	*ft_join(char *str1, char *str2, t_mini *mini);
 void	ft_here_doc(char *str, t_mini *mini, int i);
-char    *ft_strdup(const char *src, t_mini *mini);
+int		handle_hd(t_mini *mini, t_redir *tmp);
+char	*ft_strdup(const char *src, t_mini *mini);
 void	ft_reset_dups(t_mini *mini, int in, int out);
 char	*get_path_hd(t_mini *mini, int i);
 void	ft_free_exit(t_mini *mini, int ret);
@@ -238,5 +238,5 @@ void	ctrl_c(int sig);
 void	ctrl_heredoc_c(int sig);
 void	ctrl_exec_c(int sig);
 
-void	ctrl_cmd_c(int sig); // having fun
+void	ctrl_cmd_c(int sig);
 #endif

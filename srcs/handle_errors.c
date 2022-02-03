@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:26:14 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/02 18:13:48 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:33:51 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	select_err(int err, char *str)
 {
 	if (err > N_MALLOC && err <= N_EXECVE)
 		return (wr_perror(err, str));
-	if(err == 1)
+	if (err == 1)
 		return ;
 	if (err == N_MALLOC)
 		return (wr_err(E_MALLOC));
