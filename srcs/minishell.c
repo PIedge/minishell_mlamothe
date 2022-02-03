@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/03 13:26:14 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 14:41:36 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,6 @@ int	set_pipes(t_mini *mini)
 		}
 		work->cmd = pipes[y];
 	}
-	// Test Zone
-	/*while (work->prev)
-		work = work->prev;
-	while (work->next)
-	{
-		printf("work->cmd |%s|\n", work->cmd);
-		ft_printf_double_tab(work->cm_argv, "work->cm_argv");
-		work = work->next;
-		//work = work->next;
-	}
-	printf("work->cmd |%s|\n", work->cmd);
-	ft_printf_double_tab(work->cm_argv, "work->cm_argv");*/
-	// Test Zone
 	while (work->prev)
 		work = work->prev;
 	mini->cmd = work;
@@ -114,43 +101,17 @@ void	strip_quote_cmd(t_cmd *cmd)
 	}
 }
 
-int	minishell(t_mini *mini)
+int	parse_some_things(t_mini *mini)
 {
-	//static int stop = 0;
-	//printf("g : %s\n",mini->env[31]);
-	mini->cmd_ori = readline(PROMPT);
-	EOF_in_cmd(mini);
-	//HISTORY
-	add_history(mini->cmd_ori);
-	/*if (!stop)
-	{
-		++stop;
-		mini->cmd_ori = ft_strdup("echo test | cat > oui", mini);
-	}
-	else
-		mini->cmd_ori = ft_strdup("exit", mini);*/
-
-/*	mini->history = history_list();
-	if (mini->history)
-		return(printf("hist 0 : %s\n", mini->history));
-	else
-		return(printf("no_hist\n"));*/
-
-	//printf("here\n");
-	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
-		return (1);
 	mini->cmd_ori = var_treat_str(&mini->cmd_ori, mini->env);
 	mini->err = 0;
 	g_lrest = 0;
 	if (!mini->cmd_ori)
 		return (0);
-	//printf("after var treat |%s|\n", mini->cmd_ori);
 	if (!set_pipes(mini))
 		return (0);
 	while (mini->cmd->next)
 	{
-		//if (!var_treat_cmd(mini->cmd, mini))
-		//	return (0);
 		if (!find_redir(mini->cmd, mini->cmd->cmd, mini))
 			return (0);
 		if (!cm_argv_creation(mini->cmd))
@@ -159,43 +120,42 @@ int	minishell(t_mini *mini)
 		mini->cmd = mini->cmd->next;
 	}
 	if (!find_redir(mini->cmd, mini->cmd->cmd, mini))
-			return (0);
+		return (0);
 	if (!cm_argv_creation(mini->cmd))
-			return (0);
+		return (0);
 	strip_quote_cmd(mini->cmd);
-	// Test Zone
-	/*int	y = 0;
-	while (mini->cmd->next)
-	{
-		y = 0;
-		while (mini->cmd->cm_argv[y])
-			printf("%s\n", mini->cmd->cm_argv[y++]);
-		mini->cmd = mini->cmd->next;
-	}
-	y = 0;
-	while (mini->cmd->cm_argv[y])
-		printf("%s\n", mini->cmd->cm_argv[y++]);*/
-	t_cmd *work = mini->cmd;
+	return (1);
+}
+
+int	how_much_cmd(t_mini *mini)
+{
+	int ret;
+	t_cmd *work;
+
+	ret = 1;
+	work = mini->cmd;	
 	while (work->prev)
 		work = work->prev;
 	while (work->next)
-	{
-	//	printf("work->cmd |%s|\n", work->cmd);
-	//	ft_printf_double_tab(work->cm_argv, "work->cm_argv");
 		work = work->next;
-		//work = work->next;
-	}
-	//printf("work->cmd |%s|\n", work->cmd);
-	//ft_printf_double_tab(work->cm_argv, "work->cm_argv");
-	//printf("out\n");
-	//printf("\e[1;36mEXECUTION\e[0m\n");
-	int nb;							//nb commands
-
-	nb = 1;
-	while(mini->cmd->prev && ++nb)
+	while(mini->cmd->prev && ++ret)
 		mini->cmd = mini->cmd->prev;
+	return (ret);
+}
+
+int	minishell(t_mini *mini)
+{
 	int retexec;
-	//return (0);
+	int	nb;
+
+	mini->cmd_ori = readline(PROMPT);
+	EOF_in_cmd(mini);
+	add_history(mini->cmd_ori);
+	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
+		return (1);
+	if (!parse_some_things(mini))
+		return (1);
+	nb = how_much_cmd(mini);
 	retexec = exec_cmd(mini->cmd, nb, mini);
 	if (retexec == 0)
 	{
@@ -206,6 +166,4 @@ int	minishell(t_mini *mini)
 		select_err(mini->err, mini->err_word);
 	sigaction(SIGINT, &mini->new_c, NULL);
 	return (1);
-	// Test Zone
-	// Execution
 }
