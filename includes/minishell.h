@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/03 15:25:58 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:20:57 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,13 @@ int		in_if_find_redir(t_cmd *cmd, char *cm, int *i);
 int		out_if_find_redir(t_cmd *cmd, char *cm, int *i);
 t_redir	*new_redir(t_redir *prev, char *word, int type);
 char	*get_redir_word(char *str, int *i);
+void	norm_new_len(int *len, int *i);
+void	norm_copy_var_into_new(char *ori, char *var, int *a, int i);
+char	*norm_vts(char **new, int n_len);
+void	copy_until_var(char *ori, char *new, int *i, int *y);
+int		need_to_add(char *str, char **env, int *n_len);
+int		get_end_index(char *str);
+int		calc_new_len(char *str, char **env, int *n);
 
 /*
 ** Utils for execution
