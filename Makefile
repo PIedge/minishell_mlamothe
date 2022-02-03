@@ -20,6 +20,7 @@ SRCS	=	srcs/inits_frees.c		\
 			srcs/signals.c			\
 			srcs/utils.c			\
 			srcs/handle_errors.c	\
+			srcs/main_loop_utils.c	\
 			builtins/ft_cd.c		\
 			builtins/ft_echo.c		\
 			builtins/ft_pwd.c		\
