@@ -6,7 +6,11 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/03 17:20:57 by tmerrien         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/03 16:52:59 by mlamothe         ###   ########.fr       */
+>>>>>>> e96859a43ca868a8778733c4cfccaaa7d1c6a88e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +61,7 @@
 # define N_CDFARGS 21
 # define N_CDCHDIR 22
 # define N_PWD 23
+# define N_VAR 24
 
 # define E_MALLOC "Malloc didn't work, your pc is probably dying\n"
 # define E_PIPE "Error with pipe\n"
@@ -71,6 +76,7 @@
 # define E_CDFARGS "cd : too few args\n"
 # define E_CDCHDIR "Error with chdir in cd\n"
 # define E_PWD "Error, can\'t get pwd because of getcwd\n"
+# define E_VAR "Unknown variable : "
 
 # define PIPE_R 0
 # define PIPE_W 1
