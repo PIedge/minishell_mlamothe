@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 10:40:29 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:52:52 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	pid_t	pid;
 
 	signal(SIGINT, SIG_IGN);
-	if (cmd->cm_argv[0] && !ft_strcmp(cmd->cm_argv[0], "exit"))
+	if (cmd->cm_argv[0] && !cmd->next && \
+		!ft_strcmp(cmd->cm_argv[0], "exit"))
 	{
 		mini->err = 0;
 		return (0);
