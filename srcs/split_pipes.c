@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 05:26:48 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/01/20 16:35:31 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:32:40 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ static int	how_many_split(char *str, char c)
 	return (ret);
 }
 
-/*static int	find_next_split(char *s, char c, int *x)
-{
-	while (s[*x] && s[*x] == c)
-		++(*x);
-	return (*x);
-}*/
-
 static int	free_if_wrong(char **ret, char *p_actual, char *p_start, int y)
 {
 	ret[y] = ft_substr(p_start, 0, p_actual - p_start);
@@ -62,85 +55,48 @@ static int	free_if_wrong(char **ret, char *p_actual, char *p_start, int y)
 	return (1);
 }
 
-/*static int		free_if_wrong(char **ret, char *s, char *actual, int y)
-{
-	ret[y] = ft_substr(s, 0, actual - s);
-	if (!(ret[y]))
-	{
-		while (y >= 0)
-			free(ret[y--]);
-		free(ret);
-		ret = 0;
-		return (0);
-	}
-	return (1);
-}*/
-
-int	find_start_split(char *str, int i, char c)
+int	find_start_split(char *str, int i, char c, int *start)
 {
 	while (str[i] && str[i] == c)
 		++i;
+	*start = i;
 	return (i);
 }
 
-static char	**to_all(char *s, char c)
+static char	**to_all(char **ret, char *s, char c, int *start)
 {
 	int		x;
 	int		y;
-	char	**ret;
-	int	start;
 
-	ret = malloc(sizeof(char *) * (how_many_split(s, c) + 1));
-	if (ret == NULL)
-		return (0);
 	y = 0;
-	start = find_start_split(s, 0, c);
-	x = start;
+	x = find_start_split(s, 0, c, start);
 	while (s[x])
 	{
 		if (s[x] == '\'' || s[x] == '\"')
 			skip_quotes(s, &x, s[x]);
 		else if (s[x] == c)
 		{
-			if (!free_if_wrong(ret, &s[x], &s[start], y++))
+			if (!free_if_wrong(ret, &s[x], &s[*start], y++))
 				return (0);
-			start = find_start_split(s, x, c);
-			x = start;
+			x = find_start_split(s, x, c, start);
 		}
 		else
 			++x;
 	}
-	if (s[x - 1] != c && !free_if_wrong(ret, &s[x], &s[start], y++))
+	if (s[x - 1] != c && !free_if_wrong(ret, &s[x], &s[*start], y++))
 		return (0);
 	ret[y] = 0;
-	return (ret);
-	/*start_split = find_next_split(s, c, &x);
-	while (s[++x])
-	{
-		if (s[x] == '\'' || s[x] == '\"')
-			skip_quotes(s, &x, s[x]);
-		if (x == 0)
-			++x;
-		if (s[x] == c && s[x - 1] != c)
-		{
-			if (!free_if_wrong(ret, &(s[start_split]), &(s[x]), y++))
-				return (0);
-			printf("dead\n");
-			start_split = find_next_split(s, c, &x);
-		}
-	}
-	if (s[x - 1] != c && !free_if_wrong(ret, &(s[start_split]), &(s[x]), y++))
-		return (0);
-	ret[y] = 0;*/
 	return (ret);
 }
 
 char	**ft_split_pipes(char *s, char c)
 {
 	char	**ret;
+	int		start;
 
 	if (!s)
 		return (0);
+	start = 0;
 	if (*s == '\0')
 	{
 		ret = malloc(sizeof(char *) * 1);
@@ -149,6 +105,9 @@ char	**ft_split_pipes(char *s, char c)
 		ret[0] = NULL;
 		return (ret);
 	}
-	ret = to_all(s, c);
+	ret = malloc(sizeof(char *) * (how_many_split(s, c) + 1));
+	if (ret == NULL)
+		return (0);
+	to_all(ret, s, c, &start);
 	return (ret);
 }

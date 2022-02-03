@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/03 18:00:04 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:13:32 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ char	*find_var_with_limit(char **env, char *start, char *end);
 t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini);
 void	init_signals(t_mini *mini);
 void	EOF_in_cmd(t_mini *mini);
-void	cancel_sig(t_mini *mini, char val);
 int		parse_some_things(t_mini *mini);
 int		set_pipes(t_mini *mini);
 int		cm_argv_creation(t_cmd *work);
@@ -255,7 +254,6 @@ int		ft_exit(t_mini *mini);
 
 void	ctrl_c(int sig);
 void	ctrl_heredoc_c(int sig);
-void	ctrl_exec_c(int sig);
 
 void	ctrl_cmd_c(int sig);
 #endif
