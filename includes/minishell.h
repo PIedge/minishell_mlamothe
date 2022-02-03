@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/02/03 17:20:57 by tmerrien         ###   ########.fr       */
+=======
 /*   Updated: 2022/02/03 16:52:59 by mlamothe         ###   ########.fr       */
+>>>>>>> e96859a43ca868a8778733c4cfccaaa7d1c6a88e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +170,11 @@ t_cmd	*find_redir(t_cmd *cmd, char *cm, t_mini *mini);
 void	init_signals(t_mini *mini);
 void	EOF_in_cmd(t_mini *mini);
 void	cancel_sig(t_mini *mini, char val);
+int		parse_some_things(t_mini *mini);
+int		set_pipes(t_mini *mini);
+int		cm_argv_creation(t_cmd *work);
+int		var_treat_cmd(t_cmd *cmd, t_mini *mini);
+void	strip_quote_cmd(t_cmd *cmd);
 
 /*
 ** Split functions
@@ -186,6 +195,18 @@ int		ft_strcmp(char *s1, char *s2);
 void	free_cmd(t_cmd *cmd);
 int		set_error(t_mini *mini, int err, int ret, char *str);
 void	select_err(int err, char *str);
+int		how_much_cmd(t_mini *mini);
+int		in_if_find_redir(t_cmd *cmd, char *cm, int *i);
+int		out_if_find_redir(t_cmd *cmd, char *cm, int *i);
+t_redir	*new_redir(t_redir *prev, char *word, int type);
+char	*get_redir_word(char *str, int *i);
+void	norm_new_len(int *len, int *i);
+void	norm_copy_var_into_new(char *ori, char *var, int *a, int i);
+char	*norm_vts(char **new, int n_len);
+void	copy_until_var(char *ori, char *new, int *i, int *y);
+int		need_to_add(char *str, char **env, int *n_len);
+int		get_end_index(char *str);
+int		calc_new_len(char *str, char **env, int *n);
 
 /*
 ** Utils for execution

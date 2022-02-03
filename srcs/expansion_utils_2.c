@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   expansion_utils_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/31 08:42:51 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/03 14:48:04 by tmerrien         ###   ########.fr       */
+/*   Created: 2022/02/03 17:19:28 by tmerrien          #+#    #+#             */
+/*   Updated: 2022/02/03 17:22:21 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_memset(void *b, int n)
-{
-	char	*t;
+#include "../libft_re/libft_re.h"
+#include "../includes/minishell.h"
+#include <stdlib.h>
 
-	t = (char *)b;
-	while (--n >= 0)
-	{
-		*t = 0;
-	}
+int	get_end_index(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '?')
+		return (1);
+	while (str[i] && !ft_is_white_space(str[i]) && str[i] != '"')
+		++i;
+	return (i);
 }
