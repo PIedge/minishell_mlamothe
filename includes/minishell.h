@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/03 14:52:34 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:25:58 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,10 @@ void	free_cmd(t_cmd *cmd);
 int		set_error(t_mini *mini, int err, int ret, char *str);
 void	select_err(int err, char *str);
 int		how_much_cmd(t_mini *mini);
+int		in_if_find_redir(t_cmd *cmd, char *cm, int *i);
+int		out_if_find_redir(t_cmd *cmd, char *cm, int *i);
+t_redir	*new_redir(t_redir *prev, char *word, int type);
+char	*get_redir_word(char *str, int *i);
 
 /*
 ** Utils for execution
