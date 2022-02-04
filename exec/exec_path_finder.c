@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:19:46 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 11:54:17 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:56:51 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ int	check_paths_ok(t_cmd *cmd, t_mini *mini)
 	tmp = cmd;
 	while (tmp)
 	{
-		if (!tmp->cm_argv || !tmp->cm_argv[0])
-			return (set_error(mini, N_SYNTAX, 1, NULL));
 		if (check_path_redir(tmp, mini))
 			return (1);
 		tmp = tmp->next;

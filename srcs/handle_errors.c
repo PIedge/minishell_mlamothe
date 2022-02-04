@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:26:14 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 11:53:23 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:56:13 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	select_err(int err, char *str)
 		return ;
 	if (err == N_MALLOC)
 		return (wr_err(E_MALLOC, NULL));
-	if (err == 19)
-		return (wr_err(E_SYNTAX, NULL));
 	if (err == 20)
 		return (wr_err(E_CDMARGS, NULL));
 	if (err == 21)

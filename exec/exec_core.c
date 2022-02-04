@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:13:06 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 13:32:06 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:37:47 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	do_builtin(t_cmd *cmd, t_mini *mini)
 
 int	do_cmd(t_cmd *cmd, t_mini *mini)
 {
-	if (!cmd->cm_argv || !cmd->cm_argv[0])
-		return (set_error(mini, N_SYNTAX, 1, NULL));
 	if (is_builtin(cmd->cm_argv[0]))
 	{
 		if (do_builtin(cmd, mini))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 15:04:43 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:56:06 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@
 # define N_UNLINK 8
 # define N_ACCESS 9
 # define N_EXECVE 10
-# define N_SYNTAX 19
 # define N_CDMARGS 20
 # define N_CDFARGS 21
 # define N_CDCHDIR 22
@@ -69,7 +68,6 @@
 # define E_UNLINK "Error with unlink\n"
 # define E_ACCESS "Error with access\n"
 # define E_EXECVE "Error with execve\n"
-# define E_SYNTAX "minishell : syntax error\n"
 # define E_CDMARGS "cd : too many args\n"
 # define E_CDFARGS "cd : too few args\n"
 # define E_CDCHDIR "Error with chdir in cd\n"
