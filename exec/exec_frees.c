@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:25:51 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 12:54:06 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 13:56:45 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,11 @@ void	ft_free_exit(t_mini *mini, int ret)
 	exit(ret);
 }
 
-void	ft_free_exit_mltpipes(t_mini *mini, int **pipefds, int i, int ret)
+void	ft_free_exit_mltpipes(t_mini *mini, int **pipefds, int ret)
 {
-	int	j;
-
 	free(mini->cmd_ori);
 	free_cmd(mini->cmd);
-	j = -1;
-	while (++j <= i)
-		if (pipefds[j])
-			free(pipefds[j]);
-	free(pipefds);
+	ft_free_pipefds(pipefds, 0, mini);
 	ft_double_tab_free(mini->env);
 	rl_clear_history();
 	exit(ret);

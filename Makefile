@@ -37,7 +37,7 @@ NAME	=	minishell
 
 CC		=	clang
 
-FLAG	=	-Wall -Wextra -Werror #-fsanitize=address
+FLAG	=	-Wall -Wextra -Werror -g3 #-fsanitize=address
 
 VALF	=	--tool=memcheck --leak-check=full --leak-resolution=high \
 			--show-reachable=yes --track-origins=yes \

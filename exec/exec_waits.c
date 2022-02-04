@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:13:16 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 11:56:15 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:12:37 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	waitchild(int nb_cmds, t_mini *mini)
 		{
 			g_lrest = status >> 8;
 			mini->err = status >> 8;
-			if (WTERMSIG(status) || g_lrest == 130)
+			if (WTERMSIG(status))
 			{
 				g_lrest = 130;
 				ft_free_exit(mini, mini->err);
@@ -49,8 +49,11 @@ int	waitparent(int nb_cmds, t_mini *mini)
 		{
 			g_lrest = status >> 8;
 			mini->err = status >> 8;
-			if (WTERMSIG(status))
+			if (WTERMSIG(status) == 2)
+			{
+				printf("\n");
 				g_lrest = 130;
+			}
 		}
 		else
 		{
