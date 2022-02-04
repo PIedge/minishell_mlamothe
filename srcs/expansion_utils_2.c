@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 17:19:28 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 10:56:48 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:17:58 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,20 @@ int	get_end_index(char *str)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	if (str[i] == '?')
 		return (1);
+	if ((str[i] < 'a' || str[i] > 'z') && \
+		(str[i] < 'A' || str [i] > 'Z') && str[i] != '_')
+		return (1);
 	++i;
-	while (str[i] && !ft_is_white_space(str[i]) && str[i] != '$' && \
-		str[i] != '"')
+	while (str[i])
+	{
+		if ((str[i] < 'a' || str[i] > 'z') && \
+			(str[i] < 'A' || str [i] > 'Z') && \
+				str[i] != '_' && (str[i] < '0' || str[i] > '9'))
+			return (i);
 		++i;
+	}
 	return (i);
 }
