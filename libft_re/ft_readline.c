@@ -27,11 +27,12 @@ static char	*strjoin_diff(char *s1, char *s2)
 	len_2 = 0;
 	if (s2)
 		len_2 = ft_strlen(s2);
-	if (!(new = malloc(sizeof(char) * (len_1 + len_2 + 1))))
+	new = malloc(sizeof(char) * (len_1 + len_2 + 1));
+	if (!new)
 		return (0);
-	ft_memcpy((void*)new, (const void*)s1, len_1);
+	ft_memcpy((void *)new, (const void *)s1, len_1);
 	if (s2)
-		ft_memcpy((void*)(new + len_1), (const void*)s2, len_2);
+		ft_memcpy((void *)(new + len_1), (const void *)s2, len_2);
 	new[len_1 + len_2] = 0;
 	if (s1)
 		free(s1);
@@ -56,24 +57,26 @@ static int	find_next(char *str, int *ret)
 	return (i);
 }
 
-static char	*get_line()
+static char	*get_line(void)
 {
 	char	buff[BUFF_RL + 1];
 	char	*str;
 	char	*tmp;
 	int		ret;
-	
+
 	ret = 1;
 	buff[BUFF_RL] = 0;
 	str = 0;
 	tmp = 0;
 	while (ret)
 	{
-		if (0 > (ret = read(0, buff, BUFF_RL)))
+		ret = read(0, buff, BUFF_RL);
+		if (0 > ret)
 			return (0);
-		if (!(tmp = malloc(sizeof(char) * (find_next(buff, &ret) + 1))))
+		tmp = malloc(sizeof(char) * (find_next(buff, &ret) + 1));
+		if (!tmp)
 			return (0);
-		ft_memcpy((void*)tmp, (const void*)buff, ft_strlen(buff));
+		ft_memcpy((void *)tmp, (const void *)buff, ft_strlen(buff));
 		tmp[ft_strlen(buff)] = 0;
 		str = strjoin_diff(str, tmp);
 		free(tmp);
@@ -84,17 +87,17 @@ static char	*get_line()
 
 char	*ft_readline(char *prompt)
 {
-    char	*line;
+	char	*line;
 
-    if (prompt)
-    {
-        write(STDOUT_FILENO, BLU, ft_strlen(BLU));
-        write(STDOUT_FILENO, prompt, ft_strlen(prompt));
+	if (prompt)
+	{
+		write(STDOUT_FILENO, BLU, ft_strlen(BLU));
+		write(STDOUT_FILENO, prompt, ft_strlen(prompt));
 		write(STDOUT_FILENO, RESET, ft_strlen(RESET));
-        write(STDOUT_FILENO, "$ ", 2);
-    }
-    line = get_line();
-    if (!line)
-        return (0);
-    return (line);
+		write(STDOUT_FILENO, "$ ", 2);
+	}
+	line = get_line();
+	if (!line)
+		return (0);
+	return (line);
 }

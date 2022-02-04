@@ -26,7 +26,8 @@ void	*ft_realloc(void *ptr, size_t size)
 		free(ptr);
 		return (ret);
 	}
-	if (!(ret = malloc(sizeof(char) * size)))
+	ret = malloc(sizeof(char) * size);
+	if (!ret)
 		return (0);
 	len = ft_strlen(ptr);
 	if (size > len)
