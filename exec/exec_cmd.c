@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 11:24:45 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 13:02:31 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 	if (!pipefds)
 		return (1);
 	if (pipe(pipefds[0]))
-		return (set_error(mini, N_PIPE, 1, NULL));
-	if (first_child(pipefds[0][PIPE_R], pipefds[0][PIPE_W], cmd, mini))
-		return (1);
-	cmd = cmd->next;
+		return (ft_free_pipefds(pipefds, 0, 2, mini));
 	i = 0;
+	if (first_child(pipefds, i, cmd, mini))
+		return (ft_free_pipefds(pipefds, 0, 1, mini));
+	cmd = cmd->next;
 	while (cmd->next && ++i)
 	{
 		if (pipe(pipefds[i]))
-			return (set_error(mini, N_FORK, 2, NULL));
+			return (ft_free_pipefds(pipefds, i, 2, mini));
 		if (other_childs(pipefds, i, cmd, mini))
-			return (1);
+			return (ft_free_pipefds(pipefds, i, 1, mini));
 		cmd = cmd->next;
 	}
-	if (last_child(cmd, pipefds[i][PIPE_R], mini))
-		return (1);
+	if (last_child(pipefds, i, cmd, mini))
+		return (ft_free_pipefds(pipefds, i, 1, mini));
 	waitparent(nb_cmds, mini);
-	return (0);
+	return (ft_free_pipefds(pipefds, i, 0, mini));
 }
 
 int	fork_nopipe(t_cmd *cmd, t_mini *mini)

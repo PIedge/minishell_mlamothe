@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 11:28:05 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 08:00:16 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 12:20:08 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	init_signals(t_mini *mini)
 	ft_bzero((void *)&mini->new_exec_c, sizeof(mini->new_exec_c));
 	ft_bzero((void *)&mini->lol, sizeof(mini->lol));
 	mini->new_c.sa_handler = ctrl_c;
+	mini->new_c.sa_flags = 0;
+	ft_bzero((void *)&mini->new_c.sa_mask, sizeof(__sigset_t *));
 	mini->lol.sa_handler = ctrl_cmd_c;
 	sigaction(SIGINT, &mini->new_c, &mini->old_c);
 }

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 11:13:27 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 13:02:46 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define N_UNLINK 8
 # define N_ACCESS 9
 # define N_EXECVE 10
+# define N_SYNTAX 19
 # define N_CDMARGS 20
 # define N_CDFARGS 21
 # define N_CDCHDIR 22
@@ -68,6 +69,7 @@
 # define E_UNLINK "Error with unlink\n"
 # define E_ACCESS "Error with access\n"
 # define E_EXECVE "Error with execve\n"
+# define E_SYNTAX "minishell : syntax error\n"
 # define E_CDMARGS "cd : too many args\n"
 # define E_CDFARGS "cd : too few args\n"
 # define E_CDCHDIR "Error with chdir in cd\n"
@@ -211,7 +213,7 @@ int		set_in(int *in, t_redir *redir, t_mini *mini);
 int		ft_closeem(int in, int out, int ret);
 int		set_in_n_out(int *in, int *out, t_cmd *cmd, t_mini *mini);
 int		**get_pfd(t_cmd *cmd, t_mini *mini);
-int		ft_free_pipefds(int **pipefds, int ret, t_mini *mini);
+int		ft_free_pipefds(int **pipefds, int n, int ret, t_mini *mini);
 int		check_paths_ok(t_cmd *cmd, t_mini *mini);
 int		is_builtin(char *cmd);
 int		ft_free_split(char	**splt, int ret);
@@ -223,6 +225,7 @@ char	*ft_strdup(const char *src, t_mini *mini);
 int		ft_reset_dups(t_mini *mini, int in, int out);
 char	*get_path_hd(t_mini *mini, int i);
 void	ft_free_exit(t_mini *mini, int ret);
+void	ft_free_exit_mltpipes(t_mini *mini, int **pipefds, int i, int ret);
 void	waitchild(int nb_cmds, t_mini *mini);
 int		waitparent(int nb_cmds, t_mini *mini);
 
@@ -232,9 +235,9 @@ int		waitparent(int nb_cmds, t_mini *mini);
 
 int		exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini);
 int		exec_init(t_mini *mini, t_cmd *cmd, int *dup_in, int *dup_out);
-int		first_child(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini);
+int		first_child(int **pipefds, int i, t_cmd *cmd, t_mini *mini);
 int		other_childs(int **pipefds, int i, t_cmd *cmd, t_mini *mini);
-int		last_child(t_cmd *cmd, int pipe_r, t_mini *mini);
+int		last_child(int **pipefds, int i, t_cmd *cmd, t_mini *mini);
 int		do_cmd(t_cmd *cmd, t_mini *mini);
 int		do_builtin(t_cmd *cmd, t_mini *mini);
 int		is_builtin(char	*cmd);
