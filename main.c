@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 08:48:17 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/02 00:28:15 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:54:09 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,22 @@
 
 int	g_lrest;
 
+void	classic_init(t_mini *mini)
+{
+	init_signals(mini);
+	mini->err = 0;
+	g_lrest = 0;
+	mini->err_word = NULL;
+	mini->cmd = NULL;
+}
+
 int	init_mini(t_mini *mini, char **envp)
 {
 	int		i;
 	int		n;
 	char	*nbr;
 
-	init_signals(mini);
-	mini->err = 0;
-	g_lrest = 0;
-	mini->err_word = NULL;
-	mini->cmd = NULL;
+	classic_init(mini);
 	mini->env = copy_env(envp);
 	if (!(mini->env))
 		return (0);
@@ -40,7 +45,7 @@ int	init_mini(t_mini *mini, char **envp)
 		mini->env[i] = ft_join("SHLVL=", nbr, mini);
 		free(nbr);
 		if (!mini->env[i])
-			return(0);
+			return (0);
 	}
 	return (1);
 }
@@ -48,18 +53,13 @@ int	init_mini(t_mini *mini, char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	t_mini	mini;
+	int		ret;
 
 	av = 0;
+	ret = 1;
 	if (!init_mini(&mini, envp))
 		destroy(&mini, E_MALLOC);
-	// if (ac > 1)
-		// destroy(&mini);
-	/*
-	** This main isn't finished, basicaly serves for test cases rn, you know what that means
-	** TEST ZONE START
-	*/
-	ac = 0; //compilation problem if unused
-	int	ret = 1;
+	ac = 0;
 	while (ret)
 	{
 		ret = minishell(&mini);
@@ -67,15 +67,9 @@ int	main(int ac, char **av, char **envp)
 		mini.cmd_ori = NULL;
 		free_cmd(mini.cmd);
 		mini.cmd = NULL;
-	//	if(mini.err)
-	//		printf("\e[1;31merr code : %d\e[0m\n", mini.err);
 	}
 	free(mini.cmd_ori);
 	free_cmd(mini.cmd);
 	ft_double_tab_free(mini.env);
-	printf("minishell done\n");
-	/*
-	** TEST ZONE END
-	*/
 	return (0);
 }

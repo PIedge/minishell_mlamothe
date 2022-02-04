@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:19 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:57:42 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	minishell(t_mini *mini)
 	int	nb;
 
 	mini->cmd_ori = readline(PROMPT);
-	EOF_in_cmd(mini);
+	eof_in_cmd(mini);
 	add_history(mini->cmd_ori);
 	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
 		return (1);

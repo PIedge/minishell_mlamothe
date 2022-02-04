@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 12:23:31 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/27 16:01:02 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:58:43 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_join(char *str1, char *str2, t_mini *mini)
 		str_ret[i] = str1[i];
 	j = -1;
 	while (str2[++j])
-			str_ret[i + j] = str2[j];
+		str_ret[i + j] = str2[j];
 	str_ret[i + j] = 0;
 	return (str_ret);
 }
@@ -87,7 +87,7 @@ char	*ft_strdup(const char *src, t_mini *mini)
 		if (set_error(mini, N_MALLOC, 0, NULL))
 			return (NULL);
 	while (src[++i])
-			res[i] = src[i];
+		res[i] = src[i];
 	res[i] = 0;
 	return (res);
 }
@@ -102,7 +102,7 @@ int	ft_atoi(const char *str)
 	i = 0;
 	minus = 1;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-			++i;
+		++i;
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
@@ -111,8 +111,8 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= 48 && str[i] <= 57)
 	{
-			rez = rez * 10 + (str[i] - 48);
-			++i;
+		rez = rez * 10 + (str[i] - 48);
+		++i;
 	}
 	return (rez * minus);
 }

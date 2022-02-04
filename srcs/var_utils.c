@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 04:23:07 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/01 12:42:22 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:57:53 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft_re/libft_re.h"
 #include <stdlib.h>
 
-void	EOF_in_cmd(t_mini *mini)
+void	eof_in_cmd(t_mini *mini)
 {
 	int		i;
 	char	*b;
@@ -56,7 +56,7 @@ char	*find_var_with_limit(char **env, char *start, char *end)
 char	**copy_env(char **env)
 {
 	char	**new;
-	int	y;
+	int		y;
 
 	y = 0;
 	while (env[y])
