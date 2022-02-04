@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 13:57:04 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:03:26 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,40 @@ int	cmd_nopipe(t_cmd *cmd, t_mini *mini)
 	return (0);
 }
 
+void	cycle_back_redirs(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->in)
+		{
+			while (tmp->in->prev)
+				tmp->in = tmp->in->prev;
+		}
+		if (tmp->out)
+		{
+			while (tmp->out->prev)
+				tmp->out = tmp->out->prev;
+		}
+		tmp = tmp->next;
+	}
+}
+
 int	exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini)
 {
 	t_cmd	*tmp;
 	int		dup_in;
 	int		dup_out;
 
+	cycle_back_redirs(cmd);
 	signal(SIGINT, SIG_IGN);
 	if (cmd->cm_argv[0] && !cmd->next && \
 		!ft_strcmp(cmd->cm_argv[0], "exit"))
 	{
-		mini->err = 0;
-		return (0);
+		ft_exit(cmd, mini);
+		return (1);
 	}
 	if (exec_init(mini, cmd, &dup_in, &dup_out))
 		return (2);

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:13:06 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:47 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:30:30 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	do_builtin(t_cmd *cmd, t_mini *mini)
 	else if (!ft_strcmp(cmd->cm_argv[0], "env"))
 		return (ft_env(cmd, mini));
 	else if (!ft_strcmp(cmd->cm_argv[0], "exit"))
-		return (ft_exit(mini));
+		return (0);
 	return (0);
 }
 

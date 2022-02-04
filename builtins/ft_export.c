@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 01:46:28 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 15:56:25 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:11:16 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ int	ft_export(t_cmd *cmd, t_mini *mini)
 
 	if (!cmd->cm_argv[1])
 		return (ft_env_export(mini));
+	if (cmd->cm_argv[2])
+		return (1);
 	cc = check_name_var_val(cmd->cm_argv[1]);
-	if (cc == 0 || cmd->cm_argv[1][cc] != '=')
+	if (cc == 0 || (cmd->cm_argv[1][cc] != '=' && cmd->cm_argv[1][cc] != '\0'))
 		return (set_error(mini, 1, 1, NULL));
 	alrd_here = get_var_name_end(cmd->cm_argv[1], mini);
 	if (alrd_here != -1)
