@@ -24,7 +24,7 @@ int	first_child(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini)
 		ft_free_exit(mini, mini->err);
 	if (!pid)
 	{
-		sigaction(SIGINT, &mini->lol, NULL);
+		sigaction(SIGINT, &mini->old_c, NULL);
 		close(pipe_r);
 		if (set_in_n_out(&in, &out, cmd, mini))
 			ft_free_exit(mini, mini->err);
@@ -52,7 +52,7 @@ int	other_childs(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini)
 		ft_free_exit(mini, mini->err);
 	if (!pid)
 	{
-		sigaction(SIGINT, &mini->lol, NULL);
+		sigaction(SIGINT, &mini->old_c, NULL);
 		if (set_in_n_out(&in, &out, cmd, mini))
 			ft_free_exit(mini, mini->err);
 		if (in == -1)
@@ -80,7 +80,7 @@ int	last_child(t_cmd *cmd, int pipe_r, t_mini *mini)
 		ft_free_exit(mini, mini->err);
 	if (!pid)
 	{
-		sigaction(SIGINT, &mini->lol, NULL);
+		sigaction(SIGINT, &mini->old_c, NULL);
 		if (set_in_n_out(&in, &out, cmd, mini))
 			ft_free_exit(mini, mini->err);
 		if (in == -1)

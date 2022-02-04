@@ -33,7 +33,7 @@ char	*norm_vts(char **new, int n_len)
 	*new = malloc(sizeof(char) * (n_len + 1));
 	if (!(*new))
 		return (0);
-	ft_bzero((void *)new, n_len);
+	ft_bzero((void *)*new, n_len);
 	return (*new);
 }
 
