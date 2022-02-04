@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 06:57:33 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 11:13:27 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ int		waitparent(int nb_cmds, t_mini *mini);
 int		exec_cmd(t_cmd *cmd, int nb_cmds, t_mini *mini);
 int		exec_init(t_mini *mini, t_cmd *cmd, int *dup_in, int *dup_out);
 int		first_child(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini);
-int		other_childs(int pipe_r, int pipe_w, t_cmd *cmd, t_mini *mini);
+int		other_childs(int **pipefds, int i, t_cmd *cmd, t_mini *mini);
 int		last_child(t_cmd *cmd, int pipe_r, t_mini *mini);
 int		do_cmd(t_cmd *cmd, t_mini *mini);
 int		do_builtin(t_cmd *cmd, t_mini *mini);

@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:25:39 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/01/26 15:47:45 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 09:29:32 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_echo(t_cmd *cmd, t_mini *mini)
 	i = 0;
 	opt = 0;
 	tmp = cmd;
-	while (tmp->cm_argv[++i] && !ft_strcmp(tmp->cm_argv[i], "-n"))
+	while (tmp->cm_argv[++i] && !ft_strncmp(tmp->cm_argv[i], "-n", 2))
 		opt = 1;
 	--i;
 	while (tmp->cm_argv[++i])

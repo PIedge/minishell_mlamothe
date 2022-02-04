@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:19:45 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 10:26:15 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 09:53:26 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	get_var_name_end(char *str, t_mini *mini)
 				return (ret);
 			++i;
 		}
-		if (!str[i] && mini->env[ret][i] == '=')
+		if ((!str[i] && mini->env[ret][i] == '=') || (str[i] == '=' && !mini->env[ret][i]))
 			return (ret);
 	}
 	return (-1);

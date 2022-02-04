@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 11:43:15 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 11:10:47 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ int	cmd_wpipe(t_cmd *cmd, int nb_cmds, t_mini *mini)
 		return (set_error(mini, N_PIPE, 1, NULL));
 	if (first_child(pipefds[0][PIPE_R], pipefds[0][PIPE_W], cmd, mini))
 		return (1);
+	cmd = cmd->next;
 	i = 0;
-	while (cmd->next->next && ++i)
+	while (cmd->next && ++i)
 	{
-		cmd = cmd->next;
 		if (pipe(pipefds[i]))
 			return (set_error(mini, N_FORK, 2, NULL));
-		if (other_childs(pipefds[i - 1][PIPE_R], pipefds[i][PIPE_W], \
-			cmd, mini))
+		if (other_childs(pipefds, i, cmd, mini))
 			return (1);
+		cmd = cmd->next;
 	}
-	if (last_child(cmd->next, pipefds[i][PIPE_R], mini))
+	if (last_child(cmd, pipefds[i][PIPE_R], mini))
 		return (1);
 	waitparent(nb_cmds, mini);
 	return (0);
