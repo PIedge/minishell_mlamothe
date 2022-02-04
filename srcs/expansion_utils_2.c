@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 17:19:28 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 16:15:48 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:17:58 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,5 @@ int	get_end_index(char *str)
 			return (i);
 		++i;
 	}
-	/*++i;
-	while (str[i] && !ft_is_white_space(str[i]) && str[i] != '$' && \
-		str[i] != '"')
-		++i;*/
 	return (i);
 }
