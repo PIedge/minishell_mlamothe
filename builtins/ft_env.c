@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 02:57:51 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/04 09:47:38 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 11:25:59 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	have_equal(char *str)
 	int	i;
 
 	i = -1;
-	while(str[++i])
+	while (str[++i])
 		if (str[i] == '=')
 			return (1);
 	return (0);
