@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 13:02:46 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 13:54:26 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int		set_in(int *in, t_redir *redir, t_mini *mini);
 int		ft_closeem(int in, int out, int ret);
 int		set_in_n_out(int *in, int *out, t_cmd *cmd, t_mini *mini);
 int		**get_pfd(t_cmd *cmd, t_mini *mini);
-int		ft_free_pipefds(int **pipefds, int n, int ret, t_mini *mini);
+int		ft_free_pipefds(int **pipefds, int ret, t_mini *mini);
 int		check_paths_ok(t_cmd *cmd, t_mini *mini);
 int		is_builtin(char *cmd);
 int		ft_free_split(char	**splt, int ret);
@@ -225,7 +225,7 @@ char	*ft_strdup(const char *src, t_mini *mini);
 int		ft_reset_dups(t_mini *mini, int in, int out);
 char	*get_path_hd(t_mini *mini, int i);
 void	ft_free_exit(t_mini *mini, int ret);
-void	ft_free_exit_mltpipes(t_mini *mini, int **pipefds, int i, int ret);
+void	ft_free_exit_mltpipes(t_mini *mini, int **pipefds, int ret);
 void	waitchild(int nb_cmds, t_mini *mini);
 int		waitparent(int nb_cmds, t_mini *mini);
 

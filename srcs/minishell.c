@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 00:08:03 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 13:10:16 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 13:34:02 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	minishell(t_mini *mini)
 	int	nb;
 
 	mini->cmd_ori = readline(PROMPT);
-	mini->cmd_ori = "echo test | ls | wc -l";
 	eof_in_cmd(mini);
 	add_history(mini->cmd_ori);
 	if (!(mini->cmd_ori) || !mini->cmd_ori[0])
@@ -93,5 +92,5 @@ int	minishell(t_mini *mini)
 	if (retexec == 2)
 		select_err(mini->err, mini->err_word);
 	sigaction(SIGINT, &mini->new_c, NULL);
-	return (0);
+	return (1);
 }
