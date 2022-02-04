@@ -6,7 +6,7 @@
 /*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:45:59 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 10:48:10 by tmerrien         ###   ########.fr       */
+/*   Updated: 2022/02/04 18:06:38 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,9 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 {
 	int		end;
 	char	*var;
-	int		o;
 	int		i;
 	int		a;
 
-	o = 0;
 	i = 0;
 	end = 0;
 	a = 0;

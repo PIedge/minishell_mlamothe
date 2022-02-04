@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:13:52 by mlamothe          #+#    #+#             */
-/*   Updated: 2022/02/03 17:30:58 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:08:24 by tmerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	loop_read_hd(char *str, t_mini *mini, int fd)
 		ft_warn_heredoc(fd, str, mini, 1);
 	while (ft_strcmp(rdline, str))
 	{
+		rdline = var_treat_str(&rdline, mini->env);
+		if (!rdline)
+			ft_warn_heredoc(fd, str, mini, 2);
 		write(fd, rdline, ft_strlen(rdline));
 		write(fd, "\n", 1);
 		rdline = readline("> ");
