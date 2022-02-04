@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmerrien <tmerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:11:26 by mlamothe          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/04 11:10:47 by mlamothe         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/04 08:41:32 by tmerrien         ###   ########.fr       */
+>>>>>>> 69b6cba3730265111dc217c05e6a0f488702d1bb
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +56,7 @@ int	fork_nopipe(t_cmd *cmd, t_mini *mini)
 		waitparent(1, mini);
 	else
 	{
-		sigaction(SIGINT, &mini->lol, NULL);
+		sigaction(SIGINT, &mini->old_c, NULL);
 		if (execve(cmd->cm_argv[0], cmd->cm_argv, mini->env))
 		{
 			set_error(mini, N_EXECVE, 1, NULL);
