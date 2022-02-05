@@ -25,6 +25,7 @@ SRCS	=	srcs/inits_frees.c			\
 			srcs/expansion_utils.c		\
 			srcs/expansion_utils_2.c	\
 			builtins/ft_cd.c			\
+			builtins/ft_cd_utils.c		\
 			builtins/ft_echo.c			\
 			builtins/ft_pwd.c			\
 			builtins/ft_export.c		\

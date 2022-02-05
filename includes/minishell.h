@@ -6,7 +6,7 @@
 /*   By: mlamothe <mlamothe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 06:16:55 by tmerrien          #+#    #+#             */
-/*   Updated: 2022/02/04 16:46:26 by mlamothe         ###   ########.fr       */
+/*   Updated: 2022/02/05 15:55:11 by mlamothe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,9 +242,14 @@ int		is_builtin(char	*cmd);
 int		do_cmd(t_cmd *cmd, t_mini *mini);
 
 /*
-** Bultins fucntions
+** Bultins functions
 */
 
+int		open_home(t_mini *mini);
+char	**realloc_env_cd(char *str, t_mini *mini);
+int		ft_reset_env(char **new_env, t_mini *mini, char *pwd);
+int		set_oldpwd(t_mini *mini);
+int		ft_setnewpwd(t_mini *mini);
 int		ft_echo(t_cmd *cmd, t_mini *mini);
 int		ft_cd(t_cmd *cmd, t_mini *mini);
 int		ft_pwd(t_mini *mini);
@@ -253,8 +258,12 @@ int		ft_unset(t_cmd *cmd, t_mini *mini);
 int		ft_env(t_cmd *cmd, t_mini *mini);
 void	ft_exit(t_cmd *cmd, t_mini *mini);
 
+/*
+** Signals functions
+*/
+
 void	ctrl_c(int sig);
 void	ctrl_heredoc_c(int sig);
-
 void	ctrl_cmd_c(int sig);
+
 #endif
