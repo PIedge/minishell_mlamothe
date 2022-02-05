@@ -86,7 +86,10 @@ int	copy_var_into_new(char *ori, char *new, char **env, int *y)
 		ft_strcpy(new, &var[a]);
 		*y += ft_strlen(&var[a]);
 		if (ori[i + 1] == '?')
+		{
+			mv_str_left(&ori[end]);
 			free(var);
+		}
 	}
 	return (end);
 }
